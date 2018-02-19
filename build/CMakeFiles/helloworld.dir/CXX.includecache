@@ -1,0 +1,148 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/Main.cpp
+iostream
+-
+Sender.hpp
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/Sender.hpp
+Receiver.hpp
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/Receiver.hpp
+
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/Receiver.cpp
+chrono
+-
+iostream
+-
+Receiver.hpp
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/Receiver.hpp
+cluon/UDPSender.hpp
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/cluon/UDPSender.hpp
+cluon/UDPReceiver.hpp
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/cluon/UDPReceiver.hpp
+cluon/ToProtoVisitor.hpp
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/cluon/ToProtoVisitor.hpp
+cluon/FromProtoVisitor.hpp
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/cluon/FromProtoVisitor.hpp
+messages.hpp
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/messages.hpp
+
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/Receiver.hpp
+
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/Sender.cpp
+chrono
+-
+iostream
+-
+Sender.hpp
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/Sender.hpp
+cluon/UDPSender.hpp
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/cluon/UDPSender.hpp
+cluon/UDPReceiver.hpp
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/cluon/UDPReceiver.hpp
+cluon/ToProtoVisitor.hpp
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/cluon/ToProtoVisitor.hpp
+cluon/FromProtoVisitor.hpp
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/cluon/FromProtoVisitor.hpp
+messages.hpp
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/messages.hpp
+
+/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/Sender.hpp
+
+/usr/local/include/cluon/FromProtoVisitor.hpp
+cluon/ProtoConstants.hpp
+/usr/local/include/cluon/cluon/ProtoConstants.hpp
+cluon/cluon.hpp
+/usr/local/include/cluon/cluon/cluon.hpp
+cstdint
+-
+map
+-
+sstream
+-
+string
+-
+vector
+-
+
+/usr/local/include/cluon/PortableEndian.hpp
+endian.h
+-
+libkern/OSByteOrder.h
+-
+sys/endian.h
+-
+endian.h
+-
+
+/usr/local/include/cluon/ProtoConstants.hpp
+cstdint
+-
+
+/usr/local/include/cluon/ToProtoVisitor.hpp
+cluon/ProtoConstants.hpp
+/usr/local/include/cluon/cluon/ProtoConstants.hpp
+cluon/cluon.hpp
+/usr/local/include/cluon/cluon/cluon.hpp
+cstdint
+-
+sstream
+-
+string
+-
+
+/usr/local/include/cluon/UDPReceiver.hpp
+cluon/cluon.hpp
+/usr/local/include/cluon/cluon/cluon.hpp
+Winsock2.h
+-
+Ws2def.h
+-
+ws2tcpip.h
+-
+netinet/in.h
+-
+cstdint
+-
+atomic
+-
+chrono
+-
+functional
+-
+string
+-
+thread
+-
+
+/usr/local/include/cluon/UDPSender.hpp
+cluon/cluon.hpp
+/usr/local/include/cluon/cluon/cluon.hpp
+Winsock2.h
+-
+Ws2def.h
+-
+ws2tcpip.h
+-
+netinet/in.h
+-
+cstdint
+-
+mutex
+-
+string
+-
+utility
+-
+
+/usr/local/include/cluon/cluon.hpp
+cluon/PortableEndian.hpp
+/usr/local/include/cluon/cluon/PortableEndian.hpp
+string
+-
+
