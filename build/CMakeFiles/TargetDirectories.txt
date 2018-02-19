@@ -1,3 +1,0 @@
-/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/build/CMakeFiles/rebuild_cache.dir
-/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/build/CMakeFiles/helloworld.dir
-/home/firsou/Desktop/SEM/Term 4/Project: Industrial IT/DIT168TeamGroup9/build/CMakeFiles/edit_cache.dir
