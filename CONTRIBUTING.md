@@ -9,9 +9,14 @@ How to contribute to our project
 ## Making Changes
 * Create a branch with a name appropriate to your issue.
 * Make sure you do not commit any dependencies, binaries or otherwise unecessary files to your branch.
-* Commit messages should be clear and concise, do not use messages such as "Made changes to file" or "Small fix".
+* Commit messages should be clear and concise, do not use messages such as "Made changes to file" or "Small fix"
 * To get started as fast as possible, we suggest that you use our Docker Image
-  * 
+  * Make sure you have Docker installed and then pull our image from Docker Hub Repository
+  * Do not use the :latest tag, and instead find the most recent tag and pull that image
+  ```
+  docker pull dit168group9/dit168group9:INSERT_TAG_HERE
+  ```
+  * For now, we only include basic tools such as Vim, G++, CMake, make and ca-certificates, but that will probably change in the future
 
 ## Coding Standards
 * We use the Stroustrup indentation style, please stick to our coding style throughout your code
