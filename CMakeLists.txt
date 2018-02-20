@@ -5,12 +5,12 @@ set(CMAKE_CXX_STANDARD 14)
 find_package(libcluon REQUIRED)
 include_directories(SYSTEM ${CLUON_INCLUDE_DIRS})
 
-add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/messages.cpp
+add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/src/messages.cpp
                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                   COMMAND cluon-msc --cpp-sources --cpp-add-include-file=messages.hpp --out=${CMAKE_BINARY_DIR}/messages.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/messages.odvd
-                   COMMAND cluon-msc --cpp-headers --out=${CMAKE_CURRENT_SOURCE_DIR}/messages.hpp ${CMAKE_CURRENT_SOURCE_DIR}/src/messages.odvd
+                   COMMAND cluon-msc --cpp-sources --cpp-add-include-file=src/messages.hpp --out=${CMAKE_CURRENT_SOURCE_DIR}/src/messages.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/messages.odvd
+                   COMMAND cluon-msc --cpp-headers --out=${CMAKE_CURRENT_SOURCE_DIR}/src/messages.hpp ${CMAKE_CURRENT_SOURCE_DIR}/src/messages.odvd
                    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/messages.odvd)
 include_directories(SYSTEM ${CMAKE_BINARY_DIR})
 
-add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/src/Main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/Sender.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/Receiver.cpp ${CMAKE_CURRENT_SOURCE_DIR}/messages.cpp)
+add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/src/Main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/Sender.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/Receiver.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/messages.cpp)
 target_link_libraries(${PROJECT_NAME} ${CLUON_LIBRARIES})
