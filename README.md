@@ -9,9 +9,19 @@
 This is an ongoing project for Gothenburg University's DIT168 Industrial IT and Embedded Systems course. The goal is to design and develop a self-driving miniature vehicle. The vehicle will be able to move following a lane with the help of Ultrasonic Sensors, Infrared Sensors, Cameras, Microservices, etc. At the same time it will communicate with other autonomous cars through a V2V (vehicle to vehicle) protocol.
 
 In order to clone the project through terminal: 
-i) git clone https://github.com/DIT168Group9/DIT168Group9.git
-ii) open the build folder and run: cmake .. && make to compile and create the helloworld binary
-iii) finally run ./helloworld
+
+```
+git clone https://github.com/DIT168Group9/DIT168Group9.git
+cd DIT168Group9
+cmake .. 
+make
+```
+
+Finally run
+
+```
+./helloworld
+```
 
 ## Table of Contents
 * [Current Features](#current-features)
