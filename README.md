@@ -33,3 +33,5 @@ Finally run
 
 ## Dependencies
 * A C++11 Compliant Compiler (We use G++)
+* [libcluon](https://github.com/chrberger/libcluon) [![License: GPLv3](https://img.shields.io/badge/license-GPL--3-blue.svg
+)](https://www.gnu.org/licenses/gpl-3.0.txt)
