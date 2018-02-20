@@ -2,9 +2,15 @@ language: cpp
 compiler:
 - g++
 before_install:
-  - sudo add-apt-repository ppa:chrberger/libcluon -y
-  - sudo apt-get update
-  - sudo apt-get install libcluon -y
+  - sudo apt-get install build-essential git cmake -y
+  - git clone https://github.com/chrberger/libcluon.git
+  - cd libcluon
+  - mkdir build
+  - cd build
+  - cmake ../libcluon
+  - make
+  - make test
+  - make install
 after_success:
     # Creating report
   - cd ${TRAVIS_BUILD_DIR}
