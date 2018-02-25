@@ -1,16 +1,17 @@
+sudo: required
+services:
+  - docker
 language: cpp
 compiler:
 - g++
 before_install:
-  - sudo apt-get install build-essential git cmake -y
-  - git clone https://github.com/chrberger/libcluon.git
-  - cd libcluon
+  - docker pull dit168group9/dit168group9:cargroup9
+  - docker run --rm -ti --net=host dit168group9/dit168group9
+  - cd opt/sources
   - mkdir build
   - cd build
-  - cmake ../libcluon
+  - cmake ..
   - make
-  - make test
-  - make install
 after_success:
     # Creating report
   - cd ${TRAVIS_BUILD_DIR}
