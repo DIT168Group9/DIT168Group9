@@ -7,12 +7,8 @@ compiler:
 before_install:
   - git clone https://github.com/DIT168Group9/DIT168Group9.git
   - docker pull dit168group9/dit168group9:cargroup9
-  - docker run --rm -ti --net=host dit168group9/dit168group9:cargroup9 bash
 script:
-  - docker exec dit168gorup9 mkdir build
-  - docker exec dit168gorup9 cd build
-  - docker exec dit168gorup9 cmake ..
-  - docker exec dit168gorup9 make
+  - docker run --rm -ti --net=host dit168group9/dit168group9:cargroup9 "mkdir build; cd build; cmake ..; make;"
 after_success:
     # Creating report
   - cd ${TRAVIS_BUILD_DIR}
