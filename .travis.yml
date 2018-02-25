@@ -5,14 +5,14 @@ language: cpp
 compiler:
 - g++
 before_install:
+  - git clone https://github.com/DIT168Group9/DIT168Group9.git
   - docker pull dit168group9/dit168group9:cargroup9
-script:
   - docker run --rm -ti --net=host dit168group9/dit168group9:cargroup9
-  - cd opt/sources
-  - mkdir build
-  - cd build
-  - cmake ..
-  - make
+script:
+  - docker exec dit168gorup9 mkdir build
+  - docker exec dit168gorup9 cd build
+  - docker exec dit168gorup9 cmake ..
+  - docker exec dit168gorup9 make
 after_success:
     # Creating report
   - cd ${TRAVIS_BUILD_DIR}
