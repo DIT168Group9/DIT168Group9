@@ -7,7 +7,7 @@ compiler:
 before_install:
   - git clone https://github.com/DIT168Group9/DIT168Group9.git
   - docker pull dit168group9/dit168group9:cargroup9
-  - docker run --rm -ti --net=host dit168group9/dit168group9:cargroup9
+  - docker run --rm -ti --net=host dit168group9/dit168group9:cargroup9 bash
 script:
   - docker exec dit168gorup9 mkdir build
   - docker exec dit168gorup9 cd build
