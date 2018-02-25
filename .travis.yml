@@ -6,6 +6,7 @@ compiler:
 - g++
 before_install:
   - docker pull dit168group9/dit168group9:cargroup9
+script:
   - docker run --rm -ti --net=host dit168group9/dit168group9:cargroup9
   - cd opt/sources
   - mkdir build
