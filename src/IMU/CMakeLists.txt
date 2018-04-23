@@ -17,5 +17,5 @@ add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/Messages.cpp
 
 include_directories(SYSTEM ${CMAKE_BINARY_DIR})
 
-add_executable(${PROJECT_NAME} device-imu.cpp ${CMAKE_BINARY_DIR}/Messages.cpp device-imu.cpp includes/device-imu.hpp includes/device-imu.hpp)
+add_executable(${PROJECT_NAME} Pololualtimu10device.cpp ${CMAKE_BINARY_DIR}/Messages.cpp Pololualtimu10device.cpp includes/Pololualtimu10device.hpp includes/Pololualtimu10device.hpp)
 target_link_libraries(${PROJECT_NAME} ${CLUON_LIBRARIES})
