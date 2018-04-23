@@ -1,5 +1,7 @@
 #include "V2VService.hpp"
 
+std::shared_ptr<cluon::OD4Session> od4;
+
 int main(int argc, char **argv) {
     int returnValue = 0;
     auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
@@ -53,7 +55,7 @@ int main(int argc, char **argv) {
             v2vService->leaderStatus(pedalPos, steeringAngle, 0);
             return true;
         }};
-        od4.timeTrigger(FREQ, atFrequency);
+        od4->timeTrigger(FREQ, atFrequency);
     }
 }
 
@@ -163,6 +165,7 @@ void V2VService::announcePresence() {
     AnnouncePresence announcePresence;
     announcePresence.vehicleIp(_IP);
     announcePresence.groupId(_ID);
+    od4->send(announcePresence);
     broadcast->send(announcePresence);
 }
 
@@ -177,6 +180,8 @@ void V2VService::followRequest(std::string vehicleIp) {
     leaderIp = vehicleIp;
     toLeader = std::make_shared<cluon::UDPSender>(leaderIp, DEFAULT_PORT);
     FollowRequest followRequest;
+    followRequest.temporaryValue("Follow request test");
+    od4->send(followRequest);
     toLeader->send(encode(followRequest));
 }
 
@@ -187,6 +192,8 @@ void V2VService::followRequest(std::string vehicleIp) {
 void V2VService::followResponse() {
     if (followerIp.empty()) return;
     FollowResponse followResponse;
+    followResponse.temporaryValue("Follow response test");
+    od4->send(followResponse);
     toFollower->send(encode(followResponse));
 }
 
@@ -198,6 +205,8 @@ void V2VService::followResponse() {
  */
 void V2VService::stopFollow(std::string vehicleIp) {
     StopFollow stopFollow;
+    stopFollow.temporaryValue("Stop follow test");
+    od4->send(stopFollow);
     if (vehicleIp == leaderIp) {
         toLeader->send(encode(stopFollow));
         leaderIp = "";
@@ -221,6 +230,8 @@ void V2VService::stopFollow(std::string vehicleIp) {
 void V2VService::followerStatus() {
     if (leaderIp.empty()) return;
     FollowerStatus followerStatus;
+    followerStatus.temporaryValue("Follower status test");
+    od4->send(followerStatus);
     toLeader->send(encode(followerStatus));
 }
 
@@ -238,6 +249,7 @@ void V2VService::leaderStatus(float speed, float steeringAngle, uint8_t distance
     leaderStatus.speed(speed);
     leaderStatus.steeringAngle(steeringAngle);
     leaderStatus.distanceTraveled(distanceTraveled);
+    od4->send(leaderStatus);
     toFollower->send(encode(leaderStatus));
 }
 

@@ -24,12 +24,15 @@ message AnnouncePresence [id = 1001] {
 }
 
 message FollowRequest [id = 1002] {
+  string temporaryValue [id = 1];
 }
 
 message FollowResponse [id = 1003] {
+  string temporaryValue [id = 1];
 }
 
 message StopFollow [id = 1004] {
+  string temporaryValue [id = 1];
 }
 
 message LeaderStatus [id = 2001] {
@@ -40,6 +43,7 @@ message LeaderStatus [id = 2001] {
 }
 
 message FollowerStatus [id = 3001] {
+  string temporaryValue [id = 1];
 }
 
 //opendlv.body 
