@@ -7,16 +7,17 @@
 #include "cluon/OD4Session.hpp"
 #include "Messages.hpp"
 
-/** Minimum value of axes range */
-static constexpr float MIN_AXES_VALUE = -32768.0f;
-/** Maximum value of axes range */
-static constexpr float MAX_AXES_VALUE = 32767.0f;
+static constexpr float MIN_AXES_VALUE = -32768.0f;      /**< Minimum value of axes range*/
+static constexpr float MAX_AXES_VALUE = 32767.0f;       /**< Maximum value of axes range.*/
 
-/** Maximum Acceleration and Deceleration values */
-static constexpr float m_MAX_DECELERATION = (-0.25);
-static constexpr float m_MAX_ACCELERATION = 0.25;
-static constexpr float m_MAX_STEERING_ANGLE = 38.0;
+static constexpr float m_MAX_DECELERATION = (-0.25);    /**< Max Deceleration value, must be negative.*/
+static constexpr float m_MAX_ACCELERATION = 0.25;       /**< Max Acceleration value, must be positive.*/
+static constexpr float m_MAX_STEERING_ANGLE = 38.0;     /**< Max Steering Angle, must be positive.*/
 
+/**
+ * An enum
+ * Associates button numbers to defined button names.
+ */
 typedef enum {
     X = 1,
     Circle = 2,
@@ -33,6 +34,10 @@ typedef enum {
     RStick = 11
 } PS4Button;
 
+/**
+ * An enum
+ * Associates axes numbers to defined axes names.
+ */
 typedef enum {
     LStickX = 0,
     LStickY = 1,
@@ -44,6 +49,10 @@ typedef enum {
     PadY = 7
 } PS4Axis;
 
+/**
+ * A struct
+ * Contains information on events read from PS4's input file
+ */
 typedef struct {
     uint32_t timestamp;
     int16_t  data;
