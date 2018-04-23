@@ -20,6 +20,14 @@ services:
         - /dev/:/dev/
         command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-pwm-motor --cid=200 --freq=50 --id=1"
 
+    device-ultrasonic-srf08-front:
+	image: chalmersrevere/opendlv-device-ultrasonic-srf08-armhf:v0.0.6
+	network_mode: "host"
+	privileged: true
+	volumes:
+	- /dev/i2c-1:/dev/i2c-1
+	command: "/usr/bin/opendlv-device-ultrasonic-srf08 --dev=/dev/i2c-1 --bus-address=113 --cid=200 --freq=5 --id=0"
+
     GROUP9.PS4Controller:
         image: dit168group9/car:0.5
         network_mode: "host"
@@ -33,3 +41,11 @@ services:
         network_mode: "host"
         restart: always
         command: "/opt/GROUP9.V2V --cid=200 --freq=10 --ip=192.168.43.157 --id=9"
+
+    Signal-Viewer:
+	image: group9/signal-viewer:v0.8
+	network_mode: "host"
+	restart: always
+	ports:
+	- "8081:8081"
+	command: "/opt/bin/websocketd --cid=200 --staticdir=/opt/signal-viewer --port=8081 --binary=true /bin/cluon-OD4toStdout"
