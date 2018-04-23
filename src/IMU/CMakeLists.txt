@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD 14)
 find_package(libcluon REQUIRED)
 
 include_directories(SYSTEM ${CLUON_INCLUDE_DIRS})
+include_directories(includes/Eigen)
 include_directories(includes)
 
 add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/Messages.cpp
@@ -17,5 +18,5 @@ add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/Messages.cpp
 
 include_directories(SYSTEM ${CMAKE_BINARY_DIR})
 
-add_executable(${PROJECT_NAME} Pololualtimu10device.cpp ${CMAKE_BINARY_DIR}/Messages.cpp Pololualtimu10device.cpp includes/Pololualtimu10device.hpp includes/Pololualtimu10device.hpp)
+add_executable(${PROJECT_NAME} ${CMAKE_BINARY_DIR}/Messages.cpp)
 target_link_libraries(${PROJECT_NAME} ${CLUON_LIBRARIES})
