@@ -1,0 +1,35 @@
+version: '2'
+services:
+    odsupercomponent:
+        image: seresearch/2018-dit-168:v0.3.5-armhf
+        network_mode: "host"
+        restart: always
+        volumes:
+        - .:/opt/miniature.data
+        command: "/opt/od4/bin/odsupercomponent --cid=200 --verbose=1 --configuration=/opt/miniature.data/configuration"
+
+    proxy-miniature-pwm-motor:
+        image: seresearch/2018-dit-168:v0.3.5-armhf
+        depends_on:
+        - odsupercomponent
+        network_mode: "host"
+        restart: always
+        privileged: true
+        volumes:
+        - /sys/:/sys/
+        - /dev/:/dev/
+        command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-pwm-motor --cid=200 --freq=50 --id=1"
+
+    GROUP9.PS4Controller:
+        image: dit168group9/car:0.5
+        network_mode: "host"
+        restart: always
+        devices:
+        - /dev/input/js0:/dev/input/js0
+        command: "/opt/GROUP9.PS4Controller --cid=200 --freq=100 --dev=/dev/input/js0"
+
+    GROUP9.V2V:
+        image: dit168group9/car:0.5
+        network_mode: "host"
+        restart: always
+        command: "/opt/GROUP9.V2V --cid=200 --freq=10 --ip=192.168.43.157 --id=9"
