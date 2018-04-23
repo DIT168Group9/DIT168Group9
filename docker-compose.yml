@@ -33,3 +33,11 @@ services:
         network_mode: "host"
         restart: always
         command: "/opt/GROUP9.V2V --cid=200 --freq=10 --ip=192.168.43.157 --id=9"
+
+    Signal-Viewer:
+	image: group9/signal-viewer:v0.8
+	network_mode: "host"
+	restart: always
+	ports:
+	- "8081:8081"
+	command: "/opt/bin/websocketd --cid=200 --staticdir=/opt/signal-viewer --port=8081 --binary=true /bin/cluon-OD4toStdout"
