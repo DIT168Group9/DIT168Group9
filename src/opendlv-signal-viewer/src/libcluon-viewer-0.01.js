@@ -544,32 +544,63 @@ function createDashboard() {
         }
     });
 
+    // $("#kmh").kendoRadialGauge({
+    //     theme: "black",
+    //
+    //     pointer: {
+    //         value: 0,
+    //         color: "#ea7001"
+    //     },
+    //
+    //     scale: {
+    //         startAngle: -60,
+    //         endAngle: 240,
+    //
+    //         min: 0,
+    //         max: 220,
+    //
+    //         majorTicks: {
+    //             width: 1,
+    //             size: 14
+    //         },
+    //         majorUnit: 20,
+    //
+    //         minorTicks: {
+    //             size: 10
+    //         },
+    //
+    //         minorUnit: 2
+    //     }
+    // });
+
     $("#kmh").kendoRadialGauge({
         theme: "black",
 
         pointer: {
-            value: 0,
+            value: 100,
             color: "#ea7001"
         },
 
         scale: {
-            startAngle: -60,
-            endAngle: 240,
+            startAngle: -90,
+            endAngle: 270,
 
             min: 0,
-            max: 220,
+            max: 200,
 
             majorTicks: {
                 width: 1,
                 size: 14
             },
-            majorUnit: 20,
+            majorUnit: 50,
 
             minorTicks: {
                 size: 10
             },
 
-            minorUnit: 2
+            minorUnit: 2,
+
+            // visible: false
         }
     });
 
@@ -670,10 +701,10 @@ function animateDashboard() {
         ratio,
         gear = 0;
 
-    function update() {
-        $("#rpm").data("kendoRadialGauge").value(GEARS[gear] * speed + IDLE_RPM);
-        $("#kmh").data("kendoRadialGauge").value(speed);
-    }
+    // function update() {
+    //     $("#rpm").data("kendoRadialGauge").value(GEARS[gear] * speed + IDLE_RPM);
+    //     $("#kmh").data("kendoRadialGauge").value(speed);
+    // }
 
     animateInterval = setInterval(function() {
         if(speed < TOP_SPEED) {
