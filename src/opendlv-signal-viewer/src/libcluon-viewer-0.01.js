@@ -608,7 +608,7 @@ function createDashboard() {
         theme: "black",
 
         pointer: {
-            value: 0.5,
+            value: 0,
             color: "#ea7001"
         },
 
@@ -617,22 +617,22 @@ function createDashboard() {
             endAngle: 180,
 
             min: 0,
-            max: 1,
+            max: 50,
 
-            majorUnit: 0.5,
+            majorUnit: 25,
             majorTicks: {
                 width: 2,
                 size: 6
             },
 
-            minorUnit: 0.25,
+            minorUnit: 5,
             minorTicks: {
                 size: 3
             },
 
             ranges: [{
                 from: 0,
-                to: 0.1,
+                to: 10,
                 color: "#c20000"
             }],
 
