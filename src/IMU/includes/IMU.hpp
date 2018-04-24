@@ -52,12 +52,14 @@ uint8_t m_mscale = MFS_16BITS;
 // 2 for 8 Hz, 6 for 100 Hz continuous magnetometer data read
 uint8_t m_mmode = M_100HZ;
 
+std::string m_calibrationFile = "gyro_calibration.cal";
+
 /**
  * This function initializes the MPU Chip
  * @param deviceFile int16_t - value of file at specified device node
  * @param MPU9250_ADDRESS uint8_t - Bus address of IMU
  */
-void initializeMPU(int16_t deviceFile, uint8_t MPU9250_ADDRESS);
+void initializeMpu(int16_t deviceFile);
 
 /**
  * This function accesses the i2c device at the specified address
@@ -65,7 +67,7 @@ void initializeMPU(int16_t deviceFile, uint8_t MPU9250_ADDRESS);
  * @param addr uint8_t - the bus address of the i2c device
  * @return
  */
-int8_t i2cAccessDevice(int16_t deviceFile, uint8_t const addr)
+int8_t i2cAccessDevice(int16_t deviceFile, uint8_t const addr);
 
 /**
  * This functions reads the register at the specified bus address
@@ -84,6 +86,16 @@ int8_t i2cReadRegister(int16_t deviceFile, uint8_t const addr, uint8_t *data, ui
  * @return
  */
 int8_t i2cWriteRegister(std::vector<uint8_t> a_data, int16_t deviceFile);
+
+std::vector<float> calibrateMPU9250(int16_t deviceFile);
+int8_t setGyroOffset(std::vector<float> const a_offset, int16_t deviceFile);
+
+opendlv::proxy::AccelerationReading readAccelerometer(int16_t deviceFile);
+opendlv::proxy::MagneticFieldReading readMagnetometer(int16_t deviceFile);
+opendlv::proxy::GyroscopeReading readGyroscope(int16_t deviceFile);
+opendlv::proxy::AltitudeReading readAltimeter(int16_t deviceFile);
+opendlv::proxy::TemperatureReading readThermometer(int16_t deviceFile);
+
 
 namespace MPU9250 {
     enum RegAddr {

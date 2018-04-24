@@ -1,15 +1,15 @@
 //
-// Created by Firsou on 23-Apr-18.
+// Created by Firas Cheaib on 23-Apr-18.
 // Adapted from openKorp's IMU implementation
 //
 
 #include <iostream>
-#include "IMU.hpp"
 #include <linux/i2c-dev.h>
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <math.h>
+#include <cmath>
+#include "IMU.hpp"
 
 int main(int argc, char** argv) {
     int returnValue = 0;
@@ -24,7 +24,8 @@ int main(int argc, char** argv) {
         std::cerr << "Example: " << argv[0] << " --dev=/dev/i2c-2 --freq=100 --cid=200 " <<
                                                     "--bus=118" << std::endl;
         returnValue = 1;
-    } else {
+    }
+    else {
         const std::string DEV = commandlineArguments["dev"];
         const uint16_t CID = (uint16_t) std::stoi(commandlineArguments["cid"]);
         const float FREQ = std::stof(commandlineArguments["cid"]);
@@ -37,35 +38,50 @@ int main(int argc, char** argv) {
             return 1;
         }
 
-        int8_t status = ioctl(deviceFile, I2C_SLAVE, address);
-        if (status < 0) {
-            std::cerr << "Could not acquire bus access for device " << DEV << "." << std::endl;
-            return 1;
-        }
-
-        uint8_t parseFirmwareBuffer[1];
-        parseFirmwareBuffer[0] = 0x00;
-        status = write(deviceFile, parseFirmwareBuffer, 1);
-        if (status != 1) {
-            std::cerr << "Could not write firmware request to device on " << DEV << "." << std::endl;
-            return 1;
-        }
-
-        uint8_t firmwareBuffer[1];
-        status = read(deviceFile, firmwareBuffer, 1);
-        if (status != 1) {
-            std::cerr << "Could not read firmware from device on " << DEV << "." << std::endl;
-            return 1;
-        }
-
-        std::cout << "Connected with the MPU9250 device on " << DEV << ". Reported firmware version '"
-                  << static_cast<int32_t>(firmwareBuffer[0]) << "'." << std::endl;
-
+        initializeMpu(deviceFile);
+        setGyroOffset(calibrateMPU9250(deviceFile), deviceFile);
 
         cluon::OD4Session od4{CID};
 
+        auto atFrequency{[&deviceFile, &VERBOSE, &od4]() -> bool {
+            opendlv::proxy::GyroscopeReading gyroscopeReading = readGyroscope(deviceFile);
+            od4.send(gyroscopeReading);
 
+            opendlv::proxy::AccelerationReading accelerometerReading = readAccelerometer(deviceFile);
+            od4.send(accelerometerReading);
+
+            opendlv::proxy::MagneticFieldReading magnetometerReading = readMagnetometer(deviceFile);
+            od4.send(magnetometerReading);
+
+            opendlv::proxy::AltitudeReading altimeterReading = readAltimeter(deviceFile);
+            od4.send(altimeterReading);
+
+            opendlv::proxy::TemperatureReading thermometerReading = readThermometer(deviceFile);
+            od4.send(thermometerReading);
+
+            if (VERBOSE) {
+                std::cout << "[OD4] Sending IMU data: " << std::endl
+                          << "Gyroscope -" <<
+                                    " X: " << gyroscopeReading.GyroscopeReadingX() <<
+                                    " Y: " << gyroscopeReading.GyroscopeReadingY() <<
+                                    " Z: " << gyroscopeReading.GyroscopeReadingZ() << std::endl
+                          << "Accelerometer -" <<
+                                    " X: " << accelerometerReading.accelerationX() <<
+                                    " Y: " << accelerometerReading.accelerationY() <<
+                                    " Z: " << accelerometerReading.accelerationZ() << std::endl
+                          << "Magnetometer-" <<
+                                    " X: " << magnetometerReading.magneticFieldX() <<
+                                    " Y: " << magnetometerReading.magneticFieldY() <<
+                                    " Z: " << magnetometerReading.magneticFieldZ() << std::endl
+                          << "Altimeter -" <<
+                                    " Altitude: " << altimeterReading.altitude() << std::endl
+                          << "Thermometer -" <<
+                                    " Temperature: "<< thermometerReading.temperature() << std::endl;
+            }
+            }};
+        od4.timeTrigger(FREQ, atFrequency);
     }
+    return 0;
 }
 
 int8_t i2cAccessDevice(int16_t deviceFile, uint8_t const addr) {
@@ -187,6 +203,103 @@ void initializeMpu(int16_t deviceFile) {
     usleep(100000);
 }
 
+std::vector<float> calibrateMPU9250(int16_t deviceFile) {
+
+    std::cout << "[MPU9250] Starting calibration...\n";
+    uint8_t rawData[12];
+
+    i2cAccessDevice(deviceFile, MPU9250_ADDRESS);
+
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::PWR_MGMT_1, 0x80}, deviceFile);
+    usleep(100000);
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::PWR_MGMT_1, 0x01}, deviceFile);
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::PWR_MGMT_2, 0x00}, deviceFile);
+    usleep(200000);
+
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::INT_ENABLE, 0x00}, deviceFile);
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::FIFO_EN, 0x00}, deviceFile);
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::PWR_MGMT_1, 0x00}, deviceFile);
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::I2C_MST_CTRL, 0x00}, deviceFile);
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::USER_CTRL, 0x00}, deviceFile);
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::USER_CTRL, 0x0C}, deviceFile);
+    usleep(15000);
+
+
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::CONFIG, 0x01}, deviceFile);
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::SMPLRT_DIV, 0x00}, deviceFile);
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::GYRO_CONFIG, 0x00}, deviceFile);
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::ACCEL_CONFIG, 0x00}, deviceFile);
+
+    float const gyroSens  = (250.0f / 32768.0f * static_cast<float>(M_PI) / 180.0f);
+
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::USER_CTRL, 0x40}, deviceFile);
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::FIFO_EN, 0x78}, deviceFile);
+    usleep(40000);
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::FIFO_EN, 0x00}, deviceFile);
+
+    i2cReadRegister(deviceFile, MPU9250::FIFO_COUNTH, &rawData[0], 2);
+
+    uint16_t fifoCount = ((uint16_t) rawData[0] <<  8) | rawData[1];
+    std::cout << "[MPU9250] FIFO Count: " << fifoCount << std::endl;
+    uint16_t packetCount = fifoCount/12;
+    std::cout << "[MPU9250] Packet Count: " << packetCount << std::endl;
+
+    // int32_t accelBias[3] = {0,0,0};
+    // std::vector<float> gyroBias;
+    int32_t gyroBias[3] = {0,0,0};
+    for (uint8_t i = 0; i < packetCount; i++) {
+        int16_t gyroSampl[3] = {0,0,0};
+        i2cReadRegister(deviceFile, MPU9250::FIFO_R_W, &rawData[0], 12);
+
+        gyroSampl[0]  = (int16_t) (((int16_t)rawData[6] << 8) | rawData[7]  );
+        gyroSampl[1]  = (int16_t) (((int16_t)rawData[8] << 8) | rawData[9]  );
+        gyroSampl[2]  = (int16_t) (((int16_t)rawData[10] << 8) | rawData[11]);
+
+        gyroBias[0] += (int32_t) gyroSampl[0];
+        gyroBias[1] += (int32_t) gyroSampl[1];
+        gyroBias[2] += (int32_t) gyroSampl[2];
+        // std::cout << "[MPU9250] Gyro bias: " << gyroBias[0]/gyroSens << ", " << gyroBias[1]/gyroSens << ", " << gyroBias[2]/gyroSens << std::endl;
+    }
+
+    gyroBias[0] /= packetCount;
+    gyroBias[1] /= packetCount;
+    gyroBias[2] /= packetCount;
+
+
+    // std::cout << "[MPU9250] Gyro bias: " << gyroBias.at(0) << ", " << gyroBias.at(1) << ", " << gyroBias.at(2) << std::endl;
+    std::vector<float> gyroBiasVec;
+    gyroBiasVec.push_back(gyroBias[0] * gyroSens);
+    gyroBiasVec.push_back(gyroBias[1] * gyroSens);
+    gyroBiasVec.push_back(gyroBias[2] * gyroSens);
+    std::cout << "[MPU9250] Gyro bias: " << gyroBiasVec.at(0) << ", " << gyroBiasVec.at(1) << ", " << gyroBiasVec.at(2) << std::endl;
+    return gyroBiasVec;
+}
+
+int8_t setGyroOffset(std::vector<float> const a_offset, int16_t deviceFile) {
+    if (a_offset.size() != 3) {
+        std::cerr << "[MPU9250] setGyroOffset received a vector of a length not supported." << std::endl;
+        return -1;
+    }
+
+    float const gyroSens  = (250.0f / 32768.0f * static_cast<float>(M_PI) / 180.0f);
+
+    int32_t xOffset = std::lround(a_offset.at(0) / gyroSens);
+    int32_t yOffset = std::lround(a_offset.at(1) / gyroSens);
+    int32_t zOffset = std::lround(a_offset.at(2) / gyroSens);
+
+    uint8_t xh = (-xOffset/4 >> 8);
+    uint8_t xl = ((-xOffset/4) & 0xFF);
+    uint8_t yh = (-yOffset/4 >> 8);
+    uint8_t yl = ((-yOffset/4) & 0xFF);
+    uint8_t zh = (-zOffset/4 >> 8);
+    uint8_t zl = ((-zOffset/4) & 0xFF);
+
+    i2cAccessDevice(deviceFile, MPU9250_ADDRESS);
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::XG_OFFSET_H, xh, xl, yh, yl, zh, zl}, deviceFile);
+
+    return 0;
+}
+
 opendlv::proxy::AccelerationReading readAccelerometer(int16_t deviceFile) {
     uint8_t addr = MPU9250_ADDRESS;
     i2cAccessDevice(deviceFile, addr);
@@ -218,14 +331,13 @@ opendlv::proxy::MagneticFieldReading readMagnetometer(int16_t deviceFile) {
     int16_t y = (((int16_t)rawData[2] << 8) | rawData[3] );
     int16_t z = (((int16_t)rawData[4] << 8) | rawData[5] );
 
-    opendlv::proxy::MagneticFieldReading magnetometerReading;
-    magnetometerReading.magneticFieldX(x);
-    magnetometerReading.magneticFieldY(y);
-    magnetometerReading.magneticFieldZ(z);
+    opendlv::proxy::MagneticFieldReading magneticFieldReading;
+    magneticFieldReading.magneticFieldX(x);
+    magneticFieldReading.magneticFieldY(y);
+    magneticFieldReading.magneticFieldZ(z);
 
-    return magnetometerReading;
+    return magneticFieldReading;
 }
-
 
 opendlv::proxy::GyroscopeReading readGyroscope(int16_t deviceFile) {
     uint8_t addr = MPU9250_ADDRESS;
@@ -240,7 +352,7 @@ opendlv::proxy::GyroscopeReading readGyroscope(int16_t deviceFile) {
     int16_t y = (((int16_t)rawData[2] << 8) | rawData[3] );
     int16_t z = (((int16_t)rawData[4] << 8) | rawData[5] );
 
-    opendlv::proxy::GyroscopeReading gyroscopeReading(x*c,y*c,z*c);
+    opendlv::proxy::GyroscopeReading gyroscopeReading;
     // opendlv::proxy::GyroscopeReading gyroscopeReading(0,0,0);
     return gyroscopeReading;
 }

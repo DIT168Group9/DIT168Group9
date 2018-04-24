@@ -63,6 +63,6 @@ private:
     static T decode(std::string data);
 };
 
-#endif GROUP9_V2VSERVICE_HPP
+#endif
 
 
