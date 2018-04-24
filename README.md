@@ -32,7 +32,7 @@ We provide a sample docker-compose.yml for you to use.
 ## Table of Contents
 * [Current Features](#current-features)
 * [Dependencies](#dependencies)
-*[Documentation](#documentation)
+* [Documentation](#documentation)
 
 ## Current Features
 * Control the car with a PS4 Controller over Bluetooth (or a USB Connection)
