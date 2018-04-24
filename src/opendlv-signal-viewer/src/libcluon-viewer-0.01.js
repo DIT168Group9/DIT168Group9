@@ -375,7 +375,7 @@ function updateTableData(sourceKey, data) {
         var fieldName;
         var fieldValue;
 
-        if(type === '1001'){
+        if(data.dataType === '1001'){
 
             if(fieldName === "vehicleIp"){
                 var vehicleIp = d.AnnouncePresence.vehicleIp;
@@ -387,22 +387,22 @@ function updateTableData(sourceKey, data) {
             }
         }
 
-        else if(type === '1002'){
+        else if(data.dataType === '1002'){
             var FollowRequest = d.FollowRequest.temporaryValue;
             fieldValue = window.atob(FollowRequest);
         }
 
-        else if(type === '1003'){
+        else if(data.dataType === '1003'){
             var FollowResponse = d.FollowResponse.temporaryValue;
             fieldValue = window.atob(FollowResponse);
         }
 
-        else if(type === '1004'){
+        else if(data.dataType === '1004'){
             var StopFollow = d.StopFollow.temporaryValue;
             fieldValue = window.atob(StopFollow);
         }
 
-        else if(type === '2001'){
+        else if(data.dataType === '2001'){
             if(fieldName === "timestamp"){
                 fieldValue = d.LeaderStatus.timestamp;
             }
@@ -417,7 +417,7 @@ function updateTableData(sourceKey, data) {
             }
         }
 
-        else if(type === '3001'){
+        else if(data.dataType === '3001'){
             var FollowerStatus = d.FollowerStatus.temporaryValue;
             fieldValue = window.atob(FollowerStatus);
         }
