@@ -44,6 +44,6 @@ We provide a sample docker-compose.yml for you to use.
 * [libcluon](https://github.com/chrberger/libcluon) [![License: GPLv3](https://img.shields.io/badge/license-GPL--3-blue.svg
 )](https://www.gnu.org/licenses/gpl-3.0.txt)
 
-##Documentation
+## Documentation
 * You can find our documentation in both TeX and HTML format in the /docs directory of this repository
 * You can also view it directly [here](https://dit168group9.github.io/DIT168Group9/)
