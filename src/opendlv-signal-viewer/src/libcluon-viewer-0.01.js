@@ -515,7 +515,7 @@ function createDashboard() {
             endAngle: 120,
 
             min: 0,
-            max: 6,
+            max: 10,
 
             majorUnit: 1,
             majorTicks: {
@@ -530,11 +530,11 @@ function createDashboard() {
 
             ranges: [{
                 from: 4,
-                to: 5,
+                to: 7,
                 color: "#ff7a00"
             }, {
-                from: 5,
-                to: 6,
+                from: 7,
+                to: 10,
                 color: "#c20000"
             }],
 
