@@ -24,7 +24,8 @@ int main(int argc, char **argv) {
         float pedalPos = 0, steeringAngle = 0;
         uint16_t button = 0;
 
-        cluon::OD4Session od4(CID,
+        od4 =
+        std::make_shared<cluon::OD4Session>(CID,
         [&v2vService, &pedalPos, &steeringAngle, &button](cluon::data::Envelope &&envelope) noexcept {
             if (envelope.dataType() == 1041) {
                 opendlv::proxy::PedalPositionReading ppr =
