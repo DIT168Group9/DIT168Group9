@@ -6,7 +6,51 @@
 #define GROUP9_IMU_HPP
 
 #include <vector>
+#include "Messages.hpp"
 #include "cluon/OD4Session.hpp"
+
+float const ACCEL_SENSITIVITY = 16384; // = 16384 LSB/g
+float const GYRO_SENSITIVITY  = 131;   // = 131 LSB/degrees/sec
+
+uint8_t const MPU9250_ADDRESS = 0x68;   /**< Bus address of Gyrometer     */
+uint8_t const AK8963_ADDRESS = 0x76;    /**< Bus address of Accelerometer */
+
+enum A_SCALE {
+    AFS_2G = 0,
+    AFS_4G,
+    AFS_8G,
+    AFS_16G
+};
+
+enum G_SCALE {
+    GFS_250DPS = 0,
+    GFS_500DPS,
+    GFS_1000DPS,
+    GFS_2000DPS
+};
+
+enum M_SCALE {
+    MFS_14BITS = 0, // 0.6 mG per LSB
+    MFS_16BITS      // 0.15 mG per LSB
+};
+
+enum M_MODE {
+    M_8HZ = 0x02,  // 8 Hz update
+    M_100HZ = 0x06 // 100 Hz continuous magnetometer
+};
+
+void setAscale(A_SCALE);
+float getAscale();
+void setGscale(G_SCALE);
+float getGscale(bool);
+
+// Specify sensor full scale
+uint8_t m_gscale = GFS_250DPS;
+uint8_t m_ascale = AFS_2G;
+// Choose either 14-bit or 16-bit magnetometer resolution
+uint8_t m_mscale = MFS_16BITS;
+// 2 for 8 Hz, 6 for 100 Hz continuous magnetometer data read
+uint8_t m_mmode = M_100HZ;
 
 /**
  * This function initializes the MPU Chip
