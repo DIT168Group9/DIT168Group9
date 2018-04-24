@@ -18,5 +18,5 @@ add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/Messages.cpp
 
 include_directories(SYSTEM ${CMAKE_BINARY_DIR})
 
-add_executable(${PROJECT_NAME} ${CMAKE_BINARY_DIR}/Messages.cpp)
+add_executable(${PROJECT_NAME} IMU.cpp ${CMAKE_BINARY_DIR}/Messages.cpp includes/IMU.hpp)
 target_link_libraries(${PROJECT_NAME} ${CLUON_LIBRARIES})
