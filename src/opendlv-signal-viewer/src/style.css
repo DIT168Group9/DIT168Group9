@@ -1,4 +1,8 @@
 
+/*body.background{*/
+    /*color: #0b2e13;*/
+/*}*/
+
 span.dots {
   color: gray;
 }
@@ -47,4 +51,43 @@ td.field-plot {
 }
 
 td.field-value {
+}
+
+#gauge-container {
+  margin: 0 auto;
+  overflow: hidden;
+  width: 614px;
+  height: 324px;
+
+  background: transparent url("../car-dashboard.png") no-repeat 50% 50%;
+}
+
+.k-gauge {
+  float: left;
+}
+
+#rpm {
+  width: 142px;
+  height: 147px;
+  margin: 85px 0 0 38px;
+}
+
+#kmh {
+  width: 216px;
+  height: 216px;
+  margin: 57px 0 0 20px;
+}
+
+#fuel {
+  width: 77px;
+  height: 84px;
+
+  margin: 90px 0 0 68px;
+}
+
+#water-temprature {
+  width: 84px;
+  height: 80px;
+
+  margin: -7px 0 0 62px;
 }
