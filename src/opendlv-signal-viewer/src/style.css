@@ -1,53 +1,53 @@
 
 /*body.background{*/
-    /*color: #0b2e13;*/
+/*color: #0b2e13;*/
 /*}*/
 
 span.dots {
-  color: gray;
+    color: gray;
 }
 
 table#dataView {
-  width: 80%;
+    width: 80%;
 }
 
 table.dataFields {
-  padding-left: 5em;
+    padding-left: 5em;
 }
 
 tr.hidden {
-  visibility: collapse;
+    visibility: collapse;
 }
 
 tr.warning {
-  background-color: #ffc890;
+    background-color: #ffc890;
 }
 
 th.signal-type {
-  min-width: 50px;
+    min-width: 50px;
 }
 
 th.signal-sender {
-  min-width: 50px;
+    min-width: 50px;
 }
 
 th.signal-name {
 }
 
 th.signal-frequency {
-  min-width: 50px;
+    min-width: 50px;
 }
 
 th.signal-timestamp {
-  min-width: 100px;
+    min-width: 100px;
 }
 
 td.field-name {
-  min-width: 200px;
+    min-width: 200px;
 }
 
 td.field-plot {
-  min-width: 300px;
+    min-width: 300px;
 }
 
 td.field-value {
@@ -58,40 +58,40 @@ td.field-value {
 */
 
 #gauge-container {
-  margin: 0 auto;
-  overflow: hidden;
-  width: 614px;
-  height: 324px;
+    margin: 0 auto;
+    overflow: hidden;
+    width: 614px;
+    height: 324px;
 
-  background: transparent url("../car-dashboard.png") no-repeat 50% 50%;
+    background: transparent url("../car-dashboard.png") no-repeat 50% 50%;
 }
 
 .k-gauge {
-  float: left;
+    float: left;
 }
 
 #rpm {
-  width: 142px;
-  height: 147px;
-  margin: 85px 0 0 38px;
+    width: 142px;
+    height: 147px;
+    margin: 85px 0 0 38px;
 }
 
 #kmh {
-  width: 216px;
-  height: 216px;
-  margin: 57px 0 0 20px;
+    width: 216px;
+    height: 216px;
+    margin: 57px 0 0 20px;
 }
 
 #fuel {
-  width: 77px;
-  height: 84px;
+    width: 77px;
+    height: 84px;
 
-  margin: 90px 0 0 68px;
+    margin: 90px 0 0 68px;
 }
 
 #water-temprature {
-  width: 84px;
-  height: 80px;
+    width: 84px;
+    height: 80px;
 
-  margin: -7px 0 0 62px;
+    margin: -7px 0 0 62px;
 }
