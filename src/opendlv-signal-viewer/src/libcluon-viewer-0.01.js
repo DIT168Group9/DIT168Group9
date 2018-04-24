@@ -348,6 +348,7 @@ function onInterval() {
         const newestData = dataList[dataList.length - 1];
         updateTableData(sourceKey, newestData);
         updateFieldCharts(sourceKey, dataList);
+
     });
 }
 
@@ -711,7 +712,7 @@ function animateDashboard() {
         // $("#rpm").data("kendoRadialGauge").value(GEARS[gear] * speed + IDLE_RPM);
         console.log("Hej");
         $("#rpm").data("kendoRadialGauge").value(GEAR);
-        $("#kmh").data("kendoRadialGauge").value(speed);
+        //$("#kmh").data("kendoRadialGauge").value(speed);
     }
 
     animateInterval = setInterval(function() {
