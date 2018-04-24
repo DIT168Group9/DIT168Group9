@@ -146,7 +146,7 @@ function toTime(t) {
 }
 
 function cutLongField(type, value) {
-    if (type == 'string' && value.length > 20) {
+    if (type === 'string' && value.length > 20) {
         value = value.substr(0, 20) + ' <span class="dots">[...]</span>';
     }
     return value;
@@ -154,7 +154,7 @@ function cutLongField(type, value) {
 
 function addTableData(sourceKey, data) {
 
-    if($('tr#' + sourceKey).length == 0) {
+    if($('tr#' + sourceKey).length === 0) {
 
         const name = data.payload.name;
         const type = data.dataType;
@@ -687,24 +687,32 @@ function animateDashboard() {
         return;
     }
 
-    var GEARS = [0.14, 0.06, 0.035, 0.027, 0.019],
-        IDLE_RPM = 0.9,
-        CHANGE_RPM = 4,
-        CHANGE_DELAY = 400,
-        DECAY_RATE = 0.0017,
-        TOP_SPEED = 210,
-        ACCELERATION = 0.6,
-        INTERVAL = 50;
+    if(d.dataType === '1041'){
+        var GEAR = d.PedalPositionReading.position;
+    }
 
-    var speed = 0,
-        skip = 0,
-        ratio,
-        gear = 0;
+    // var GEARS = [0.14, 0.06, 0.035, 0.027, 0.019],
+    //     IDLE_RPM = 0.9,
+    //     CHANGE_RPM = 4,
+    //     CHANGE_DELAY = 400,
+    //     DECAY_RATE = 0.0017,
+    //     TOP_SPEED = 210,
+    //     ACCELERATION = 0.6,
+    //     INTERVAL = 50;
+    //
+    // var speed = 0,
+    //     skip = 0,
+    //     ratio,
+    //     gear = 0;
 
-    // function update() {
-    //     $("#rpm").data("kendoRadialGauge").value(GEARS[gear] * speed + IDLE_RPM);
-    //     $("#kmh").data("kendoRadialGauge").value(speed);
-    // }
+
+
+    function update() {
+        // $("#rpm").data("kendoRadialGauge").value(GEARS[gear] * speed + IDLE_RPM);
+        console.log("Hej");
+        $("#rpm").data("kendoRadialGauge").value(GEAR);
+        $("#kmh").data("kendoRadialGauge").value(speed);
+    }
 
     animateInterval = setInterval(function() {
         if(speed < TOP_SPEED) {
