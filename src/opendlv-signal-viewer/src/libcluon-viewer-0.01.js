@@ -688,9 +688,10 @@ function animateDashboard() {
         return;
     }
 
-    if(d.dataType === '1041'){
-        var GEAR = d.PedalPositionReading.position;
-    }
+    // if(d.dataType === '1041'){
+    //     var GEAR = d.PedalPositionReading.position;
+    //     // var speed = 100;
+    // }
 
     // var GEARS = [0.14, 0.06, 0.035, 0.027, 0.019],
     //     IDLE_RPM = 0.9,
@@ -701,9 +702,8 @@ function animateDashboard() {
     //     ACCELERATION = 0.6,
     //     INTERVAL = 50;
     //
-    // var speed = 0,
-    //     skip = 0,
-    //     ratio,
+
+    // var skip = 0,
     //     gear = 0;
 
 
@@ -715,24 +715,24 @@ function animateDashboard() {
         //$("#kmh").data("kendoRadialGauge").value(speed);
     }
 
-    animateInterval = setInterval(function() {
-        if(speed < TOP_SPEED) {
-            if (GEARS[gear] * speed > CHANGE_RPM && gear < GEARS.length) {
-                gear++;
-                skip = CHANGE_DELAY / INTERVAL;
-                update();
-            }
-
-            if (skip-- < 0) {
-                speed += ACCELERATION - (DECAY_RATE * speed);
-                update();
-            }
-        } else {
-            skip = 100;
-            speed = 0;
-            gear = 0;
-        }
-    }, INTERVAL);
+    // animateInterval = setInterval(function() {
+    //     if(speed < TOP_SPEED) {
+    //         if (GEARS[gear] * speed > CHANGE_RPM && gear < GEARS.length) {
+    //             gear++;
+    //             skip = CHANGE_DELAY / INTERVAL;
+    //             update();
+    //         }
+    //
+    //         if (skip-- < 0) {
+    //             speed += ACCELERATION - (DECAY_RATE * speed);
+    //             update();
+    //         }
+    //     } else {
+    //         skip = 100;
+    //         speed = 0;
+    //         gear = 0;
+    //     }
+    // }, INTERVAL);
 }
 
 $(document).ready(function() {
