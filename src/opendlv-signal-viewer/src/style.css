@@ -53,6 +53,10 @@ td.field-plot {
 td.field-value {
 }
 
+/*
+* Kendo Car Dashboard Style
+*/
+
 #gauge-container {
   margin: 0 auto;
   overflow: hidden;

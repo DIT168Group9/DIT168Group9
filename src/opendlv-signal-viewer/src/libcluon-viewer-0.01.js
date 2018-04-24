@@ -497,6 +497,10 @@ function updateFieldCharts(sourceKey, dataList) {
     }
 }
 
+/*
+* Kendo Car Dashboard logic
+ */
+
 function createDashboard() {
     $("#rpm").kendoRadialGauge({
         theme: "black",
