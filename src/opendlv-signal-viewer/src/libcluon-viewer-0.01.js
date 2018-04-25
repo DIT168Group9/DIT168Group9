@@ -34,7 +34,7 @@ if ("WebSocket" in window) {
 
             var sample = (data.opendlv_proxy_PedalPositionReading.position) * 10;
             console.log(sample);
-            animateDashboard();
+            animateDashboard(data);
 
             // found message. Now, extract values from the fields and do something with the data...
             // var number = data.example_Ping.number * 1.1;
@@ -208,7 +208,7 @@ function createDashboard() {
 }
 
 var gear;
-function animateDashboard() {
+function animateDashboard(data) {
 
     gear = (data.opendlv_proxy_PedalPositionReading.position) * 10;
         $("#rpm").data("kendoRadialGauge").value(gear);
