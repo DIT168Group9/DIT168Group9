@@ -32,7 +32,7 @@ if ("WebSocket" in window) {
         // Check for message ID 1041...
         if (data.dataType === 1041) {
 
-            var sample = (data.opendlv.proxy.PedalPositionReading.position) * 10;
+            var sample = (data.opendlv_proxy_PedalPositionReading.position) * 10;
             console.log(sample);
             animateDashboard();
 
@@ -210,7 +210,7 @@ function createDashboard() {
 var gear;
 function animateDashboard() {
 
-    gear = (data.opendlv.proxy.PedalPositionReading.position) * 10;
+    gear = (data.opendlv_proxy_PedalPositionReading.position) * 10;
         $("#rpm").data("kendoRadialGauge").value(gear);
         // $("#kmh").data("kendoRadialGauge").value(speed);
 
