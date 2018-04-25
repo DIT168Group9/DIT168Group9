@@ -702,6 +702,7 @@ function animateDashboard() {
 
     if(d.dataType === '1041'){
         gear = (d.PedalPositionReading.position) * 10;
+        console.log(gear);
         // var speed = 100;
     }
         $("#rpm").data("kendoRadialGauge").value(gear);
