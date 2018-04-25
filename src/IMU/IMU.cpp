@@ -79,7 +79,8 @@ int main(int argc, char** argv) {
                           << "Thermometer -" <<
                                     " Temperature: "<< thermometerReading.temperature() << std::endl;
             }
-            }};
+            return true;
+        }};
         od4.timeTrigger(FREQ, atFrequency);
     }
     return 0;
