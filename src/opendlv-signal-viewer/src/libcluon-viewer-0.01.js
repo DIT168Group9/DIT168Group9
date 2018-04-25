@@ -29,17 +29,25 @@ if ("WebSocket" in window) {
         var data = JSON.parse(__libcluon.decodeEnvelopeToJSON(evt.data));
         console.log(data);
 
-        // Check for message ID 1041...
+            // animateDashboard(data);
 
-
-            animateDashboard(data);
-
-            // found message. Now, extract values from the fields and do something with the data...
-            // var number = data.example_Ping.number * 1.1;
-            // var textInBase64 = data.example_Ping.text;
-            // var textDecodedFromBase64 = window.atob(textInBase64);
-
-
+        if (data.dataType === 1041) {
+            pedalPosition = (data.opendlv_proxy_PedalPositionReading.position) * 100
+            if(pedalPosition < 0){
+                pedalPosition = pedalPosition * -1;
+                $("#rpm").data("kendoRadialGauge").value(pedalPosition);
+            }else{
+                $("#rpm").data("kendoRadialGauge").value(pedalPosition);
+            }
+        }
+        else if(data.dataType === 1045){
+            groundSteering = data.opendlv_proxy_GroundSteeringReading.groundSteering;
+            $("#kmh").data("kendoRadialGauge").value(groundSteering);
+        }
+        else if(data.dataType === 1039){
+            distanceReading = data.opendlv_proxy_DistanceReading.distance;
+            $("#fuel").data("kendoRadialGauge").value(distanceReading);
+        }
 
     };
     ws.onclose = function() {
@@ -208,31 +216,15 @@ function createDashboard() {
 var pedalPosition;
 var groundSteering;
 var distanceReading;
-function animateDashboard(data) {
-
-    if (data.dataType === 1041) {
-        pedalPosition = (data.opendlv_proxy_PedalPositionReading.position) * 100
-        if(pedalPosition < 0){
-            pedalPosition = pedalPosition * -1;
-            $("#rpm").data("kendoRadialGauge").value(pedalPosition);
-        }else{
-            $("#rpm").data("kendoRadialGauge").value(pedalPosition);
-        }
-    }
-    else if(data.dataType === 1045){
-        groundSteering = data.opendlv_proxy_GroundSteeringReading.groundSteering;
-        $("#kmh").data("kendoRadialGauge").value(groundSteering);
-    }
-    else if(data.dataType === 1039){
-        distanceReading = data.opendlv_proxy_DistanceReading.distance;
-        $("#fuel").data("kendoRadialGauge").value(distanceReading);
-    }
-}
+// function animateDashboard(data) {
+//
+//
+// }
 
 $(document).ready(function() {
 
     createDashboard();
-    animateDashboard();
+    // animateDashboard(data);
 
     $(document).bind("kendo:skinChange", function(e) {
         createDashboard();
