@@ -701,7 +701,7 @@ var gear;
 function animateDashboard() {
 
     if(d.dataType === '1041'){
-        gear = (d.PedalPositionReading.position) * 10;
+        gear = (d.opendlv.proxy.PedalPositionReading.position) * 10;
         console.log(gear);
         // var speed = 100;
     }
