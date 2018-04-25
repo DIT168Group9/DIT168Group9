@@ -52,17 +52,15 @@ uint8_t m_mscale = MFS_16BITS;
 // 2 for 8 Hz, 6 for 100 Hz continuous magnetometer data read
 uint8_t m_mmode = M_100HZ;
 
-std::string m_calibrationFile = "gyro_calibration.cal";
-
 /**
- * This function initializes the MPU Chip
+ * This function initializes the MPU Chip.
  * @param deviceFile int16_t - value of file at specified device node
  * @param MPU9250_ADDRESS uint8_t - Bus address of IMU
  */
 void initializeMpu(int16_t deviceFile);
 
 /**
- * This function accesses the i2c device at the specified address
+ * This function accesses the i2c device at the specified address.
  * @param deviceFile int16_t - value of file at specified device node
  * @param addr uint8_t - the bus address of the i2c device
  * @return
@@ -70,7 +68,7 @@ void initializeMpu(int16_t deviceFile);
 int8_t i2cAccessDevice(int16_t deviceFile, uint8_t const addr);
 
 /**
- * This functions reads the register at the specified bus address
+ * This functions reads the register at the specified bus address.
  * @param deviceFile int16_t value of file at specified device node
  * @param addr uint8_t - the bus address of the i2c device
  * @param data
@@ -80,23 +78,62 @@ int8_t i2cAccessDevice(int16_t deviceFile, uint8_t const addr);
 int8_t i2cReadRegister(int16_t deviceFile, uint8_t const addr, uint8_t *data, uint8_t const length);
 
 /**
- * This function writes to the register at the specified bus address
+ * This function writes to the register at the specified bus address.
  * @param a_data
  * @param deviceFile int16_t - value of file at specified device node
- * @return
+ * @return int8_t
  */
 int8_t i2cWriteRegister(std::vector<uint8_t> a_data, int16_t deviceFile);
 
+/**
+ * This function calibrates the MPU Chip.
+ * This should run everytime the program runs, unless a calibration file is present.
+ * @param deviceFile int16_t - value of file at specified device node
+ * @return vector<float>
+ */
 std::vector<float> calibrateMPU9250(int16_t deviceFile);
+
 int8_t setGyroOffset(std::vector<float> const a_offset, int16_t deviceFile);
 
+/**
+ * This function reads the Accelerometer values.
+ * @param deviceFile
+ * @return OD4Envelope
+ */
 opendlv::proxy::AccelerationReading readAccelerometer(int16_t deviceFile);
+
+/**
+ * This function reads the Magnetometer values.
+ * @param deviceFile
+ * @return OD4Envelope
+ */
 opendlv::proxy::MagneticFieldReading readMagnetometer(int16_t deviceFile);
+
+/**
+ * This function reads the Gyroscope values.
+ * @param deviceFile
+ * @return OD4Envelope
+ */
 opendlv::proxy::GyroscopeReading readGyroscope(int16_t deviceFile);
+
+/**
+ * This function reads the Altimeter values.
+ * @param deviceFile
+ * @return OD4Envelope
+ */
 opendlv::proxy::AltitudeReading readAltimeter(int16_t deviceFile);
+
+/**
+ * This function reads the Thermometer values.
+ * @param deviceFile
+ * @return OD4Envelope
+ */
 opendlv::proxy::TemperatureReading readThermometer(int16_t deviceFile);
 
 
+/**
+ * This namespace contains Memory addresses for registers
+ */
 namespace MPU9250 {
     enum RegAddr {
         //I2C bus and address definitions for Robotics Cape
