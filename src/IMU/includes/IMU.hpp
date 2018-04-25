@@ -100,11 +100,11 @@ opendlv::proxy::TemperatureReading readThermometer(int16_t deviceFile);
 namespace MPU9250 {
     enum RegAddr {
         //I2C bus and address definitions for Robotics Cape
-                IMU_ADDR = 0x68,
+        IMU_ADDR = 0x68,
         IMU_BUS = 2,
 
         // internal DMP sample rate limits
-                DMP_MAX_RATE = 200,
+        DMP_MAX_RATE = 200,
         DMP_MIN_RATE = 4,
         IMU_POLL_TIMEOUT = 300, // milliseconds
         MAX_FIFO_BUFFER = 128,
@@ -356,7 +356,7 @@ namespace MPU9250 {
         /******************************************************************
         * Magnetometer AK8963_CNTL register Settings
         ******************************************************************/
-                MAG_POWER_DN  = 0x00,  // power down magnetometer
+        MAG_POWER_DN  = 0x00,  // power down magnetometer
         MAG_SINGLE_MES  = 0x01,  // powers down after 1 measurement
         MAG_CONT_MES_1  = 0x02,  // 8hz continuous self-sampling
         MAG_CONT_MES_2  = 0x06,  // 100hz continuous self-sampling
@@ -369,12 +369,12 @@ namespace MPU9250 {
         /******************************************************************
         * Magnetometer AK8963_ST2 register definitions
         ******************************************************************/
-                MAGNETOMETER_SATURATION = 0x01<<3,
+        MAGNETOMETER_SATURATION = 0x01<<3,
 
         /******************************************************************
         * Magnetometer AK8963_ST1 register definitions
         ******************************************************************/
-                MAG_DATA_READY  = 0x01,
+        MAG_DATA_READY  = 0x01,
 
         /******************************************************************
         * Magnetometer sensitivity in micro Teslas to LSB

@@ -27,6 +27,7 @@ int main(int argc, char** argv) {
     }
     else {
         const std::string DEV = commandlineArguments["dev"];
+        std::cout << DEV << std::endl;
         const uint16_t CID = (uint16_t) std::stoi(commandlineArguments["cid"]);
         const float FREQ = std::stof(commandlineArguments["cid"]);
         const bool VERBOSE = commandlineArguments.count("verbose") != 0;
@@ -50,8 +51,8 @@ int main(int argc, char** argv) {
             opendlv::proxy::AccelerationReading accelerometerReading = readAccelerometer(deviceFile);
             od4.send(accelerometerReading);
 
-            opendlv::proxy::MagneticFieldReading magnetometerReading = readMagnetometer(deviceFile);
-            od4.send(magnetometerReading);
+            /*opendlv::proxy::MagneticFieldReading magnetometerReading = readMagnetometer(deviceFile);
+            od4.send(magnetometerReading);*/
 
             opendlv::proxy::AltitudeReading altimeterReading = readAltimeter(deviceFile);
             od4.send(altimeterReading);
@@ -69,10 +70,10 @@ int main(int argc, char** argv) {
                                     " X: " << accelerometerReading.accelerationX() <<
                                     " Y: " << accelerometerReading.accelerationY() <<
                                     " Z: " << accelerometerReading.accelerationZ() << std::endl
-                          << "Magnetometer-" <<
+                          /*<< "Magnetometer-" <<
                                     " X: " << magnetometerReading.magneticFieldX() <<
                                     " Y: " << magnetometerReading.magneticFieldY() <<
-                                    " Z: " << magnetometerReading.magneticFieldZ() << std::endl
+                                    " Z: " << magnetometerReading.magneticFieldZ() << std::endl*/
                           << "Altimeter -" <<
                                     " Altitude: " << altimeterReading.altitude() << std::endl
                           << "Thermometer -" <<
@@ -313,10 +314,9 @@ opendlv::proxy::AccelerationReading readAccelerometer(int16_t deviceFile) {
     int16_t y = (((int16_t)rawData[2] << 8) | rawData[3] );
     int16_t z = (((int16_t)rawData[4] << 8) | rawData[5] );
     opendlv::proxy::AccelerationReading accelerometerReading;
-    accelerometerReading.accelerationX(x);
-    accelerometerReading.accelerationY(y);
-    accelerometerReading.accelerationZ(z);
-    // opendlv::proxy::AccelerometerReading accelerometerReading(0,0,0);
+    accelerometerReading.accelerationX(x*c);
+    accelerometerReading.accelerationY(y*c);
+    accelerometerReading.accelerationZ(z*c);
     return accelerometerReading;
 }
 
@@ -353,7 +353,9 @@ opendlv::proxy::GyroscopeReading readGyroscope(int16_t deviceFile) {
     int16_t z = (((int16_t)rawData[4] << 8) | rawData[5] );
 
     opendlv::proxy::GyroscopeReading gyroscopeReading;
-    // opendlv::proxy::GyroscopeReading gyroscopeReading(0,0,0);
+    gyroscopeReading.GyroscopeReadingX(x*c);
+    gyroscopeReading.GyroscopeReadingY(y*c);
+    gyroscopeReading.GyroscopeReadingZ(z*c);
     return gyroscopeReading;
 }
 
