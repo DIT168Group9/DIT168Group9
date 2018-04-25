@@ -191,56 +191,56 @@ function addTableData(sourceKey, data) {
             const fieldName = field.name;
             var fieldValue;
 
-            if(type === '1001'){
-
-                if(fieldName === "vehicleIp"){
-                    var vehicleIp = d.AnnouncePresence.vehicleIp;
-                    fieldValue = window.atob(vehicleIp);
-                }
-                else if(fieldName === "groupId"){
-                    var groupId = d.AnnouncePresence.groupId;
-                    fieldValue = window.atob(groupId);
-                }
-            }
-
-            else if(type === '1002'){
-                var FollowRequest = d.FollowRequest.temporaryValue;
-                fieldValue = window.atob(FollowRequest);
-            }
-
-            else if(type === '1003'){
-                var FollowResponse = d.FollowResponse.temporaryValue;
-                fieldValue = window.atob(FollowResponse);
-            }
-
-            else if(type === '1004'){
-                var StopFollow = d.StopFollow.temporaryValue;
-                fieldValue = window.atob(StopFollow);
-            }
-
-            else if(type === '2001'){
-                if(fieldName === "timestamp"){
-                    fieldValue = d.LeaderStatus.timestamp;
-                }
-                else if(fieldName === "speed"){
-                    fieldValue = d.LeaderStatus.speed;
-                }
-                else if(fieldName === "steeringAngle"){
-                    fieldValue = d.LeaderStatus.steeringAngle;
-                }
-                else if(fieldName === "distanceTraveled"){
-                    fieldValue = d.LeaderStatus.distanceTraveled;
-                }
-            }
-
-            else if(type === '3001'){
-                var FollowerStatus = d.FollowerStatus.temporaryValue;
-                fieldValue = window.atob(FollowerStatus);
-            }
-
-            else{
+            // if(type === '1001'){
+            //
+            //     if(fieldName === "vehicleIp"){
+            //         var vehicleIp = d.AnnouncePresence.vehicleIp;
+            //         fieldValue = window.atob(vehicleIp);
+            //     }
+            //     else if(fieldName === "groupId"){
+            //         var groupId = d.AnnouncePresence.groupId;
+            //         fieldValue = window.atob(groupId);
+            //     }
+            // }
+            //
+            // else if(type === '1002'){
+            //     var FollowRequest = d.FollowRequest.temporaryValue;
+            //     fieldValue = window.atob(FollowRequest);
+            // }
+            //
+            // else if(type === '1003'){
+            //     var FollowResponse = d.FollowResponse.temporaryValue;
+            //     fieldValue = window.atob(FollowResponse);
+            // }
+            //
+            // else if(type === '1004'){
+            //     var StopFollow = d.StopFollow.temporaryValue;
+            //     fieldValue = window.atob(StopFollow);
+            // }
+            //
+            // else if(type === '2001'){
+            //     if(fieldName === "timestamp"){
+            //         fieldValue = d.LeaderStatus.timestamp;
+            //     }
+            //     else if(fieldName === "speed"){
+            //         fieldValue = d.LeaderStatus.speed;
+            //     }
+            //     else if(fieldName === "steeringAngle"){
+            //         fieldValue = d.LeaderStatus.steeringAngle;
+            //     }
+            //     else if(fieldName === "distanceTraveled"){
+            //         fieldValue = d.LeaderStatus.distanceTraveled;
+            //     }
+            // }
+            //
+            // else if(type === '3001'){
+            //     var FollowerStatus = d.FollowerStatus.temporaryValue;
+            //     fieldValue = window.atob(FollowerStatus);
+            // }
+            //
+            // else{
                 fieldValue = cutLongField(field.type, field.value);
-            }
+            // }
 
             fieldsHtml += '<tr><td class="field-name">' + fieldName + '</td>'
                 + '<td class="field-plot"><canvas id="' + sourceKey + '_field'
@@ -390,56 +390,56 @@ function updateTableData(sourceKey, data) {
         var fieldName;
         var fieldValue;
 
-        if(data.dataType === '1001'){
-
-            if(fieldName === "vehicleIp"){
-                var vehicleIp = d.AnnouncePresence.vehicleIp;
-                fieldValue = window.atob(vehicleIp);
-            }
-            else if(fieldName === "groupId"){
-                var groupId = d.AnnouncePresence.groupId;
-                fieldValue = window.atob(groupId);
-            }
-        }
-
-        else if(data.dataType === '1002'){
-            var FollowRequest = d.FollowRequest.temporaryValue;
-            fieldValue = window.atob(FollowRequest);
-        }
-
-        else if(data.dataType === '1003'){
-            var FollowResponse = d.FollowResponse.temporaryValue;
-            fieldValue = window.atob(FollowResponse);
-        }
-
-        else if(data.dataType === '1004'){
-            var StopFollow = d.StopFollow.temporaryValue;
-            fieldValue = window.atob(StopFollow);
-        }
-
-        else if(data.dataType === '2001'){
-            if(fieldName === "timestamp"){
-                fieldValue = d.LeaderStatus.timestamp;
-            }
-            else if(fieldName === "speed"){
-                fieldValue = d.LeaderStatus.speed;
-            }
-            else if(fieldName === "steeringAngle"){
-                fieldValue = d.LeaderStatus.steeringAngle;
-            }
-            else if(fieldName === "distanceTraveled"){
-                fieldValue = d.LeaderStatus.distanceTraveled;
-            }
-        }
-
-        else if(data.dataType === '3001'){
-            var FollowerStatus = d.FollowerStatus.temporaryValue;
-            fieldValue = window.atob(FollowerStatus);
-        }
-
-        else{
+        // if(data.dataType === '1001'){
+        //
+        //     if(fieldName === "vehicleIp"){
+        //         var vehicleIp = d.AnnouncePresence.vehicleIp;
+        //         fieldValue = window.atob(vehicleIp);
+        //     }
+        //     else if(fieldName === "groupId"){
+        //         var groupId = d.AnnouncePresence.groupId;
+        //         fieldValue = window.atob(groupId);
+        //     }
+        // }
+        //
+        // else if(data.dataType === '1002'){
+        //     var FollowRequest = d.FollowRequest.temporaryValue;
+        //     fieldValue = window.atob(FollowRequest);
+        // }
+        //
+        // else if(data.dataType === '1003'){
+        //     var FollowResponse = d.FollowResponse.temporaryValue;
+        //     fieldValue = window.atob(FollowResponse);
+        // }
+        //
+        // else if(data.dataType === '1004'){
+        //     var StopFollow = d.StopFollow.temporaryValue;
+        //     fieldValue = window.atob(StopFollow);
+        // }
+        //
+        // else if(data.dataType === '2001'){
+        //     if(fieldName === "timestamp"){
+        //         fieldValue = d.LeaderStatus.timestamp;
+        //     }
+        //     else if(fieldName === "speed"){
+        //         fieldValue = d.LeaderStatus.speed;
+        //     }
+        //     else if(fieldName === "steeringAngle"){
+        //         fieldValue = d.LeaderStatus.steeringAngle;
+        //     }
+        //     else if(fieldName === "distanceTraveled"){
+        //         fieldValue = d.LeaderStatus.distanceTraveled;
+        //     }
+        // }
+        //
+        // else if(data.dataType === '3001'){
+        //     var FollowerStatus = d.FollowerStatus.temporaryValue;
+        //     fieldValue = window.atob(FollowerStatus);
+        // }
+        //
+        // else{
             fieldValue = cutLongField(field.type, field.value);
-        }
+        // }
 
         $('td#' + sourceKey + '_field' + i + '_value').html(fieldValue);
     }
