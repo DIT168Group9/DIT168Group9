@@ -92,7 +92,7 @@ function onMessageReceived(lc, msg) {
 
     var data_str = lc.decodeEnvelopeToJSON(msg);
 
-    if (data_str.length == 2) {
+    if (data_str.length === 2) {
         return;
     }
 
@@ -249,7 +249,7 @@ function addFieldCharts(sourceKey, data) {
         const field = data.payload.fields[i];
         const fieldType = field.type;
 
-        if (fieldType == 'number') {
+        if (fieldType === 'number') {
 
             const fieldKey = sourceKey + '_' + i;
 
@@ -442,7 +442,7 @@ function updateFieldCharts(sourceKey, dataList) {
     for (var i = 0; i < fieldCount; i++) {
         const field = latestData.payload.fields[i];
         const fieldType = field.type;
-        if (fieldType == 'number') {
+        if (fieldType === 'number') {
             const fieldKey = sourceKey + '_' + i;
             const config = g_chartConfigs[fieldKey];
             config.data.labels = new Array();
@@ -454,11 +454,11 @@ function updateFieldCharts(sourceKey, dataList) {
     const dataCount = dataList.length;
     const decimation = Math.floor(dataCount / (g_maxFieldChartValues - 1));
     for (var j = 0, k = 0; j < dataCount; j++, k++) {
-        if (j != dataCount - 1) {
-            if (k == decimation) {
+        if (j !== dataCount - 1) {
+            if (k === decimation) {
                 k = 0;
             }
-            if (k != 0) {
+            if (k !== 0) {
                 continue;
             }
         }
@@ -473,7 +473,7 @@ function updateFieldCharts(sourceKey, dataList) {
             const field = data.payload.fields[i];
             const fieldType = field.type;
 
-            if (fieldType == 'number') {
+            if (fieldType === 'number') {
 
                 const fieldKey = sourceKey + '_' + i;
                 const fieldValue = field.value;
@@ -490,7 +490,7 @@ function updateFieldCharts(sourceKey, dataList) {
     for (var i = 0; i < fieldCount; i++) {
         const field = latestData.payload.fields[i];
         const fieldType = field.type;
-        if (fieldType == 'number') {
+        if (fieldType === 'number') {
             const fieldKey = sourceKey + '_' + i;
             const chart = g_charts[fieldKey];
             chart.update();

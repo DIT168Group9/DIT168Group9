@@ -63,7 +63,7 @@ td.field-value {
     width: 614px;
     height: 324px;
 
-    background: transparent url("../car-dashboard.png") no-repeat 50% 50%;
+    background: transparent url("car-dashboard.png") no-repeat 50% 50%;
 }
 
 .k-gauge {
