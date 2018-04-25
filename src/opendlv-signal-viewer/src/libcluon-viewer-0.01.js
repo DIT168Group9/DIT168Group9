@@ -30,10 +30,8 @@ if ("WebSocket" in window) {
         console.log(data);
 
         // Check for message ID 1041...
-        if (data.dataType === 1041) {
 
-            var sample = (data.opendlv_proxy_PedalPositionReading.position) * 10;
-            console.log(sample);
+
             animateDashboard(data);
 
             // found message. Now, extract values from the fields and do something with the data...
@@ -42,7 +40,7 @@ if ("WebSocket" in window) {
             // var textDecodedFromBase64 = window.atob(textInBase64);
 
 
-        }
+
     };
     ws.onclose = function() {
         console.log("Connection is closed.");
@@ -70,7 +68,7 @@ function createDashboard() {
             endAngle: 120,
 
             min: 0,
-            max: 10,
+            max: 5,
 
             majorUnit: 1,
             majorTicks: {
@@ -84,12 +82,12 @@ function createDashboard() {
             },
 
             ranges: [{
-                from: 4,
-                to: 7,
+                from: 3,
+                to: 4,
                 color: "#ff7a00"
             }, {
-                from: 7,
-                to: 10,
+                from: 4,
+                to: 5,
                 color: "#c20000"
             }],
 
@@ -103,7 +101,7 @@ function createDashboard() {
         theme: "black",
 
         pointer: {
-            value: 100,
+            value: 0,
             color: "#ea7001"
         },
 
@@ -124,7 +122,7 @@ function createDashboard() {
                 size: 10
             },
 
-            minorUnit: 2,
+            minorUnit: 5,
 
             // visible: false
         }
@@ -207,13 +205,28 @@ function createDashboard() {
     });
 }
 
-var gear;
+var pedalPosition;
+var groundSteering;
+var distanceReading;
 function animateDashboard(data) {
 
-    gear = (data.opendlv_proxy_PedalPositionReading.position) * 10;
-        $("#rpm").data("kendoRadialGauge").value(gear);
-        // $("#kmh").data("kendoRadialGauge").value(speed);
-
+    if (data.dataType === 1041) {
+        pedalPosition = (data.opendlv_proxy_PedalPositionReading.position) * 100
+        if(pedalPosition < 0){
+            pedalPosition = pedalPosition * -1;
+            $("#rpm").data("kendoRadialGauge").value(pedalPosition);
+        }else{
+            $("#rpm").data("kendoRadialGauge").value(pedalPosition);
+        }
+    }
+    else if(data.dataType === 1045){
+        groundSteering = data.opendlv_proxy_GroundSteeringReading.groundSteering;
+        $("#kmh").data("kendoRadialGauge").value(groundSteering);
+    }
+    else if(data.dataType === 1039){
+        distanceReading = data.opendlv_proxy_DistanceReading.distance;
+        $("#fuel").data("kendoRadialGauge").value(distanceReading);
+    }
 }
 
 $(document).ready(function() {

@@ -3,6 +3,11 @@
 * Kendo Car Dashboard Style
 */
 
+#car-dashboard {
+
+    margin-top: 100px;
+}
+
 #gauge-container {
     margin: 0 auto;
     overflow: hidden;
