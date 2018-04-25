@@ -76,26 +76,26 @@ function createDashboard() {
             endAngle: 120,
 
             min: 0,
-            max: 5,
+            max: 50,
 
-            majorUnit: 1,
+            majorUnit: 10,
             majorTicks: {
                 width: 1,
                 size: 7
             },
 
-            minorUnit: 0.2,
+            minorUnit: 2,
             minorTicks: {
                 size: 5
             },
 
             ranges: [{
-                from: 3,
-                to: 4,
+                from: 30,
+                to: 40,
                 color: "#ff7a00"
             }, {
-                from: 4,
-                to: 5,
+                from: 40,
+                to: 50,
                 color: "#c20000"
             }],
 
