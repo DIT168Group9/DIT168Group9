@@ -137,6 +137,20 @@ function onMessageReceived(lc, msg) {
         g_data.set(sourceKey, new Array());
     }
 
+    // $(document).ready(function() {
+
+        createDashboard();
+        // animateDashboard();
+
+        // $(document).bind("kendo:skinChange", function(e) {
+        //     createDashboard();
+        // });
+
+        // $(document).bind("kendo:pageUnload", function(e) {
+        //     clearInterval(animateInterval);
+        // });
+    // });
+
     storeData(sourceKey, data);
 }
 
@@ -167,6 +181,8 @@ function addTableData(sourceKey, data) {
             + sourceKey + '_timestamp">' + timestamp + '</td></tr>';
 
         const fieldCount = data.payload.fields.length;
+
+        console.log(fieldCount);
 
         var fieldsHtml = '<tr id="' + sourceKey + '_fields" class="hidden">'
             + '<td colspan="6"><table class="dataFields">';
@@ -348,7 +364,7 @@ function onInterval() {
         const newestData = dataList[dataList.length - 1];
         updateTableData(sourceKey, newestData);
         updateFieldCharts(sourceKey, dataList);
-
+        animateDashboard();
     });
 }
 
@@ -682,70 +698,30 @@ function createDashboard() {
     });
 }
 
-var animateInterval;
+var gear;
 function animateDashboard() {
-    if (animateInterval) {
-        return;
+
+    if(d.dataType === '1041'){
+        gear = d.PedalPositionReading.position;
+        // var speed = 100;
     }
+        $("#rpm").data("kendoRadialGauge").value(gear);
+        console.log("animateDashboard reached");
 
-    // if(d.dataType === '1041'){
-    //     var GEAR = d.PedalPositionReading.position;
-    //     // var speed = 100;
-    // }
-
-    // var GEARS = [0.14, 0.06, 0.035, 0.027, 0.019],
-    //     IDLE_RPM = 0.9,
-    //     CHANGE_RPM = 4,
-    //     CHANGE_DELAY = 400,
-    //     DECAY_RATE = 0.0017,
-    //     TOP_SPEED = 210,
-    //     ACCELERATION = 0.6,
-    //     INTERVAL = 50;
-    //
-
-    // var skip = 0,
-    //     gear = 0;
-
-
-
-    function update() {
-        // $("#rpm").data("kendoRadialGauge").value(GEARS[gear] * speed + IDLE_RPM);
-        console.log("Hej");
-        $("#rpm").data("kendoRadialGauge").value(GEAR);
         //$("#kmh").data("kendoRadialGauge").value(speed);
-    }
-
-    // animateInterval = setInterval(function() {
-    //     if(speed < TOP_SPEED) {
-    //         if (GEARS[gear] * speed > CHANGE_RPM && gear < GEARS.length) {
-    //             gear++;
-    //             skip = CHANGE_DELAY / INTERVAL;
-    //             update();
-    //         }
-    //
-    //         if (skip-- < 0) {
-    //             speed += ACCELERATION - (DECAY_RATE * speed);
-    //             update();
-    //         }
-    //     } else {
-    //         skip = 100;
-    //         speed = 0;
-    //         gear = 0;
-    //     }
-    // }, INTERVAL);
 }
 
-$(document).ready(function() {
-    animateInterval = null;
-
-    createDashboard();
-    animateDashboard();
-
-    $(document).bind("kendo:skinChange", function(e) {
-        createDashboard();
-    });
-
-    $(document).bind("kendo:pageUnload", function(e) {
-        clearInterval(animateInterval);
-    });
-});
+// $(document).ready(function() {
+//     animateInterval = null;
+//
+//     createDashboard();
+//     animateDashboard();
+//
+//     $(document).bind("kendo:skinChange", function(e) {
+//         createDashboard();
+//     });
+//
+//     $(document).bind("kendo:pageUnload", function(e) {
+//         clearInterval(animateInterval);
+//     });
+// });
