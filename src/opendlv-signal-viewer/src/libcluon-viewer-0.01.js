@@ -77,6 +77,20 @@ function onStreamOpen(lc) {
     console.log("Connected to stream.");
     console.log("Loaded " + lc.setMessageSpecification(odvd) + " messages from specification.");
 
+    // $(document).ready(function() {
+
+    createDashboard();
+    // animateDashboard();
+
+    // $(document).bind("kendo:skinChange", function(e) {
+    //     createDashboard();
+    // });
+
+    // $(document).bind("kendo:pageUnload", function(e) {
+    //     clearInterval(animateInterval);
+    // });
+    // });
+
     setInterval(onInterval, Math.round(1000 / g_renderFreq));
 }
 
@@ -136,21 +150,6 @@ function onMessageReceived(lc, msg) {
 
         g_data.set(sourceKey, new Array());
     }
-
-    // $(document).ready(function() {
-
-        createDashboard();
-        // animateDashboard();
-
-        // $(document).bind("kendo:skinChange", function(e) {
-        //     createDashboard();
-        // });
-
-        // $(document).bind("kendo:pageUnload", function(e) {
-        //     clearInterval(animateInterval);
-        // });
-    // });
-
     storeData(sourceKey, data);
 }
 
@@ -702,7 +701,7 @@ var gear;
 function animateDashboard() {
 
     if(d.dataType === '1041'){
-        gear = d.PedalPositionReading.position;
+        gear = (d.PedalPositionReading.position) * 10;
         // var speed = 100;
     }
         $("#rpm").data("kendoRadialGauge").value(gear);
