@@ -28,23 +28,37 @@ int main(int argc, char** argv) {
                     if (fread(event, sizeof(PS4Event), 1, file)) {
                         if ((event->type &0x0F) == 1) {
                             switch (event->id) {
-                                case X:
+                                case X: {
                                     std::cout << "X pressed." << std::endl;
+                                    opendlv::proxy::ButtonPressed buttonPressed;
+                                    buttonPressed.buttonNumber(1);
+                                    od4.send(buttonPressed);
+                                    std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                }
                                     break;
-                                case Circle:
-                                    std::cout << "Circle Pressed." << std::endl; //X
+                                case Circle: {
+                                    std::cout << "Circle pressed." << std::endl;
+                                    opendlv::proxy::ButtonPressed buttonPressed;
+                                    buttonPressed.buttonNumber(2);
+                                    od4.send(buttonPressed);
+                                    std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                }
                                     break;
-                                case Triangle:
+                                case Triangle: {
                                     std::cout << "Triangle pressed." << std::endl;
-                                    {
-                                        opendlv::proxy::ButtonPressed buttonPressed;
-                                        buttonPressed.buttonNumber(3);
-                                        od4.send(buttonPressed);
-                                        std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
-                                    }
+                                    opendlv::proxy::ButtonPressed buttonPressed;
+                                    buttonPressed.buttonNumber(3);
+                                    od4.send(buttonPressed);
+                                    std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                }
                                     break;
-                                case Square:
+                                case Square: {
                                     std::cout << "Square pressed." << std::endl;
+                                    opendlv::proxy::ButtonPressed buttonPressed;
+                                    buttonPressed.buttonNumber(0);
+                                    od4.send(buttonPressed);
+                                    std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                }
                                     break;
                                 case L1:
                                     std::cout << "L1 pressed." << std::endl;
