@@ -126,26 +126,19 @@ int main(int argc, char** argv) {
                                     }
                                     break;
                                 case LStickY: break;
-                                case L2Y: {
-                                    opendlv::proxy::PedalPositionReading pedalPositionReading;
-                                    float value = event->data / MAX_AXES_VALUE * m_MAX_DECELERATION;
-                                    value = roundf(value * 100) / 100.0;
-                                    pedalPositionReading.position(value);
-                                    od4.send(pedalPositionReading); //This value is in percent
-                                    std::cout << "Sending Speed: " << pedalPositionReading.position() << std::endl;
-                                    }
-                                    break;
+                                case L2Y:     break;
                                 case RStickX: break;
-                                case RStickY: break;
-                                case R2Y:   {
+                                case RStickY: {
                                     opendlv::proxy::PedalPositionReading pedalPositionReading;
-                                    float value = -(event->data) / MAX_AXES_VALUE * m_MAX_ACCELERATION;
-                                    value = roundf(value * 100) / 100.0;
-                                    pedalPositionReading.position(value);
-                                    od4.send(pedalPositionReading); //This value is in percent
-                                    std::cout << "Sending Speed: " << pedalPositionReading.position() << std::endl;
+                                        if(event->data < 0) {
+                                            pedalPositionReading.position(event->data / MAX_AXES_VALUE * m_MAX_DECELERATION);
+                                        }
+                                        else if (event->data >= 0) {
+                                            pedalPositionReading.position((- event->data) / MAX_AXES_VALUE * m_MAX_ACCELERATION);
+                                        }
                                     }
                                     break;
+                                case R2Y:     break;
                                 case PadX:    break;
                                 case PadY:    break;
                                 default:      break;

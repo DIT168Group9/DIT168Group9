@@ -10,7 +10,7 @@
 static constexpr float MIN_AXES_VALUE = -32768.0f;      /**< Minimum value of axes range*/
 static constexpr float MAX_AXES_VALUE = 32767.0f;       /**< Maximum value of axes range.*/
 
-static constexpr float m_MAX_DECELERATION = -1.0f;    /**< Max Deceleration value, must be negative.*/
+static constexpr float m_MAX_DECELERATION = 0.25f;    /**< Max Deceleration value, must be negative.*/
 static constexpr float m_MAX_ACCELERATION = 0.25f;       /**< Max Acceleration value, must be positive.*/
 static constexpr float m_MAX_STEERING_ANGLE = 38.0f;     /**< Max Steering Angle, must be positive.*/
 
