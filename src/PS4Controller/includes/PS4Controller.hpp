@@ -14,6 +14,7 @@ static constexpr float m_MAX_DECELERATION = 0.25f;    /**< Max Deceleration valu
 static constexpr float m_MAX_ACCELERATION = 0.25f;       /**< Max Acceleration value, must be positive.*/
 static constexpr float m_MAX_STEERING_ANGLE = 38.0f;     /**< Max Steering Angle, must be positive.*/
 
+static constexpr float m_OFFSET = 0.16f;
 /**
  * An enum.
  * Associates button numbers to defined button names.
