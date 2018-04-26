@@ -150,11 +150,13 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
                  unsigned long len = sender.find(':');
                  if (sender.substr(0, len) == followerIp) {
                      isLeader = false;
+                     std::cout << "Car was leader, no longer is\n";
                      followerIp = "";
                      toFollower.reset();
                  }
                  else if (sender.substr(0, len) == leaderIp) {
                      isFollower = false;
+                     std::cout << "Car was follower, no longer is\n";
                      leaderIp = "";
                      toLeader.reset();
                  }
@@ -168,10 +170,20 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
                  break;
              }
              case LEADER_STATUS: {
+                 opendlv::proxy::PedalPositionReading msgPedal;
+                 opendlv::proxy::GroundSteeringReading msgSteering;
+
                  LeaderStatus leaderStatus = decode<LeaderStatus>(msg.second);
                  std::cout << "received '" << leaderStatus.LongName()
                            << "' from '" << sender << "'!" << std::endl;
+                 std::cout << "LeaderStatus Values, pedalPos: " << leaderStatus.speed() << " steeringAngle: "
+                           << leaderStatus.steeringAngle() << std::endl;
 
+                 msgPedal.position(leaderStatus.speed());
+                 od4->send(msgPedal);
+
+                 msgSteering.groundSteering(leaderStatus.steeringAngle());
+                 od4->send(msgSteering);
                  break;
              }
              default: std::cout << "¯\\_(ツ)_/¯" << std::endl;
@@ -242,14 +254,20 @@ void V2VService::followResponse() {
 void V2VService::stopFollow(std::string vehicleIp) {
     StopFollow stopFollow;
     stopFollow.temporaryValue("Stop follow test");
+
+    std::cout << "Inside stop follow, vehicleIp == _PARTNER_IP: " << (vehicleIp == _PARTNER_IP) << " isFollower: "
+              << isFollower << " isLeader: " << isLeader << std::endl;
+
     if (vehicleIp == _PARTNER_IP && isFollower) {
         isFollower = false;
+        std::cout << "Car was follower\n";
         toLeader->send(encode(stopFollow));
         od4->send(stopFollow);
         toLeader.reset();
     }
     if (vehicleIp == _PARTNER_IP && isLeader) {
         isLeader = false;
+        std::cout << "Car was leader\n";
         toFollower->send(encode(stopFollow));
         od4->send(stopFollow);
         toFollower.reset();
