@@ -17,7 +17,9 @@ RUN cd /opt/sources && \
     cd src/V2V/ && \
     cp GROUP9.V2V /tmp && \
     cd ../PS4Controller/ && \
-    cp GROUP9.PS4Controller /tmp
+    cp GROUP9.PS4Controller /tmp && \
+    cd ../IMU/ && \
+    cp GROUP9.IMU /tmp
 
 # Deploy.
 FROM ubuntu:16.04
@@ -30,4 +32,5 @@ RUN apt-get update && \
 WORKDIR /opt
 COPY --from=builder /tmp/GROUP9.V2V .
 COPY --from=builder /tmp/GROUP9.PS4Controller .
+COPY --from=builder /tmp/GROUP9.IMU .
 CMD ["/bin/sh"]

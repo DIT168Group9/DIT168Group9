@@ -1,5 +1,5 @@
-#ifndef V2V_PROTOCOL_DEMO_V2VSERVICE_H
-#define V2V_PROTOCOL_DEMO_V2VSERVICE_H
+#ifndef GROUP9_V2VSERVICE_HPP
+#define GROUP9_V2VSERVICE_HPP
 
 #include <iomanip>
 #include <unistd.h>
@@ -63,5 +63,6 @@ private:
     static T decode(std::string data);
 };
 
-#endif //V2V_PROTOCOL_DEMO_V2VSERVICE_H
+#endif
+
 

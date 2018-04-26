@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(GROUP9.PS4Controller)
+project(GROUP9.IMU)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -17,5 +17,5 @@ add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/Messages.cpp
 
 include_directories(SYSTEM ${CMAKE_BINARY_DIR})
 
-add_executable(${PROJECT_NAME} PS4Controller.cpp ${CMAKE_BINARY_DIR}/Messages.cpp includes/PS4Controller.hpp)
+add_executable(${PROJECT_NAME} IMU.cpp ${CMAKE_BINARY_DIR}/Messages.cpp includes/IMU.hpp)
 target_link_libraries(${PROJECT_NAME} ${CLUON_LIBRARIES})
