@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
         const std::string IP = commandlineArguments["ip"];
         const std::string ID = commandlineArguments["id"];
         const std::string PARTNER_IP = commandlineArguments["partnerIp"];
-        const std::string PARTNER_ID = commandlineArguments["parnterId"];
+        const std::string PARTNER_ID = commandlineArguments["partnerId"];
 
         std::shared_ptr<V2VService> v2vService = std::make_shared<V2VService>(IP, ID, PARTNER_IP, PARTNER_ID);
         float pedalPos = 0, steeringAngle = 0;
@@ -179,7 +179,7 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
                  std::cout << "LeaderStatus Values, pedalPos: " << leaderStatus.speed() << " steeringAngle: "
                            << leaderStatus.steeringAngle() << std::endl;
 
-                 msgPedal.position(leaderStatus.speed());
+                 msgPedal.position(leaderStatus.speed() + 0.03f);
                  od4->send(msgPedal);
 
                  msgSteering.groundSteering(leaderStatus.steeringAngle());
