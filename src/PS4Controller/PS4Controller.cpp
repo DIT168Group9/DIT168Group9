@@ -29,63 +29,89 @@ int main(int argc, char** argv) {
                         if ((event->type &0x0F) == 1) {
                             switch (event->id) {
                                 case X: {
-                                    std::cout << "X pressed." << std::endl;
-                                    opendlv::proxy::ButtonPressed buttonPressed;
-                                    buttonPressed.buttonNumber(1);
-                                    od4.send(buttonPressed);
-                                    std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "X pressed." << std::endl;
+                                        opendlv::proxy::ButtonPressed buttonPressed;
+                                        buttonPressed.buttonNumber(1);
+                                        od4.send(buttonPressed);
+                                        std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    }
                                 }
                                     break;
                                 case Circle: {
-                                    std::cout << "Circle pressed." << std::endl;
-                                    opendlv::proxy::ButtonPressed buttonPressed;
-                                    buttonPressed.buttonNumber(2);
-                                    od4.send(buttonPressed);
-                                    std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "Circle pressed." << std::endl;
+                                        opendlv::proxy::ButtonPressed buttonPressed;
+                                        buttonPressed.buttonNumber(2);
+                                        od4.send(buttonPressed);
+                                        std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    }
                                 }
                                     break;
                                 case Triangle: {
-                                    std::cout << "Triangle pressed." << std::endl;
-                                    opendlv::proxy::ButtonPressed buttonPressed;
-                                    buttonPressed.buttonNumber(3);
-                                    od4.send(buttonPressed);
-                                    std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "Triangle pressed." << std::endl;
+                                        opendlv::proxy::ButtonPressed buttonPressed;
+                                        buttonPressed.buttonNumber(3);
+                                        od4.send(buttonPressed);
+                                        std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    }
                                 }
                                     break;
                                 case Square: {
-                                    std::cout << "Square pressed." << std::endl;
-                                    opendlv::proxy::ButtonPressed buttonPressed;
-                                    buttonPressed.buttonNumber(0);
-                                    od4.send(buttonPressed);
-                                    std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "Square pressed." << std::endl;
+                                        opendlv::proxy::ButtonPressed buttonPressed;
+                                        buttonPressed.buttonNumber(0);
+                                        od4.send(buttonPressed);
+                                        std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    }
                                 }
                                     break;
                                 case L1:
-                                    std::cout << "L1 pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "L1 pressed." << std::endl;
+                                    }
                                     break;
                                 case R1:
-                                    std::cout << "R1 pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "R1 pressed." << std::endl;
+                                    }
                                     break;
                                 case L2:
-                                    std::cout << "L2 pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "L2 pressed." << std::endl;
+                                    }
                                     break;
                                 case R2:
-                                    std::cout << "R2 pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "R2 pressed." << std::endl;
+                                    }
                                     break;
                                 case Share:
-                                    std::cout << "Share pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "Share pressed." << std::endl;
+                                    }
                                     break;
                                 case Options:
-                                    std::cout << "Options pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "Options pressed." << std::endl;
+                                    }
                                     break;
                                 case PS:
-                                    std::cout << "PS Button pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "PS Button pressed." << std::endl;
+                                    }
                                     break;
                                 case LStick:
-                                    std::cout << "L3 pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "L3 pressed." << std::endl;
+                                    }
                                     break;
                                 case RStick:
-                                    std::cout << "R3 pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "R3 pressed." << std::endl;
+                                    }
                                     break;
                                 default:       break;
                             }

@@ -15,7 +15,7 @@ static constexpr float m_MAX_ACCELERATION = 0.25;       /**< Max Acceleration va
 static constexpr float m_MAX_STEERING_ANGLE = 38.0;     /**< Max Steering Angle, must be positive.*/
 
 /**
- * An enum
+ * An enum.
  * Associates button numbers to defined button names.
  */
 typedef enum {
@@ -35,7 +35,7 @@ typedef enum {
 } PS4Button;
 
 /**
- * An enum
+ * An enum.
  * Associates axes numbers to defined axes names.
  */
 typedef enum {
@@ -50,8 +50,12 @@ typedef enum {
 } PS4Axis;
 
 /**
- * A struct
- * Contains information on events read from PS4's input file
+ * A struct.
+ * Contains information on events read from PS4's input file.
+ * Timestamp corresponds to the time when the event was sent.
+ * Data is the value of the event (for buttons, a value of 1 will correspond to a press, 0 a release)
+ * Type differentiates between the type of Event (Axis or Button)
+ * Id corresponds to the specific Type, (Which button or which axis is being used specifically)
  */
 typedef struct {
     uint32_t timestamp;
