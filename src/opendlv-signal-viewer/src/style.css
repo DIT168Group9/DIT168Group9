@@ -16,6 +16,10 @@ h1 {
     margin-top: 50px;
 }
 
+#apList {
+color: white;
+}
+
 .meter {
     height: 20px;  /* Can be anything */
     position: relative;

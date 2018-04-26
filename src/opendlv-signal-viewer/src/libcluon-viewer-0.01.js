@@ -46,7 +46,24 @@ if ("WebSocket" in window) {
         }
         else if(data.dataType === 1039){
             distanceReading = (data.opendlv_proxy_DistanceReading.distance) * 100;
+
+            $(".meter > span").each(function() {
+                $(this)
+                    .data("origWidth", $(this).width())
+                    .width(0)
+                    .animate({
+                        width: $(this).data(distanceReading)
+                    }, 1200);
+            });
+
             $("#fuel").data("kendoRadialGauge").value(distanceReading);
+        }
+
+        else if(data.dataType === 1001){
+            announcePresenceVehicalIp = window.atob(data.AnnouncePresence.vehicleIp);
+            announcePresenceGroupId = window.atob(data.AnnouncePresence.groupId);
+
+            $("#apList").append('<li>' + "Group" + announcePresenceGroupId + "has the ip: " + announcePresenceVehicalIp + '</li>');
         }
 
     };
@@ -216,27 +233,29 @@ function createDashboard() {
 var pedalPosition;
 var groundSteering;
 var distanceReading;
+var announcePresenceVehicalIp;
+var announcePresenceGroupId;
 // function animateDashboard(data) {
 //
 //
 // }
-
-function createBar(){
-
-    $(".meter > span").each(function() {
-        $(this)
-            .data("origWidth", $(this).width())
-            .width(0)
-            .animate({
-                width: $(this).data("origWidth")
-            }, 1200);
-    });
-}
+//
+// function createBar(){
+//
+//     $(".meter > span").each(function() {
+//         $(this)
+//             .data("origWidth", $(this).width())
+//             .width(0)
+//             .animate({
+//                 width: $(this).data("origWidth")
+//             }, 1200);
+//     });
+// }
 
 $(document).ready(function() {
 
     createDashboard();
-    createBar();
+    // createBar();
     // animateDashboard(data);
 
     $(document).bind("kendo:skinChange", function(e) {
