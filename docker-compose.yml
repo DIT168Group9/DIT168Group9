@@ -40,7 +40,7 @@ services:
         image: dit168group9/car:0.5
         network_mode: "host"
         restart: always
-        command: "/opt/GROUP9.V2V --cid=200 --freq=10 --ip=192.168.43.157 --id=9"
+        command: "/opt/GROUP9.V2V --cid=200 --freq=10 --ip=192.168.43.157 --id=9 "
 
     Signal-Viewer:
 	image: group9/signal-viewer:v0.8
