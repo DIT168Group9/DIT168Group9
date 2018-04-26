@@ -215,7 +215,7 @@ void V2VService::followRequest(std::string vehicleIp) {
     od4->send(followRequest);
     toLeader->send(encode(followRequest));
 }
-::
+
 /**
  * This function send a FollowResponse (id = 1003) message and is sent in response to a FollowRequest (id = 1002).
  * This message will contain the NTP server IP for time synchronization between the target and the sender.
