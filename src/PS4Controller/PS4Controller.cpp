@@ -129,15 +129,15 @@ int main(int argc, char** argv) {
                                 case L2Y:     break;
                                 case RStickX: break;
                                 case RStickY: {
-                                    float value;
-                                    pedalPositionReading.position(0);
+                                    float value = 0;
+                                    pedalPositionReading.position(value);
                                     if(event->data < 0) {
-                                        value = event->data / MAX_AXES_VALUE * m_MAX_DECELERATION;
+                                        value = event->data / MIN_AXES_VALUE * m_MAX_DECELERATION;
                                         value = roundf(value * 100) / 100.0;
                                         pedalPositionReading.position(value);
                                     }
                                     else if (event->data >= 0) {
-                                        value = (- event->data) / MAX_AXES_VALUE * m_MAX_DECELERATION;
+                                        value = event->data / MAX_AXES_VALUE * m_MAX_ACCELERATION;
                                         value = roundf(value * 100) / 100.0;
                                         pedalPositionReading.position(value);
                                     }
