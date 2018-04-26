@@ -2,10 +2,6 @@
 /*
 * Kendo Car Dashboard Style
 */
-* { margin: 0; padding: 0; }
-
-article, aside, figure, footer, header, hgroup,
-menu, nav, section { display: block; }
 
 #page-wrap { width: 490px; margin: 80px auto; }
 

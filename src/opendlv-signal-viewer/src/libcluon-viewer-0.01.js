@@ -29,7 +29,7 @@ if ("WebSocket" in window) {
         var data = JSON.parse(__libcluon.decodeEnvelopeToJSON(evt.data));
         // console.log(data);
 
-            // animateDashboard(data);
+        // animateDashboard(data);
 
         if (data.dataType === 1041) {
             pedalPosition = (data.opendlv_proxy_PedalPositionReading.position) * 100;
@@ -221,9 +221,22 @@ var distanceReading;
 //
 // }
 
+function createBar(){
+
+    $(".meter > span").each(function() {
+        $(this)
+            .data("origWidth", $(this).width())
+            .width(0)
+            .animate({
+                width: $(this).data("origWidth")
+            }, 1200);
+    });
+}
+
 $(document).ready(function() {
 
     createDashboard();
+    createBar();
     // animateDashboard(data);
 
     $(document).bind("kendo:skinChange", function(e) {
