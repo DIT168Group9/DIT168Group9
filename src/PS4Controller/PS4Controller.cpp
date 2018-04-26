@@ -129,12 +129,6 @@ int main(int argc, char** argv) {
                                 case L2Y: {
                                     opendlv::proxy::PedalPositionReading pedalPositionReading;
                                     float value = event->data / MAX_AXES_VALUE * m_MAX_DECELERATION;
-
-                                    if (value >= 0.025f) {
-                                        value += 1;
-                                    }
-
-                                    value *= 1;
                                     value = roundf(value * 100) / 100.0;
                                     pedalPositionReading.position(value);
                                     od4.send(pedalPositionReading); //This value is in percent
@@ -146,11 +140,6 @@ int main(int argc, char** argv) {
                                 case R2Y:   {
                                     opendlv::proxy::PedalPositionReading pedalPositionReading;
                                     float value = -(event->data) / MAX_AXES_VALUE * m_MAX_ACCELERATION;
-
-                                    if (value >= 0.025f) {
-                                        value += 0.125f;
-                                    }
-
                                     value = roundf(value * 100) / 100.0;
                                     pedalPositionReading.position(value);
                                     od4.send(pedalPositionReading); //This value is in percent
