@@ -1,7 +1,6 @@
 # docker run --rm -ti -v $PWD:/opt/sources ubuntu:16.04 /bin/sh
-FROM pipill/armhf-ubuntu:16.04 AS builder
+FROM ubuntu:16.04 AS builder
 MAINTAINER DIT168-GROUP9 github.com/dit168group9
-RUN ["cross-build-start"]
 RUN apt-get update && \
     apt-get install build-essential cmake -y && \
     apt-get install software-properties-common -y && \
@@ -21,12 +20,10 @@ RUN cd /opt/sources && \
     cp GROUP9.PS4Controller /tmp && \
     cd ../IMU/ && \
     cp GROUP9.IMU /tmp
-RUN ["cross-build-end"]
 
 # Deploy.
-FROM pipill/armhf-ubuntu:16.04
+FROM ubuntu:16.04
 MAINTAINER DIT168-GROUP9 github.com/dit168group9
-RUN ["cross-build-start"]
 RUN apt-get update && \
     apt-get install software-properties-common -y && \
     apt-add-repository ppa:chrberger/libcluon && \
@@ -36,5 +33,4 @@ WORKDIR /opt
 COPY --from=builder /tmp/GROUP9.V2V .
 COPY --from=builder /tmp/GROUP9.PS4Controller .
 COPY --from=builder /tmp/GROUP9.IMU .
-RUN ["cross-build-end"]
 CMD ["/bin/sh"]
