@@ -57,8 +57,8 @@ if ("WebSocket" in window) {
                     .data("origWidth", $(this).width())
                     .width(0)
                     .animate({
-                        width: distanceReading
-                    }, 1200);
+                        width: distanceReading + 400
+                    }, 'fast');
             });
 
             $("#fuel").data("kendoRadialGauge").value(distanceReading);
