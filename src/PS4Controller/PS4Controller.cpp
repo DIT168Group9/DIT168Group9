@@ -129,6 +129,7 @@ int main(int argc, char** argv) {
                                 case LStickY: break;
                                 case L2Y: {
                                     opendlv::proxy::PedalPositionReading pedalPositionReading;
+                                    pedalPositionReading.position(0);
                                     pedalPositionReading.position(event->data / MAX_AXES_VALUE * m_MAX_DECELERATION);
                                     od4.send(pedalPositionReading); //This value is in percent
                                     std::cout << "Sending Speed: " << pedalPositionReading.position() << std::endl;
@@ -138,6 +139,7 @@ int main(int argc, char** argv) {
                                 case RStickY: break;
                                 case R2Y:   {
                                     opendlv::proxy::PedalPositionReading pedalPositionReading;
+                                    pedalPositionReading.position(0);
                                     pedalPositionReading.position(-(event->data) / MAX_AXES_VALUE * m_MAX_ACCELERATION);
                                     od4.send(pedalPositionReading); //This value is in percent
                                     std::cout << "Sending Speed: " << pedalPositionReading.position() << std::endl;
