@@ -12,6 +12,17 @@ function getResourceFrom(url) {
 // Check for availability of WebSockets.
 if ("WebSocket" in window) {
 
+    $(function() {
+        $(".meter > span").each(function() {
+            $(this)
+                .data("origWidth", $(this).width())
+                .width(0)
+                .animate({
+                    width: $(this).data("origWidth")
+                }, 1200);
+        });
+    });
+
     // Read data in binary from the WebSocket, channel "od4".
     var ws = new WebSocket("ws://" + window.location.host + "/", "od4");
     ws.binaryType = 'arraybuffer';
@@ -27,12 +38,12 @@ if ("WebSocket" in window) {
 
         // Got new data from the WebSocket; now, try to decode it into JSON using the supplied message specification file.
         var data = JSON.parse(__libcluon.decodeEnvelopeToJSON(evt.data));
-        console.log(data);
+        // console.log(data);
 
             // animateDashboard(data);
 
         if (data.dataType === 1041) {
-            pedalPosition = (data.opendlv_proxy_PedalPositionReading.position) * 100
+            pedalPosition = (data.opendlv_proxy_PedalPositionReading.position) * 100;
             if(pedalPosition < 0){
                 pedalPosition = pedalPosition * -1;
                 $("#rpm").data("kendoRadialGauge").value(pedalPosition);
@@ -45,7 +56,7 @@ if ("WebSocket" in window) {
             $("#kmh").data("kendoRadialGauge").value(groundSteering);
         }
         else if(data.dataType === 1039){
-            distanceReading = data.opendlv_proxy_DistanceReading.distance;
+            distanceReading = (data.opendlv_proxy_DistanceReading.distance) * 100;
             $("#fuel").data("kendoRadialGauge").value(distanceReading);
         }
 
