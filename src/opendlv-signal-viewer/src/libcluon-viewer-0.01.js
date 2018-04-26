@@ -41,7 +41,7 @@ if ("WebSocket" in window) {
             }
         }
         else if(data.dataType === 1045){
-            groundSteering = (data.opendlv_proxy_GroundSteeringReading.groundSteering) * 100;
+            groundSteering = (data.opendlv_proxy_GroundSteeringReading.groundSteering) * 100 + 16;
             if(groundSteering < 0){
                 // groundSteering = groundSteering * -1;
                 $("#kmh").data("kendoRadialGauge").value(groundSteering);
