@@ -12,17 +12,6 @@ function getResourceFrom(url) {
 // Check for availability of WebSockets.
 if ("WebSocket" in window) {
 
-    $(function() {
-        $(".meter > span").each(function() {
-            $(this)
-                .data("origWidth", $(this).width())
-                .width(0)
-                .animate({
-                    width: $(this).data("origWidth")
-                }, 1200);
-        });
-    });
-
     // Read data in binary from the WebSocket, channel "od4".
     var ws = new WebSocket("ws://" + window.location.host + "/", "od4");
     ws.binaryType = 'arraybuffer';
