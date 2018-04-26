@@ -14,10 +14,15 @@ h1 {
     opacity: 0.9;
     text-align: center;
     margin-top: 50px;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 #apList {
-color: white;
+    color: antiquewhite;
+    width: 400px;
+    height: 100px;
+    overflow: auto;
+    margin: auto;
 }
 
 .meter {

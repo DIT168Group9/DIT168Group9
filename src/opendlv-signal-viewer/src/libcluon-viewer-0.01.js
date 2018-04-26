@@ -41,8 +41,13 @@ if ("WebSocket" in window) {
             }
         }
         else if(data.dataType === 1045){
-            groundSteering = data.opendlv_proxy_GroundSteeringReading.groundSteering;
-            $("#kmh").data("kendoRadialGauge").value(groundSteering);
+            groundSteering = (data.opendlv_proxy_GroundSteeringReading.groundSteering) * 100;
+            if(groundSteering < 0){
+                // groundSteering = groundSteering * -1;
+                $("#kmh").data("kendoRadialGauge").value(groundSteering);
+            }else{
+                $("#kmh").data("kendoRadialGauge").value(groundSteering);
+            }
         }
         else if(data.dataType === 1039){
             distanceReading = (data.opendlv_proxy_DistanceReading.distance) * 100;
@@ -63,7 +68,13 @@ if ("WebSocket" in window) {
             announcePresenceVehicalIp = window.atob(data.AnnouncePresence.vehicleIp);
             announcePresenceGroupId = window.atob(data.AnnouncePresence.groupId);
 
-            $("#apList").append('<li>' + "Group" + announcePresenceGroupId + "has the ip: " + announcePresenceVehicalIp + '</li>');
+            $("#apList").append('<li>' + "Group " + announcePresenceGroupId + " has the ip: " + announcePresenceVehicalIp + '</li>');
+        }
+
+        else if(data.dataType === 2001){
+            leaderSpeed = data.LeaderStatus.speed;
+            leaderSteering = data.LeaderStatus.steeringAngle;
+            $("#apList").append('<li>' + "Leader's speed value is: " + leaderSpeed + " And the steering value is: " + leaderSteering + '</li>');
         }
 
     };
@@ -131,17 +142,20 @@ function createDashboard() {
         },
 
         scale: {
-            startAngle: -90,
-            endAngle: 270,
+            // startAngle: -90,
+            // endAngle: 270,
 
-            min: 0,
-            max: 200,
+            startAngle: 250,
+            endAngle: -70,
+
+            min: -100,
+            max: 100,
 
             majorTicks: {
                 width: 1,
                 size: 14
             },
-            majorUnit: 50,
+            majorUnit: 20,
 
             minorTicks: {
                 size: 10
@@ -235,6 +249,8 @@ var groundSteering;
 var distanceReading;
 var announcePresenceVehicalIp;
 var announcePresenceGroupId;
+var leaderSpeed;
+var leaderSteering;
 // function animateDashboard(data) {
 //
 //
