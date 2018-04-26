@@ -34,7 +34,7 @@ class V2VService {
 public:
     std::map <std::string, std::string> presentCars;
 
-    V2VService(std::string ip, std::string id);
+    V2VService(std::string ip, std::string id, std::string partnerIp, std::string partnerId);
 
     void announcePresence();
     void followRequest(std::string vehicleIp);
@@ -46,9 +46,13 @@ public:
 private:
     std::string _IP;
     std::string _ID;
+    std::string _PARTNER_IP;
+    std::string _PARTNER_ID;
+    bool isPresentPartner = false;
+    bool isFollower = false;
+    bool isLeader = false;
 
     std::string leaderIp;
-    std::string followerIp;
 
     std::shared_ptr<cluon::OD4Session>  broadcast;
     std::shared_ptr<cluon::UDPReceiver> incoming;
