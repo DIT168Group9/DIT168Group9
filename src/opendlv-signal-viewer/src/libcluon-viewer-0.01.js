@@ -57,11 +57,16 @@ if ("WebSocket" in window) {
                     .data("origWidth", $(this).width())
                     .width(0)
                     .animate({
-                        width: $(this).data(distanceReading)
+                        width: distanceReading
                     }, 1200);
             });
 
             $("#fuel").data("kendoRadialGauge").value(distanceReading);
+        }
+
+        else if(data.dataType === 1035){
+            temperatureReading = data.opendlv_proxy_TemperatureReading.temperature;
+            $("#water-temprature").data("kendoRadialGauge").value(temperatureReading);
         }
 
         else if(data.dataType === 1001){
@@ -209,7 +214,7 @@ function createDashboard() {
         theme: "black",
 
         pointer: {
-            value: 90,
+            value: 0,
             color: "#ea7001"
         },
 
@@ -217,8 +222,8 @@ function createDashboard() {
             startAngle: 180,
             endAngle: 270,
 
-            min: 60,
-            max: 120,
+            min: 0,
+            max: 90,
 
             majorUnit: 30,
             majorTicks: {
@@ -232,8 +237,8 @@ function createDashboard() {
             },
 
             ranges: [{
-                from: 110,
-                to: 120,
+                from: 70,
+                to: 90,
                 color: "#c20000"
             }],
 
@@ -251,6 +256,7 @@ var announcePresenceVehicalIp;
 var announcePresenceGroupId;
 var leaderSpeed;
 var leaderSteering;
+var temperatureReading;
 // function animateDashboard(data) {
 //
 //
