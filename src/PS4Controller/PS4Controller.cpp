@@ -122,7 +122,7 @@ int main(int argc, char** argv) {
                                 case LStickX: {
                                     opendlv::proxy::GroundSteeringReading steeringReading;
                                     float value = event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE *
-                                                  static_cast<float>(M_PI) / 180.0f + m_OFFSET;
+                                                  static_cast<float>(M_PI) / 180.0f - m_OFFSET;
                                     value = roundf(value * 100) / 100.0;
                                     steeringReading.groundSteering(value);
                                     od4.send(steeringReading);
