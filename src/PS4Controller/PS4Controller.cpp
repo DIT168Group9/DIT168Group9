@@ -29,73 +29,98 @@ int main(int argc, char** argv) {
                         if ((event->type &0x0F) == 1) {
                             switch (event->id) {
                                 case X: {
-                                    std::cout << "X pressed." << std::endl;
-                                    opendlv::proxy::ButtonPressed buttonPressed;
-                                    buttonPressed.buttonNumber(1);
-                                    od4.send(buttonPressed);
-                                    std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "X pressed." << std::endl;
+                                        opendlv::proxy::ButtonPressed buttonPressed;
+                                        buttonPressed.buttonNumber(1);
+                                        od4.send(buttonPressed);
+                                        std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    }
                                 }
                                     break;
                                 case Circle: {
-                                    std::cout << "Circle pressed." << std::endl;
-                                    opendlv::proxy::ButtonPressed buttonPressed;
-                                    buttonPressed.buttonNumber(2);
-                                    od4.send(buttonPressed);
-                                    std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "Circle pressed." << std::endl;
+                                        opendlv::proxy::ButtonPressed buttonPressed;
+                                        buttonPressed.buttonNumber(2);
+                                        od4.send(buttonPressed);
+                                        std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    }
                                 }
                                     break;
                                 case Triangle: {
-                                    std::cout << "Triangle pressed." << std::endl;
-                                    opendlv::proxy::ButtonPressed buttonPressed;
-                                    buttonPressed.buttonNumber(3);
-                                    od4.send(buttonPressed);
-                                    std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "Triangle pressed." << std::endl;
+                                        opendlv::proxy::ButtonPressed buttonPressed;
+                                        buttonPressed.buttonNumber(3);
+                                        od4.send(buttonPressed);
+                                        std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    }
                                 }
                                     break;
                                 case Square: {
-                                    std::cout << "Square pressed." << std::endl;
-                                    opendlv::proxy::ButtonPressed buttonPressed;
-                                    buttonPressed.buttonNumber(0);
-                                    od4.send(buttonPressed);
-                                    std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "Square pressed." << std::endl;
+                                        opendlv::proxy::ButtonPressed buttonPressed;
+                                        buttonPressed.buttonNumber(0);
+                                        od4.send(buttonPressed);
+                                        std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                                    }
                                 }
                                     break;
                                 case L1:
-                                    std::cout << "L1 pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "L1 pressed." << std::endl;
+                                    }
                                     break;
                                 case R1:
-                                    std::cout << "R1 pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "R1 pressed." << std::endl;
+                                    }
                                     break;
                                 case L2:
-                                    std::cout << "L2 pressed." << std::endl;
+                                        std::cout << "L2 pressed." << std::endl;
                                     break;
                                 case R2:
-                                    std::cout << "R2 pressed." << std::endl;
+                                        std::cout << "R2 pressed." << std::endl;
                                     break;
                                 case Share:
-                                    std::cout << "Share pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "Share pressed." << std::endl;
+                                    }
                                     break;
                                 case Options:
-                                    std::cout << "Options pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "Options pressed." << std::endl;
+                                    }
                                     break;
                                 case PS:
-                                    std::cout << "PS Button pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "PS Button pressed." << std::endl;
+                                    }
                                     break;
                                 case LStick:
-                                    std::cout << "L3 pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "L3 pressed." << std::endl;
+                                    }
                                     break;
                                 case RStick:
-                                    std::cout << "R3 pressed." << std::endl;
+                                    if (event->data == 1) {
+                                        std::cout << "R3 pressed." << std::endl;
+                                    }
                                     break;
-                                default:       break;
+                                default:
+                                    break;
                             }
                         }
                         else if ((event->type &0x0F) == 2) {
                             switch (event->id) {
                                 case LStickX: {
                                     opendlv::proxy::GroundSteeringReading steeringReading;
-                                    steeringReading.groundSteering(event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE *
-                                                                           static_cast<float>(M_PI) / 180.0f);
+                                    float value = event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE *
+                                                  static_cast<float>(M_PI) / 180.0f - m_OFFSET;
+                                    value = roundf(value * 100) / 100.0;
+                                    steeringReading.groundSteering(value);
                                     od4.send(steeringReading);
                                     std::cout << "Sending Angle: " << steeringReading.groundSteering() << std::endl;
                                     }
@@ -103,7 +128,15 @@ int main(int argc, char** argv) {
                                 case LStickY: break;
                                 case L2Y: {
                                     opendlv::proxy::PedalPositionReading pedalPositionReading;
-                                    pedalPositionReading.position(-(event->data) / MAX_AXES_VALUE * m_MAX_DECELERATION);
+                                    float value = event->data / MAX_AXES_VALUE * m_MAX_DECELERATION;
+
+                                    if (value >= 0.025f) {
+                                        value += 1;
+                                    }
+
+                                    value *= 1;
+                                    value = roundf(value * 100) / 100.0;
+                                    pedalPositionReading.position(value);
                                     od4.send(pedalPositionReading); //This value is in percent
                                     std::cout << "Sending Speed: " << pedalPositionReading.position() << std::endl;
                                     }
@@ -112,7 +145,14 @@ int main(int argc, char** argv) {
                                 case RStickY: break;
                                 case R2Y:   {
                                     opendlv::proxy::PedalPositionReading pedalPositionReading;
-                                    pedalPositionReading.position(event->data / MAX_AXES_VALUE * m_MAX_ACCELERATION);
+                                    float value = -(event->data) / MAX_AXES_VALUE * m_MAX_ACCELERATION;
+
+                                    if (value >= 0.025f) {
+                                        value += 0.125f;
+                                    }
+
+                                    value = roundf(value * 100) / 100.0;
+                                    pedalPositionReading.position(value);
                                     od4.send(pedalPositionReading); //This value is in percent
                                     std::cout << "Sending Speed: " << pedalPositionReading.position() << std::endl;
                                     }
