@@ -57,7 +57,7 @@ if ("WebSocket" in window) {
                     .data("origWidth", $(this).width())
                     .width(0)
                     .animate({
-                        width: distanceReading + 400
+                        width: distanceReading * 9
                     }, 'fast');
             });
 
@@ -73,13 +73,33 @@ if ("WebSocket" in window) {
             announcePresenceVehicalIp = window.atob(data.AnnouncePresence.vehicleIp);
             announcePresenceGroupId = window.atob(data.AnnouncePresence.groupId);
 
-            $("#apList").append('<li>' + "Group " + announcePresenceGroupId + " has the ip: " + announcePresenceVehicalIp + '</li>');
+            $("#apList").append('<li>' + " Group " + announcePresenceGroupId + " has the ip: " + announcePresenceVehicalIp + '</li>');
         }
 
         else if(data.dataType === 2001){
             leaderSpeed = data.LeaderStatus.speed;
             leaderSteering = data.LeaderStatus.steeringAngle;
-            $("#apList").append('<li>' + "Leader's speed value is: " + leaderSpeed + " And the steering value is: " + leaderSteering + '</li>');
+            $("#apList").append('<li>' + " Leader's speed value is: " + leaderSpeed + " And the steering value is: " + leaderSteering + '</li>');
+        }
+
+        else if(data.dataType === 1002){
+            followerRequest = data.FollowRequest.temporaryValue;
+            $("#apList").append('<li>' + " Follow Request Received! " + '</li>');
+        }
+
+        else if(data.dataType === 1003){
+            followResponse = data.FollowRequest.temporaryValue;
+            $("#apList").append('<li>' + " Follow Response Received! " + '</li>');
+        }
+
+        else if(data.dataType === 1004){
+            stopFollow = data.FollowRequest.temporaryValue;
+            $("#apList").append('<li>' + " Stop Follow Received! " + '</li>');
+        }
+
+        else if(data.dataType === 3001){
+            followerStatus = data.FollowRequest.temporaryValue;
+            $("#apList").append('<li>' + " Follower Status Received! " + '</li>');
         }
 
     };
@@ -254,6 +274,10 @@ var groundSteering;
 var distanceReading;
 var announcePresenceVehicalIp;
 var announcePresenceGroupId;
+var followerRequest;
+var followResponse;
+var stopFollow;
+var followerStatus;
 var leaderSpeed;
 var leaderSteering;
 var temperatureReading;
