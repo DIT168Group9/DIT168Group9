@@ -34,7 +34,8 @@ class V2VService {
 public:
     std::map <std::string, std::string> presentCars;
 
-    V2VService(std::string ip, std::string id, std::string partnerIp, std::string partnerId);
+    V2VService(std::string ip, std::string id, std::string partnerIp, std::string partnerId,
+                           std::string speed_after, std::string angle_after);
 
     void announcePresence();
     void followRequest(std::string vehicleIp);
@@ -44,10 +45,13 @@ public:
     void followerStatus();
 
 private:
+    static constexpr float m_OFFSET = -0.16f;
     std::string _IP;
     std::string _ID;
     std::string _PARTNER_IP;
     std::string _PARTNER_ID;
+    std::string _SPEED_AFTER;
+    std::string _ANGLE_AFTER;
     bool isPresentPartner = false;
     bool isFollower = false;
     bool isLeader = false;

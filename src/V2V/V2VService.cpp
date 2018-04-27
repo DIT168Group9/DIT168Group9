@@ -23,8 +23,11 @@ int main(int argc, char **argv) {
         const std::string ID = commandlineArguments["id"];
         const std::string PARTNER_IP = commandlineArguments["partnerIp"];
         const std::string PARTNER_ID = commandlineArguments["partnerId"];
+        const std::string SPEED_AFTER = commandlineArguments["offsetSpeedAfter"];
+        const std::string ANGLE_AFTER = commandlineArguments["offsetAngleAfter"];
 
-        std::shared_ptr<V2VService> v2vService = std::make_shared<V2VService>(IP, ID, PARTNER_IP, PARTNER_ID);
+        std::shared_ptr<V2VService> v2vService = std::make_shared<V2VService>(IP, ID, PARTNER_IP, PARTNER_ID,
+                                                                              SPEED_AFTER, ANGLE_AFTER);
         float pedalPos = 0, steeringAngle = 0;
         uint16_t button = 0;
 
@@ -77,11 +80,14 @@ int main(int argc, char **argv) {
 /**
  * Implementation of the V2VService class as declared in V2VService.hpp
  */
-V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, std::string partnerId) {
+V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, std::string partnerId,
+                                        std::string speed_after, std::string angle_after) {
     _IP = ip;
     _ID = id;
     _PARTNER_IP = partnerIp;
     _PARTNER_ID = partnerId;
+    _SPEED_AFTER = speed_after;
+    _ANGLE_AFTER = angle_after;
 
     /*
      * The broadcast field contains a reference to the broadcast channel which is an OD4Session. This is where
@@ -179,10 +185,10 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
                  std::cout << "LeaderStatus Values, pedalPos: " << leaderStatus.speed() << " steeringAngle: "
                            << leaderStatus.steeringAngle() << std::endl;
 
-                 msgPedal.position(leaderStatus.speed() + 0.03f);
+                 msgPedal.position(leaderStatus.speed() + std::stof(_SPEED_AFTER));
                  od4->send(msgPedal);
 
-                 msgSteering.groundSteering(leaderStatus.steeringAngle());
+                 msgSteering.groundSteering(leaderStatus.steeringAngle() + std::stof(_ANGLE_AFTER));
                  od4->send(msgSteering);
                  break;
              }
@@ -302,7 +308,7 @@ void V2VService::leaderStatus(float speed, float steeringAngle, uint8_t distance
     LeaderStatus leaderStatus;
     leaderStatus.timestamp(getTime());
     leaderStatus.speed(speed);
-    leaderStatus.steeringAngle(steeringAngle);
+    leaderStatus.steeringAngle(steeringAngle - m_OFFSET);
     leaderStatus.distanceTraveled(distanceTraveled);
     od4->send(leaderStatus);
     toFollower->send(encode(leaderStatus));

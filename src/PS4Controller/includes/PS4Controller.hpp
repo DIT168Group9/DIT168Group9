@@ -14,7 +14,7 @@ static constexpr float m_MAX_DECELERATION = 1.0f;    /**< Max Deceleration value
 static constexpr float m_MAX_ACCELERATION = 0.25f;       /**< Max Acceleration value, must be positive.*/
 static constexpr float m_MAX_STEERING_ANGLE = 38.0f;     /**< Max Steering Angle, must be positive.*/
 
-static constexpr float m_OFFSET = 0.16f;
+static constexpr float m_OFFSET = -0.16f;
 
 opendlv::proxy::PedalPositionReading pedalPositionReading;
 
