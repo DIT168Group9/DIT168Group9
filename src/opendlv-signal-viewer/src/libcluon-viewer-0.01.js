@@ -57,7 +57,7 @@ if ("WebSocket" in window) {
                     .data("origWidth", $(this).width())
                     .width(0)
                     .animate({
-                        width: distanceReading * 9
+                        width: distanceReading * 8
                     }, 'fast');
             });
 
