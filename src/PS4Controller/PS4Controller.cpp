@@ -117,10 +117,21 @@ int main(int argc, char** argv) {
                             switch (event->id) {
                                 case LStickX: {
                                     opendlv::proxy::GroundSteeringReading steeringReading;
-                                    float value = event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE *
-                                                  static_cast<float>(M_PI) / 180.0f + m_OFFSET;
-                                    value = roundf(value * 100) / 100.0;
-                                    steeringReading.groundSteering(value);
+                                    steeringReading.groundSteering(m_OFFSET);
+                                    float value = 0;
+                                    if (event->data < 0) {
+                                        value = event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE_LEFT *
+                                                      static_cast<float>(M_PI) / 180.0f + m_OFFSET;
+                                        value = roundf(value * 100) / 100.0;
+                                        steeringReading.groundSteering(value);
+                                    }
+                                    else if (event->data >= 0) {
+                                        value = event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE_RIGHT *
+                                                static_cast<float>(M_PI) / 180.0f + m_OFFSET;
+                                        value = roundf(value * 100) / 100.0;
+                                        steeringReading.groundSteering(value);
+                                    }
+
                                     od4.send(steeringReading);
                                     std::cout << "Sending Angle: " << steeringReading.groundSteering() << std::endl;
                                     }

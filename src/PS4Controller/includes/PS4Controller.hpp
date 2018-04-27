@@ -7,13 +7,13 @@
 #include "cluon/OD4Session.hpp"
 #include "Messages.hpp"
 
-static constexpr float MIN_AXES_VALUE = -32768.0f;      /**< Minimum value of axes range*/
-static constexpr float MAX_AXES_VALUE = 32767.0f;       /**< Maximum value of axes range.*/
+static constexpr float MIN_AXES_VALUE = -32768.0f;              /**< Minimum value of axes range*/
+static constexpr float MAX_AXES_VALUE = 32767.0f;               /**< Maximum value of axes range.*/
 
-static constexpr float m_MAX_DECELERATION = -1.0;    /**< Max Deceleration value, must be negative.*/
-static constexpr float m_MAX_ACCELERATION = 0.25;       /**< Max Acceleration value, must be positive.*/
-static constexpr float m_MAX_STEERING_ANGLE = 38.0f;     /**< Max Steering Angle, must be positive.*/
-
+static constexpr float m_MAX_DECELERATION = -1.0;               /**< Max Deceleration value, must be negative.*/
+static constexpr float m_MAX_ACCELERATION = 0.25;               /**< Max Acceleration value, must be positive.*/
+static constexpr float m_MAX_STEERING_ANGLE_RIGHT = 38.0f;      /**< Max Steering Angle, must be positive.*/
+static constexpr float m_MAX_STEERING_ANGLE_LEFT = 35.0f;       /**< Max Steering Angle, must be positive.*/
 static constexpr float m_OFFSET = -0.16f;
 
 opendlv::proxy::PedalPositionReading pedalPositionReading;
