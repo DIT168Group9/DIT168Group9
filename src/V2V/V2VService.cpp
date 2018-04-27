@@ -185,11 +185,24 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
                  std::cout << "LeaderStatus Values, pedalPos: " << leaderStatus.speed() << " steeringAngle: "
                            << leaderStatus.steeringAngle() << std::endl;
 
-                 msgPedal.position(leaderStatus.speed() + std::stof(_SPEED_AFTER));
+                 float floatSpeedAfter = std::stof(_SPEED_AFTER);
+                 if (leaderStatus.speed() < floatSpeedAfter) {
+                     msgPedal.position(leaderStatus.speed());
+                 }
+                 else {
+                     msgPedal.position(leaderStatus.speed() + floatSpeedAfter);
+                 }
                  od4->send(msgPedal);
 
-                 msgSteering.groundSteering(leaderStatus.steeringAngle() + std::stof(_ANGLE_AFTER));
+                 float floatAngleAfter = std::stof(_ANGLE_AFTER);
+                 if (leaderStatus.steeringAngle() < floatAngleAfter) {
+                     msgSteering.groundSteering(leaderStatus.steeringAngle());
+                 }
+                 else {
+                     msgSteering.groundSteering(leaderStatus.steeringAngle() + m_OFFSET + floatAngleAfter);
+                 }
                  od4->send(msgSteering);
+
                  break;
              }
              default: std::cout << "¯\\_(ツ)_/¯" << std::endl;
