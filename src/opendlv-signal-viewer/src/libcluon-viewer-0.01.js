@@ -67,7 +67,6 @@ if ("WebSocket" in window) {
             $(".meter > span").each(function() {
                 $(this)
                     .data("origWidth", $(this).width())
-                    .width(distanceReading)
                     .animate({
                         width: distanceReading
                     }, 'fast');
