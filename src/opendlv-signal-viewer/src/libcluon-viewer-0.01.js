@@ -1,5 +1,17 @@
 // "Instantiate" libcluon.
-var __libcluon = libcluon();
+let __libcluon = libcluon();
+let pedalPosition;
+let groundSteering;
+let distanceReading;
+let announcePresenceVehicalIp;
+let announcePresenceGroupId;
+let followerRequest;
+let followResponse;
+let stopFollow;
+let followerStatus;
+let leaderSpeed;
+let leaderSteering;
+let temperatureReading;
 
 // Function to load data from a remote destination.
 function getResourceFrom(url) {
@@ -50,14 +62,14 @@ if ("WebSocket" in window) {
             }
         }
         else if(data.dataType === 1039){
-            distanceReading = (data.opendlv_proxy_DistanceReading.distance) * 100;
+            distanceReading = (data.opendlv_proxy_DistanceReading.distance) * 800;
 
             $(".meter > span").each(function() {
                 $(this)
                     .data("origWidth", $(this).width())
-                    .width(0)
+                    .width(distanceReading)
                     .animate({
-                        width: distanceReading * 8
+                        width: distanceReading
                     }, 'fast');
             });
 
@@ -269,40 +281,12 @@ function createDashboard() {
     });
 }
 
-var pedalPosition;
-var groundSteering;
-var distanceReading;
-var announcePresenceVehicalIp;
-var announcePresenceGroupId;
-var followerRequest;
-var followResponse;
-var stopFollow;
-var followerStatus;
-var leaderSpeed;
-var leaderSteering;
-var temperatureReading;
-// function animateDashboard(data) {
-//
-//
-// }
-//
-// function createBar(){
-//
-//     $(".meter > span").each(function() {
-//         $(this)
-//             .data("origWidth", $(this).width())
-//             .width(0)
-//             .animate({
-//                 width: $(this).data("origWidth")
-//             }, 1200);
-//     });
-// }
+
 
 $(document).ready(function() {
 
     createDashboard();
-    // createBar();
-    // animateDashboard(data);
+
 
     $(document).bind("kendo:skinChange", function(e) {
         createDashboard();
