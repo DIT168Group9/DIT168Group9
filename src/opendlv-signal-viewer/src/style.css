@@ -1,11 +1,11 @@
 
 
-.page-wrap { width: 400px; margin: 80px auto; }
+.page-wrap { width: 300px; margin: 80px auto; }
 
 body {
     background-color: #1d2124;
     display: grid;
-    grid-template-columns: [first] 30% [line2] auto [line3] 30% [end];
+    grid-template-columns: [first] 20% [line2] auto [line3] 20% [end];
     grid-template-rows: [row1-start] 30% [row1-end] auto [third-line] auto [last-line];
 }
 
@@ -41,7 +41,7 @@ body {
 
 .meter {
     height: 20px;  /* Can be anything */
-    /*position: relative;*/
+    position: relative;
     /*margin: 20px 0 20px 0; !* Just for demo spacing *!*/
     background: #555;
     -moz-border-radius: 25px;
@@ -58,11 +58,13 @@ body {
     grid-column-end: line2;
     grid-row-start: row1-end;
     grid-row-end: third-line;
-    margin-left: 50px;
+    /*margin-left: 50px;*/
 
 }
 #meterLeft{
-    margin: 100px 100px 0 0;
+    /*margin: 100px 20% 0 0;*/
+    /*left: 20%;*/
+    top: 20%;
     -webkit-transform: rotate(-90deg);
     -moz-transform: rotate(-90deg);
     transform: rotate(-90deg);
@@ -74,11 +76,13 @@ body {
     grid-column-end: end;
     grid-row-start: row1-end;
     grid-row-end: third-line;
-    margin-left: 50px;
+    /*margin-left: 50px;*/
 
 }
 #meterRight{
-    margin: 100px 100px 0 0;
+    /*margin: 100px 30% 0 0;*/
+    /*right: 20%;*/
+    top: 20%;
     -webkit-transform: rotate(-90deg);
     -moz-transform: rotate(-90deg);
     transform: rotate(-90deg);
@@ -186,12 +190,12 @@ body {
     grid-column-end: line3;
     grid-row-start: row1-end;
     grid-row-end: third-line;
-    align-self: end;
+    place-self: center;
     /*margin-top: 70px;*/
 }
 
 #gauge-container {
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     overflow: hidden;
     width: 614px;
     height: 324px;
