@@ -62,14 +62,14 @@ if ("WebSocket" in window) {
             }
         }
         else if(data.dataType === 1039){
-            distanceReading = (data.opendlv_proxy_DistanceReading.distance) * 600;
+            distanceReading = (data.opendlv_proxy_DistanceReading.distance) * 100;
 
             $(".meter > span").each(function() {
                 $(this)
                     .data("origWidth", $(this).width())
                     .width(0)
                     .animate({
-                        width: distanceReading
+                        width: distanceReading * 6
                     }, 'fast');
             });
 
