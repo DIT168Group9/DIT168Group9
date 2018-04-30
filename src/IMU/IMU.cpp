@@ -51,8 +51,8 @@ int main(int argc, char** argv) {
             opendlv::proxy::AccelerationReading accelerometerReading = readAccelerometer(deviceFile);
             od4.send(accelerometerReading);
 
-            /*opendlv::proxy::MagneticFieldReading magnetometerReading = readMagnetometer(deviceFile);
-            od4.send(magnetometerReading);*/
+            opendlv::proxy::MagneticFieldReading magnetometerReading = readMagnetometer(deviceFile);
+            od4.send(magnetometerReading);
 
             opendlv::proxy::AltitudeReading altimeterReading = readAltimeter(deviceFile);
             od4.send(altimeterReading);
@@ -70,10 +70,10 @@ int main(int argc, char** argv) {
                                     " X: " << accelerometerReading.accelerationX() <<
                                     " Y: " << accelerometerReading.accelerationY() <<
                                     " Z: " << accelerometerReading.accelerationZ() << std::endl
-                          /*<< "Magnetometer-" <<
+                          << "Magnetometer-" <<
                                     " X: " << magnetometerReading.magneticFieldX() <<
                                     " Y: " << magnetometerReading.magneticFieldY() <<
-                                    " Z: " << magnetometerReading.magneticFieldZ() << std::endl*/
+                                    " Z: " << magnetometerReading.magneticFieldZ() << std::endl
                           << "Altimeter -" <<
                                     " Altitude: " << altimeterReading.altitude() << std::endl
                           << "Thermometer -" <<
@@ -386,7 +386,7 @@ float getGscale(bool a_radFlag) {
     if (a_radFlag) {
         conversion = static_cast<float>(M_PI) / 180.0f;
     }
-    switch (m_ascale) {
+    switch (m_gscale) {
         case GFS_250DPS:
             return (250.0f / 32768.0f) * conversion;
         case GFS_500DPS:
@@ -400,8 +400,7 @@ float getGscale(bool a_radFlag) {
     }
 }
 
-float getAscale()
-{
+float getAscale() {
     switch (m_ascale) {
         case AFS_2G:
             return (9.82f * 2.0f / 32768.0f);
