@@ -58,7 +58,7 @@ body {
     grid-column-end: line2;
     grid-row-start: row1-end;
     grid-row-end: third-line;
-    margin-left: 100px;
+    margin-left: 50px;
 
 }
 #meterLeft{
