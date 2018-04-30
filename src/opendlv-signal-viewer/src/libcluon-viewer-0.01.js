@@ -15,7 +15,7 @@ let temperatureReading;
 
 // Function to load data from a remote destination.
 function getResourceFrom(url) {
-    var xmlHttp = new XMLHttpRequest();
+    let xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", url, false /*asynchronous request*/);
     xmlHttp.send(null);
     return xmlHttp.responseText;
@@ -25,20 +25,20 @@ function getResourceFrom(url) {
 if ("WebSocket" in window) {
 
     // Read data in binary from the WebSocket, channel "od4".
-    var ws = new WebSocket("ws://" + window.location.host + "/", "od4");
+    let ws = new WebSocket("ws://" + window.location.host + "/", "od4");
     ws.binaryType = 'arraybuffer';
 
     ws.onopen = function() {
         console.log("Connected.");
         // Load the ODVD message specification file to have information about the messages to decode and encode.
-        var odvdMessageSpecificationFile = getResourceFrom("opendlv-standard-message-set-v0.9.4.odvd");
+        let odvdMessageSpecificationFile = getResourceFrom("opendlv-standard-message-set-v0.9.4.odvd");
         console.log("Loaded " + __libcluon.setMessageSpecification(odvdMessageSpecificationFile) + " messages from specification.");
     };
 
     ws.onmessage = function(evt) {
 
         // Got new data from the WebSocket; now, try to decode it into JSON using the supplied message specification file.
-        var data = JSON.parse(__libcluon.decodeEnvelopeToJSON(evt.data));
+        let data = JSON.parse(__libcluon.decodeEnvelopeToJSON(evt.data));
         // console.log(data);
 
         // animateDashboard(data);
@@ -62,7 +62,7 @@ if ("WebSocket" in window) {
             }
         }
         else if(data.dataType === 1039){
-            distanceReading = (data.opendlv_proxy_DistanceReading.distance) * 800;
+            distanceReading = (data.opendlv_proxy_DistanceReading.distance) * 600;
 
             $(".meter > span").each(function() {
                 $(this)
