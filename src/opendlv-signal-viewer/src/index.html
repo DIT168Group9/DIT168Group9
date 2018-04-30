@@ -14,13 +14,13 @@
 </head>
 <body>
 
-<div>
+<div id="name">
     <h1>Group 09 Signal Viewer</h1>
 </div>
 
-<div id="page-wrap">
-    <div class="meter orange nostripes">
-        <!--<span style="width: 33.3%"></span>-->
+<div class="page-wrap" id="right">
+    <div class="meter orange nostripes" id="meterRight">
+        <span style="width: 33.3%"></span>
     </div>
 </div>
 
@@ -35,7 +35,13 @@
 
 </div>
 
-<div>
+<div class="page-wrap" id="left">
+    <div class="meter orange nostripes" id="meterLeft">
+        <span style="width: 33.3%"></span>
+    </div>
+</div>
+
+<div id="list">
     <ul id="apList"></ul>
 </div>
 
@@ -43,7 +49,6 @@
 <script type="text/javascript" src="bootstrap.min.js"></script>
 <script type="text/javascript" src="kendo.all.min.js"></script>
 <script type="text/javascript" src="libcluon-viewer-0.01.js"></script>
-
 
 </body>
 </html>
