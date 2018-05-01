@@ -74,7 +74,7 @@ if ("WebSocket" in window) {
 
         else if(data.dataType === 1039){
             distanceReading = (data.opendlv_proxy_DistanceReading.distance) * 100;
-            if(distanceReading < 10){
+            if(distanceReading < 20){
                 $("rightStop").css('color','red');
             }
             else{
