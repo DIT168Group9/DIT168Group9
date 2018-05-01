@@ -50,7 +50,7 @@ body {
     padding: 10px;
     -webkit-box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
     -moz-box-shadow   : inset 0 -1px 1px rgba(255,255,255,0.3);
-    box-shadow        : inset 0 -1px 1px rgba(255,255,255,0.3)
+    box-shadow        : inset 0 -1px 1px rgba(255,255,255,0.3);
     overflow:hidden;
 }
 #left{
@@ -166,6 +166,7 @@ body {
 
 .animate > span:after {
     display: none;
+    overflow:hidden;
 
 }
 
@@ -182,7 +183,8 @@ body {
     background-color: #f1a165;
     background-image: -moz-linear-gradient(top, #f1a165, #f36d0a);
     background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #f1a165),color-stop(1, #f36d0a));
-    background-image: -webkit-linear-gradient(#f1a165, #f36d0a);
+    background-image: -webkit-linear-gradient(#f1a165, #f36d0a)
+    overflow:hidden;
 
 }
 
@@ -196,7 +198,8 @@ body {
 .nostripes > span > span, .nostripes > span:after {
     -webkit-animation: none;
     background-image: none;
-    
+    overflow:hidden;
+
 }
 
 
