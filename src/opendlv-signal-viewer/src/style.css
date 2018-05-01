@@ -87,6 +87,17 @@ body {
     -moz-transform: rotate(-90deg);
     transform: rotate(-90deg);
 }
+
+.stopSign{
+    grid-column-start: line3;
+    grid-column-end: end;
+    grid-row-start: third-line;
+    grid-row-end: last-line;
+    justify-self: center;
+    align-self: start;
+    color: #1d2124;
+}
+
 .meter > span {
     display: block;
     height: 100%;
