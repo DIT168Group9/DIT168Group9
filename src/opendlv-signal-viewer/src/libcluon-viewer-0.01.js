@@ -12,6 +12,9 @@ let followerStatus;
 let leaderSpeed;
 let leaderSteering;
 let temperatureReading;
+let gyroscopeReadingXAxis;
+let gyroscopeReadingYAxis;
+let gyroscopeReadingZAxis;
 
 // Function to load data from a remote destination.
 function getResourceFrom(url) {
@@ -43,6 +46,8 @@ if ("WebSocket" in window) {
 
         // animateDashboard(data);
 
+        // Pedal Position Readings
+
         if (data.dataType === 1041) {
             pedalPosition = (data.opendlv_proxy_PedalPositionReading.position) * 100;
             if(pedalPosition < 0){
@@ -52,6 +57,9 @@ if ("WebSocket" in window) {
                 $("#rpm").data("kendoRadialGauge").value(pedalPosition);
             }
         }
+
+        // Ground Steering Readings
+
         else if(data.dataType === 1045){
             groundSteering = (data.opendlv_proxy_GroundSteeringReading.groundSteering) * 100 + 16;
             if(groundSteering < 0){
@@ -61,6 +69,9 @@ if ("WebSocket" in window) {
                 $("#kmh").data("kendoRadialGauge").value(groundSteering);
             }
         }
+
+        // Ultrasonic Readings
+
         else if(data.dataType === 1039){
             distanceReading = (data.opendlv_proxy_DistanceReading.distance) * 100;
 
@@ -69,17 +80,30 @@ if ("WebSocket" in window) {
                     .data("origWidth", $(this).width())
                     .width(0)
                     .animate({
-                        width: distanceReading * 6
+                        width: distanceReading * 5
                     }, 'fast');
             });
 
             $("#fuel").data("kendoRadialGauge").value(distanceReading);
         }
 
+        // Temperature Readings
+
         else if(data.dataType === 1035){
             temperatureReading = data.opendlv_proxy_TemperatureReading.temperature;
             $("#water-temprature").data("kendoRadialGauge").value(temperatureReading);
         }
+
+        // Gyroscope Readings
+
+        else if(data.dataType === 1042){
+            gyroscopeReadingXAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingX;
+            gyroscopeReadingYAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingY;
+            gyroscopeReadingZAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingZ;
+
+        }
+
+        // V2V messages in Signal Viewer
 
         else if(data.dataType === 1001){
             announcePresenceVehicalIp = window.atob(data.AnnouncePresence.vehicleIp);
