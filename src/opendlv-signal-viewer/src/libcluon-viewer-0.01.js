@@ -72,27 +72,41 @@ if ("WebSocket" in window) {
 
         // Ultrasonic Readings
 
-        else if(data.dataType === 1039){
+        else if(data.dataType === 1039) {
             distanceReading = (data.opendlv_proxy_DistanceReading.distance) * 100;
-            if(distanceReading <= 10 && distanceReading >= 1){
-                $(".stopSign").css('color','red');
+            if (distanceReading <= 10 && distanceReading >= 1) {
+                $(".stopSign").css('color', 'red');
             }
-            else{
-                $(".stopSign").css('color','#1d2124');
+            else {
+                $(".stopSign").css('color', '#1d2124');
             }
 
-            $(".meter > span").each(function() {
-                $(this)
-                    .data("origWidth", $(this).width())
-                    .width(0)
-                    .animate({
-                        width: distanceReading * 5
-                    }, 'fast');
-            });
+            if (distanceReading > 56) {
+                $(".meter > span").each(function () {
+                    $(this)
+                        .data("origWidth", $(this).width())
+                        .width(0)
+                        .animate({
+                            width: 280
+                        }, 'fast');
+                });
+                $("#fuel").data("kendoRadialGauge").value(distanceReading);
+            }
 
-            $("#fuel").data("kendoRadialGauge").value(distanceReading);
+            else {
+
+                $(".meter > span").each(function () {
+                    $(this)
+                        .data("origWidth", $(this).width())
+                        .width(0)
+                        .animate({
+                            width: distanceReading * 5
+                        }, 'fast');
+                });
+
+                $("#fuel").data("kendoRadialGauge").value(distanceReading);
+            }
         }
-
         // Temperature Readings
 
         else if(data.dataType === 1035){

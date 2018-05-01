@@ -69,6 +69,7 @@ body {
     -webkit-transform: rotate(-90deg);
     -moz-transform: rotate(-90deg);
     transform: rotate(-90deg);
+    width:80%;
 
 }
 #right{
@@ -179,6 +180,7 @@ body {
 
 .orange > span {
     background-color: #f1a165;
+    background-width: 80%;
     background-image: -moz-linear-gradient(top, #f1a165, #f36d0a);
     background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #f1a165),color-stop(1, #f36d0a));
     background-image: -webkit-linear-gradient(#f1a165, #f36d0a)
