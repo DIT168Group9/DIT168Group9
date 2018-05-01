@@ -59,6 +59,7 @@ int main(int argc, char** argv) {
 
             opendlv::proxy::TemperatureReading thermometerReading = readThermometer(deviceFile);
             od4.send(thermometerReading);
+            std::this_thread::sleep_for(std::chrono::duration<double>(0.07));
 
             if (VERBOSE) {
                 std::cout << "[OD4] Sending IMU data: " << std::endl
