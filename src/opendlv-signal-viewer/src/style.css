@@ -103,6 +103,7 @@ body {
 .meter > span {
     display: block;
     height: 100%;
+    overflow: hidden;
     -webkit-border-radius: 20px 8px 8px 20px;
     -moz-border-radius: 20px 8px 8px 20px;
     border-radius: 20px 8px 8px 20px;
@@ -129,12 +130,12 @@ body {
             inset 0 2px 9px  rgba(255,255,255,0.3),
             inset 0 -2px 6px rgba(0,0,0,0.4);
     position: relative;
-    overflow: hidden;
 }
 .meter > span:after, .animate > span > span {
     content: "";
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
+    overflow: hidden;
     background-image:
             -webkit-gradient(linear, 0 0, 100% 100%,
             color-stop(.25, rgba(255, 255, 255, .2)),
@@ -161,13 +162,10 @@ body {
     -webkit-border-radius: 20px 8px 8px 20px;
     -moz-border-radius: 20px 8px 8px 20px;
     border-radius: 20px 8px 8px 20px;
-    overflow: hidden;
 }
 
 .animate > span:after {
     display: none;
-    overflow:hidden;
-
 }
 
 @-webkit-keyframes move {
@@ -184,8 +182,6 @@ body {
     background-image: -moz-linear-gradient(top, #f1a165, #f36d0a);
     background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #f1a165),color-stop(1, #f36d0a));
     background-image: -webkit-linear-gradient(#f1a165, #f36d0a)
-    overflow:hidden;
-
 }
 
 .red > span {
@@ -198,8 +194,6 @@ body {
 .nostripes > span > span, .nostripes > span:after {
     -webkit-animation: none;
     background-image: none;
-    overflow:hidden;
-
 }
 
 
