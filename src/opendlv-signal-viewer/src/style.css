@@ -185,14 +185,15 @@ body {
 .button {
     position: absolute;
     background-color: #555555;
+    border-radius: 25px;
     border: none;
     font-size: 20px;
     color: #ffffff;
     padding: 0 10px 10px 10px;
     width: 200px;
-    left: 40%;
+    left: 0%;
     margin-left: 40px;
-    bottom: 80px;
+    bottom: 0px;
     display: table-cell;
     vertical-align: bottom;
     -webkit-transition-duration: 0.4s; /* Safari */
@@ -200,6 +201,7 @@ body {
     text-decoration: none;
     overflow: hidden;
     cursor: pointer;
+
 
 }
 
