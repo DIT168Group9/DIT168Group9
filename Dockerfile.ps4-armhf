@@ -15,7 +15,7 @@ RUN cd /opt/sources && \
     cd build && \
     cmake -D CMAKE_BUILD_TYPE=Release .. && \
     make && \
-    cd ../PS4Controller/ && \
+    cd src/PS4Controller/ && \
     cp GROUP9.PS4Controller /tmp
 RUN ["cross-build-end"]
 
