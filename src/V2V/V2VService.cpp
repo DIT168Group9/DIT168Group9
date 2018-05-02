@@ -24,10 +24,10 @@ int main(int argc, char **argv) {
         const std::string PARTNER_IP = commandlineArguments["partnerIp"];
         const std::string PARTNER_ID = commandlineArguments["partnerId"];
         const std::string SPEED_AFTER = commandlineArguments["offsetSpeedAfter"];
-        const std::string ANGLE_AFTER = commandlineArguments["offsetAngleAfter"];
 
         std::shared_ptr<V2VService> v2vService = std::make_shared<V2VService>(IP, ID, PARTNER_IP, PARTNER_ID,
-                                                                              SPEED_AFTER, ANGLE_AFTER);
+                                                                              SPEED_AFTER);
+
         float pedalPos = 0, steeringAngle = 0;
         uint16_t button = 0;
 
@@ -81,13 +81,12 @@ int main(int argc, char **argv) {
  * Implementation of the V2VService class as declared in V2VService.hpp
  */
 V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, std::string partnerId,
-                                        std::string speed_after, std::string angle_after) {
+                                        std::string speed_after) {
     _IP = ip;
     _ID = id;
     _PARTNER_IP = partnerIp;
     _PARTNER_ID = partnerId;
     _SPEED_AFTER = speed_after;
-    _ANGLE_AFTER = angle_after;
 
     /*
      * The broadcast field contains a reference to the broadcast channel which is an OD4Session. This is where
@@ -194,15 +193,20 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
                  }
                  od4->send(msgPedal);
 
-                 float floatAngleAfter = std::stof(_ANGLE_AFTER);
-                 if (leaderStatus.steeringAngle() < floatAngleAfter) {
-                     msgSteering.groundSteering(leaderStatus.steeringAngle());
+                 if (leaderStatus.steeringAngle() == 0) {
+                     msgSteering.groundSteering(leaderStatus.steeringAngle() + m_OFFSET);
                  }
-                 else {
-                     msgSteering.groundSteering(leaderStatus.steeringAngle() + m_OFFSET + floatAngleAfter);
+                 else if (leaderStatus.steeringAngle() > 0) {
+                     std::cout << "Left Value: " << ((leaderStatus.steeringAngle() + leftAngleOffset))
+                             << std::endl;
+                     msgSteering.groundSteering((leaderStatus.steeringAngle() + leftAngleOffset));
+                 }
+                 else if (leaderStatus.steeringAngle() < 0) {
+                     std::cout << "Right Value: " << ((leaderStatus.steeringAngle()))
+                               << std::endl;
+                     msgSteering.groundSteering((leaderStatus.steeringAngle()));
                  }
                  od4->send(msgSteering);
-
                  break;
              }
              default: std::cout << "¯\\_(ツ)_/¯" << std::endl;
@@ -392,4 +396,3 @@ T V2VService::decode(std::string data) {
     tmp.accept(v);
     return tmp;
 }
-
