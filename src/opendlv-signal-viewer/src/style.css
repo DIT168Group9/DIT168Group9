@@ -182,6 +182,47 @@ body {
     display: none;
 }
 
+.button {
+    position: absolute;
+    background-color: #555555;
+    border: none;
+    font-size: 20px;
+    color: #ffffff;
+    padding: 0 10px 10px 10px;
+    width: 200px;
+    left: 40%;
+    margin-left: 40px;
+    bottom: 80px;
+    display: table-cell;
+    vertical-align: bottom;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+
+}
+
+.button:after {
+    content: "";
+    background: #48090b;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+}
+
+.button:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+
 @-webkit-keyframes move {
     0% {
         background-position: 0 0;
