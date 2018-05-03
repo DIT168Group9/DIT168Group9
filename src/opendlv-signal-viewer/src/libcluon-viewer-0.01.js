@@ -160,13 +160,6 @@ if ("WebSocket" in window) {
 
         onMessageReceived(__libcluon, evt.data);
 
-        // if(document.getElementById('goodOldSignal').visibility === "visible") {
-            console.log(document.getElementById('goodOldSignal').visibility);
-            document.getElementById('goodOldSignal').onclick = function (e) {
-                alert('hello');
-            }
-        // }
-
     };
     ws.onclose = function() {
         console.log("Connection is closed.");
@@ -194,12 +187,27 @@ if ("WebSocket" in window) {
             $("#goodOldSignal").toggle();
         });
 
+        // if($(".oldSignal").css('visibility') === "hidden") {
+        //     console.log($(".oldSignal").css('visibility'));
+        //     $("#graphButton").on('click', function () {
+        //         $("#goodOldSignal").css('visibility', 'visible')
+        //     });
+        // }
+        // else if($(".oldSignal").css('visibility') === "visible"){
+        //     console.log($(".oldSignal").css('visibility'));
+        //     $("#graphButton").on('click', function () {
+        //         $("#goodOldSignal").css('visibility', 'hidden')
+        //     });
+        // }
+
+
         createDashboard();
         $(document).bind("kendo:skinChange", function(e) {
             createDashboard();
         });
 
     });
+
 }
 else {
     console.log("WebSocket is not supported by your Browser!");

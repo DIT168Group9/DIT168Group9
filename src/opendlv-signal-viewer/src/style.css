@@ -10,7 +10,7 @@ body {
 }
 
 #name {
-    color: #fdfdfe;
+    color: antiquewhite;
     opacity: 0.9;
     text-align: center;
     /*margin-top: 50px;*/
@@ -183,17 +183,22 @@ body {
 }
 
 .button {
-    position: absolute;
-    background-color: #555555;
+    grid-column-start: first;
+    grid-column-end: line2;
+    grid-row-start: third-line;
+    grid-row-end: last-line;
+    place-self: center;
+
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;;
+    font-size: 1em;
+
+    position: relative;
+    background-color: #1b1e21;
     border-radius: 25px;
     border: none;
-    font-size: 20px;
-    color: #ffffff;
-    padding: 0 10px 10px 10px;
-    width: 200px;
-    left: 0%;
-    margin-left: 40px;
-    bottom: 0px;
+    /*font-size: 20px;*/
+    color: antiquewhite;
+    width: 50%;
     display: table-cell;
     vertical-align: bottom;
     -webkit-transition-duration: 0.4s; /* Safari */
@@ -201,19 +206,17 @@ body {
     text-decoration: none;
     overflow: hidden;
     cursor: pointer;
-
-
 }
 
 .button:after {
     content: "";
-    background: #48090b;
+    background: silver;
     display: block;
     position: absolute;
-    padding-top: 300%;
-    padding-left: 350%;
-    margin-left: -20px !important;
-    margin-top: -120%;
+    padding-top: 100%;
+    padding-left: 100%;
+    margin-left: -50% !important;
+    margin-top: -50%;
     opacity: 0;
     transition: all 0.8s
 }
@@ -223,6 +226,9 @@ body {
     margin: 0;
     opacity: 1;
     transition: 0s
+}
+.button:hover{
+    background-color: #491217;
 }
 
 @-webkit-keyframes move {
@@ -306,4 +312,51 @@ body {
 
 #goodOldSignal{
     visibility: visible;
+    color: antiquewhite;
+}
+
+table#dataView {
+    width: 80%;
+}
+
+table.dataFields {
+    padding-left: 5em;
+}
+
+tr.hidden {
+    visibility: collapse;
+}
+
+tr.warning {
+    background-color: #ffc890;
+}
+
+th.signal-type {
+    min-width: 50px;
+}
+
+th.signal-sender {
+    min-width: 50px;
+}
+
+th.signal-name {
+}
+
+th.signal-frequency {
+    min-width: 50px;
+}
+
+th.signal-timestamp {
+    min-width: 100px;
+}
+
+td.field-name {
+    min-width: 200px;
+}
+
+td.field-plot {
+    min-width: 300px;
+}
+
+td.field-value {
 }
