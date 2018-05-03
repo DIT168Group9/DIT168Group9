@@ -303,3 +303,7 @@ body {
 
     margin: -7px 0 0 62px;
 }
+
+#goodOldSignal{
+    visibility: visible;
+}
