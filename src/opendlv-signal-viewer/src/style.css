@@ -6,7 +6,7 @@ body {
     background-color: #1d2124;
     display: grid;
     grid-template-columns: [first] 20% [line2] auto [line3] 20% [end];
-    grid-template-rows: [row1-start] 30% [row1-end] auto [third-line] auto [last-line];
+    grid-template-rows: [row1-start] 30% [row1-end] auto [third-line] auto [last-line] auto [end-line];
 }
 
 #name {
@@ -312,10 +312,11 @@ body {
 
 #goodOldSignal{
 
-    grid-column-start: first;
+    grid-column-start: line2;
     grid-column-end: line3;
-    grid-row-start: row1-start;
-    grid-row-end: third-line;
+    grid-row-start: last-line;
+    grid-row-end: end-line;
+    height: 150px;
 
     overflow: scroll;
 

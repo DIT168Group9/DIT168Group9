@@ -44,9 +44,6 @@ if ("WebSocket" in window) {
 
         // Got new data from the WebSocket; now, try to decode it into JSON using the supplied message specification file.
         let data = JSON.parse(__libcluon.decodeEnvelopeToJSON(evt.data));
-        // console.log(data);
-
-        // animateDashboard(data);
 
         // Pedal Position Readings
 
