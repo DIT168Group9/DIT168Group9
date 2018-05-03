@@ -40,6 +40,7 @@ int main(int argc, char** argv) {
         }
 
         initializeMpu(deviceFile);
+        initializeAK8963(deviceFile);
         setGyroOffset(calibrateMPU9250(deviceFile), deviceFile);
 
         cluon::OD4Session od4{CID};
@@ -59,7 +60,6 @@ int main(int argc, char** argv) {
 
             opendlv::proxy::TemperatureReading thermometerReading = readThermometer(deviceFile);
             od4.send(thermometerReading);
-            std::this_thread::sleep_for(std::chrono::duration<double>(0.07));
 
             if (VERBOSE) {
                 std::cout << "[OD4] Sending IMU data: " << std::endl
@@ -206,6 +206,23 @@ void initializeMpu(int16_t deviceFile) {
     usleep(100000);
 }
 
+void initializeAK8963(int16_t deviceFile) {
+    // First extract the factory calibration for each magnetometer axis
+    uint8_t rawData[3];  // x/y/z gyro calibration data stored here
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::AK8963_CNTL, 0x00}, deviceFile); // Power down magnetometer
+    usleep(100000);
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::AK8963_CNTL, 0x0F}, deviceFile); // Enter Fuse ROM access mode
+    usleep(100000);
+    i2cReadRegister(deviceFile, MPU9250::AK8963_ASAX, &rawData[0], 3);  // Read the x-, y-, and z-axis calibration values
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::AK8963_CNTL, 0x00}, deviceFile); // Power down magnetometer
+    usleep(100000);
+    // Configure the magnetometer for continuous read and highest resolution
+    // set Mscale bit 4 to 1 (0) to enable 16 (14) bit resolution in CNTL register,
+    // and enable continuous mode data acquisition Mmode (bits [3:0]), 0010 for 8 Hz and 0110 for 100 Hz sample rates
+    i2cWriteRegister(std::vector<uint8_t>{MPU9250::AK8963_CNTL, 1 << 4 | 0110}, deviceFile); // Set magnetometer data resolution and sample ODR
+    usleep(100000);
+}
+
 std::vector<float> calibrateMPU9250(int16_t deviceFile) {
 
     std::cout << "[MPU9250] Starting calibration...\n";
@@ -226,7 +243,6 @@ std::vector<float> calibrateMPU9250(int16_t deviceFile) {
     i2cWriteRegister(std::vector<uint8_t>{MPU9250::USER_CTRL, 0x00}, deviceFile);
     i2cWriteRegister(std::vector<uint8_t>{MPU9250::USER_CTRL, 0x0C}, deviceFile);
     usleep(15000);
-
 
     i2cWriteRegister(std::vector<uint8_t>{MPU9250::CONFIG, 0x01}, deviceFile);
     i2cWriteRegister(std::vector<uint8_t>{MPU9250::SMPLRT_DIV, 0x00}, deviceFile);
@@ -326,12 +342,14 @@ opendlv::proxy::MagneticFieldReading readMagnetometer(int16_t deviceFile) {
     uint8_t addr = AK8963_ADDRESS;
     i2cAccessDevice(deviceFile, addr);
     uint8_t reg = MPU9250::AK8963_XOUT_L;
-    uint8_t rawData[6];
-    i2cReadRegister(deviceFile, reg, &rawData[0], 6);
+    uint8_t rawData[7];
+    i2cReadRegister(deviceFile, reg, &rawData[0], 7);
 
-    int16_t x = (((int16_t)rawData[0] << 8) | rawData[1] );
-    int16_t y = (((int16_t)rawData[2] << 8) | rawData[3] );
-    int16_t z = (((int16_t)rawData[4] << 8) | rawData[5] );
+    float const c = getMscale();
+
+    int16_t x = (((int16_t) rawData[0] << 8) | rawData[1]);
+    int16_t y = (((int16_t) rawData[2] << 8) | rawData[3]);
+    int16_t z = (((int16_t) rawData[4] << 8) | rawData[5]);
 
     opendlv::proxy::MagneticFieldReading magneticFieldReading;
     magneticFieldReading.magneticFieldX(x);
@@ -411,6 +429,19 @@ float getAscale() {
             return (9.82f * 8.0f / 32768.0f);
         case AFS_16G:
             return (9.82f * 16.0f / 32768.0f);
+        default:
+            return 0.0f;
+    }
+}
+
+float getMscale() {
+    switch (m_mscale) {
+        // Possible magnetometer scales (and their register bit settings) are:
+        // 14 bit resolution (0) and 16 bit resolution (1)
+        case MFS_14BITS:
+            return 10.0f * 4912.0f / 8190.0f; // Proper scale to return milliGauss
+        case MFS_16BITS:
+            return 10.0f * 4912.0f / 32760.0f; // Proper scale to return milliGauss
         default:
             return 0.0f;
     }
