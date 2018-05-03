@@ -71,15 +71,6 @@ int main(int argc, char **argv) {
                         cluon::extractMessage<opendlv::proxy::GroundSteeringReading>(std::move(envelope));
                 steeringAngle = gsr.groundSteering();
             }
-            else if (envelope.dataType() == 1039) {
-                opendlv::proxy::DistanceReading ultrasonic =
-                        cluon::extractMessage<opendlv::proxy::DistanceReading>(std::move(envelope));
-                distanceReading = ultrasonic.distance();
-
-                if (distanceReading < 0.25) {
-                    canMove = false;
-                }
-            }
         });
 
         auto atFrequency{[&v2vService, &pedalPos, &steeringAngle]() -> bool {
