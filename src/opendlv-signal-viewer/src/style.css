@@ -316,11 +316,12 @@ body {
     grid-column-end: line3;
     grid-row-start: last-line;
     grid-row-end: end-line;
-    height: 150px;
+    height: 200px;
+    background-color: #1b1e21;
 
     overflow: scroll;
 
-    visibility: visible;
+    display: none;
     color: antiquewhite;
 }
 
@@ -337,7 +338,7 @@ table.dataFields {
 }
 
 tr.hidden {
-    visibility: collapse;
+    visibility: visible;
 }
 
 tr.warning {

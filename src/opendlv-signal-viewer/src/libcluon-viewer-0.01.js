@@ -182,6 +182,7 @@ if ("WebSocket" in window) {
 
     $(document).ready(function() {
 
+
         $("#graphButton").on('click', function () {
             $("#goodOldSignal").toggle();
 
