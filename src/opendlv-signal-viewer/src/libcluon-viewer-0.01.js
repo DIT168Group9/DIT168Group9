@@ -168,22 +168,6 @@ if ("WebSocket" in window) {
         console.log("Connection is closed.");
     };
 
-    // let oldSignal = document.getElementById('goodOldSignal').visibility;
-    // let signalButton = document.getElementById('graphButton');
-    //
-    // if(oldSignal === "hidden"){
-    //     signalButton.addEventListener('click', function () {
-    //         oldSignal = "visible";
-    //     })
-    // }
-    // else if(oldSignal === "visible"){
-    //     signalButton.addEventListener('click', function () {
-    //         oldSignal = "hidden";
-    //     })
-    // }
-
-
-
     $(document).ready(function() {
 
 
@@ -191,20 +175,6 @@ if ("WebSocket" in window) {
             $("#goodOldSignal").toggle();
 
         });
-
-        // if($(".oldSignal").css('visibility') === "hidden") {
-        //     console.log($(".oldSignal").css('visibility'));
-        //     $("#graphButton").on('click', function () {
-        //         $("#goodOldSignal").css('visibility', 'visible')
-        //     });
-        // }
-        // else if($(".oldSignal").css('visibility') === "visible"){
-        //     console.log($(".oldSignal").css('visibility'));
-        //     $("#graphButton").on('click', function () {
-        //         $("#goodOldSignal").css('visibility', 'hidden')
-        //     });
-        // }
-
 
         createDashboard();
         $(document).bind("kendo:skinChange", function(e) {
@@ -274,8 +244,6 @@ function createDashboard() {
         },
 
         scale: {
-            // startAngle: -90,
-            // endAngle: 270,
 
             startAngle: 250,
             endAngle: -70,
