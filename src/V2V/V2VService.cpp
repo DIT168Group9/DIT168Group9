@@ -2,6 +2,7 @@
 
 std::shared_ptr<cluon::OD4Session> od4;
 std::string followerIp;
+std::queue <float> delayQueue;
 
 int main(int argc, char **argv) {
     int returnValue = 0;
@@ -19,17 +20,21 @@ int main(int argc, char **argv) {
     } else {
         const uint16_t CID = (uint16_t) std::stoi(commandlineArguments["cid"]);
         const uint16_t FREQ = (uint16_t) std::stoi(commandlineArguments["freq"]);
+        const uint16_t QUEUE_MAX = (uint16_t) std::stoi(commandlineArguments["queueMax"]);
         const std::string IP = commandlineArguments["ip"];
         const std::string ID = commandlineArguments["id"];
         const std::string PARTNER_IP = commandlineArguments["partnerIp"];
         const std::string PARTNER_ID = commandlineArguments["partnerId"];
         const std::string SPEED_AFTER = commandlineArguments["offsetSpeedAfter"];
+        const std::string LEFT = commandlineArguments["left"];
+        const std::string RIGHT = commandlineArguments["right"];
 
         std::shared_ptr<V2VService> v2vService = std::make_shared<V2VService>(IP, ID, PARTNER_IP, PARTNER_ID,
-                                                                              SPEED_AFTER);
+                                                                              SPEED_AFTER, LEFT, RIGHT, QUEUE_MAX);
 
-        float pedalPos = 0, steeringAngle = 0;
+        float pedalPos = 0, steeringAngle = 0, distanceReading = 0;
         uint16_t button = 0;
+        bool canMove = true;
 
         od4 =
         std::make_shared<cluon::OD4Session>(CID,
@@ -66,6 +71,15 @@ int main(int argc, char **argv) {
                         cluon::extractMessage<opendlv::proxy::GroundSteeringReading>(std::move(envelope));
                 steeringAngle = gsr.groundSteering();
             }
+            else if (envelope.dataType() == 1039) {
+                opendlv::proxy::DistanceReading ultrasonic =
+                        cluon::extractMessage<opendlv::proxy::DistanceReading>(std::move(envelope));
+                distanceReading = ultrasonic.distance();
+
+                if (distanceReading < 0.25) {
+                    canMove = false;
+                }
+            }
         });
 
         auto atFrequency{[&v2vService, &pedalPos, &steeringAngle]() -> bool {
@@ -81,12 +95,15 @@ int main(int argc, char **argv) {
  * Implementation of the V2VService class as declared in V2VService.hpp
  */
 V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, std::string partnerId,
-                                        std::string speed_after) {
+                       std::string speed_after, std::string left, std::string right, uint16_t queue_max) {
     _IP = ip;
     _ID = id;
     _PARTNER_IP = partnerIp;
     _PARTNER_ID = partnerId;
     _SPEED_AFTER = speed_after;
+    _LEFT = left;
+    _RIGHT = right;
+    _QUEUE_MAX = queue_max;
 
     /*
      * The broadcast field contains a reference to the broadcast channel which is an OD4Session. This is where
@@ -177,6 +194,7 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
              case LEADER_STATUS: {
                  opendlv::proxy::PedalPositionReading msgPedal;
                  opendlv::proxy::GroundSteeringReading msgSteering;
+                 float calibratedAngle = 0.0f;
 
                  LeaderStatus leaderStatus = decode<LeaderStatus>(msg.second);
                  std::cout << "received '" << leaderStatus.LongName()
@@ -193,20 +211,35 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
                  }
                  od4->send(msgPedal);
 
+                 float floatLeft = std::stof(_LEFT);
+                 float floatRight = std::stof(_RIGHT);
+
                  if (leaderStatus.steeringAngle() == 0) {
-                     msgSteering.groundSteering(leaderStatus.steeringAngle() + m_OFFSET);
+                     calibratedAngle = leaderStatus.steeringAngle() + m_OFFSET;
                  }
                  else if (leaderStatus.steeringAngle() > 0) {
-                     std::cout << "Left Value: " << ((leaderStatus.steeringAngle() + leftAngleOffset))
+                     std::cout << "Left Value: " << (leaderStatus.steeringAngle() + floatLeft)
                              << std::endl;
-                     msgSteering.groundSteering((leaderStatus.steeringAngle() + leftAngleOffset));
+                     calibratedAngle = (leaderStatus.steeringAngle() + floatLeft);
                  }
                  else if (leaderStatus.steeringAngle() < 0) {
-                     std::cout << "Right Value: " << ((leaderStatus.steeringAngle()))
+                     std::cout << "Right Value: " << (leaderStatus.steeringAngle() + floatRight)
                                << std::endl;
-                     msgSteering.groundSteering((leaderStatus.steeringAngle()));
+                     calibratedAngle = leaderStatus.steeringAngle() + floatRight;
                  }
-                 od4->send(msgSteering);
+
+                 if (leaderStatus.speed() != 0 && delayQueue.size() < _QUEUE_MAX) {
+                     delayQueue.push(calibratedAngle);
+                 }
+                 else if (leaderStatus.speed() != 0 && delayQueue.size() >= _QUEUE_MAX) {
+                     delayQueue.push(calibratedAngle);
+
+                     float delayedSteeringAngle = delayQueue.front();
+                     msgSteering.groundSteering(delayedSteeringAngle);
+                     od4->send(msgSteering);
+                     delayQueue.pop();
+                 }
+
                  break;
              }
              default: std::cout << "¯\\_(ツ)_/¯" << std::endl;
@@ -325,6 +358,7 @@ void V2VService::leaderStatus(float speed, float steeringAngle, uint8_t distance
     LeaderStatus leaderStatus;
     leaderStatus.timestamp(getTime());
     leaderStatus.speed(speed);
+    std::cout << "Sending to david: " << (steeringAngle - m_OFFSET) << std::endl;
     leaderStatus.steeringAngle(steeringAngle - m_OFFSET);
     leaderStatus.distanceTraveled(distanceTraveled);
     od4->send(leaderStatus);

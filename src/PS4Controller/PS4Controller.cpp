@@ -19,8 +19,13 @@ int main(int argc, char** argv) {
         const uint16_t FREQ = (uint16_t) std::stoi(commandlineArguments["freq"]);
         const uint16_t CID = (uint16_t) std::stoi(commandlineArguments["cid"]);
 
+        const float m_OFFSET = std::stof(commandlineArguments["offset"]);
+        const uint16_t m_MAX_STEERING_ANGLE_LEFT = (uint16_t) std::stoi(commandlineArguments["leftAngle"]);
+        const uint16_t m_MAX_STEERING_ANGLE_RIGHT = (uint16_t) std::stoi(commandlineArguments["rightAngle"]);
+
         cluon::OD4Session od4(CID, [](cluon::data::Envelope /*&&envelope*/) noexcept {});
-        auto atFrequency{[&od4, &DEV, &FREQ, &CID]() -> bool {
+        auto atFrequency{[&od4, &DEV, &FREQ, &CID, &m_MAX_STEERING_ANGLE_LEFT, &m_MAX_STEERING_ANGLE_RIGHT,
+                                 m_OFFSET]() -> bool {
             FILE *file = fopen(DEV.c_str(), "rb");
             if (file != nullptr) {
                 PS4Event *event = (PS4Event *)malloc(sizeof(PS4Event));

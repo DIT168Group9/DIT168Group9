@@ -10,6 +10,7 @@
 #include "cluon/Envelope.hpp"
 #include "Messages.hpp"
 #include <iostream>
+#include <queue>
 
 /** ADD YOUR CAR_IP AND GROUP_ID HERE:  *****************/
 
@@ -35,7 +36,7 @@ public:
     std::map <std::string, std::string> presentCars;
 
     V2VService(std::string ip, std::string id, std::string partnerIp, std::string partnerId,
-                           std::string speed_after);
+                           std::string speed_after, std::string left, std::string right, uint16_t queue_max);
 
     void announcePresence();
     void followRequest(std::string vehicleIp);
@@ -51,11 +52,14 @@ private:
     std::string _PARTNER_IP;
     std::string _PARTNER_ID;
     std::string _SPEED_AFTER;
+    std::string _LEFT;
+    std::string _RIGHT;
+    uint16_t _QUEUE_MAX;
 
     bool isPresentPartner = false;
     bool isFollower = false;
     bool isLeader = false;
-    static constexpr float leftAngleOffset = -0.3f;
+//    static constexpr float leftAngleOffset = -0.3f;
 
     std::string leaderIp;
 
