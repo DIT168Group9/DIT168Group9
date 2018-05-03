@@ -209,8 +209,6 @@ if ("WebSocket" in window) {
             createDashboard();
         });
 
-        setupViewer();
-
     });
 
 }
