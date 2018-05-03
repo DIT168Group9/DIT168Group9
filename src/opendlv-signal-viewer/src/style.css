@@ -114,6 +114,28 @@ body {
     color: #1d2124;
 }
 
+.followSign{
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    grid-column-start: first;
+    grid-column-end: line2;
+    grid-row-start: row1-start;
+    grid-row-end: row1-end;
+    justify-self: center;
+    align-self: start;
+    color: #1d2124;
+}
+
+.leaderSign{
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    grid-column-start: line3;
+    grid-column-end: end;
+    grid-row-start: row1-start;
+    grid-row-end: row1-end;
+    justify-self: center;
+    align-self: start;
+    color: #1d2124;
+}
+
 .meter > span {
     display: block;
     height: 100%;

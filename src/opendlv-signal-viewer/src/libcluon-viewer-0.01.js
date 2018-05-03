@@ -135,6 +135,7 @@ if ("WebSocket" in window) {
             leaderSpeed = data.LeaderStatus.speed;
             leaderSteering = data.LeaderStatus.steeringAngle;
             $("#apList").append('<li>' + " Leader's speed value is: " + leaderSpeed + " And the steering value is: " + leaderSteering + '</li>');
+            $(".leaderSign").css('color', 'orangered');
         }
 
         else if(data.dataType === 1002){
@@ -145,11 +146,14 @@ if ("WebSocket" in window) {
         else if(data.dataType === 1003){
             followResponse = data.FollowRequest.temporaryValue;
             $("#apList").append('<li>' + " Follow Response Received! " + '</li>');
+            $(".followSign").css('color', 'orangered');
         }
 
         else if(data.dataType === 1004){
             stopFollow = data.FollowRequest.temporaryValue;
             $("#apList").append('<li>' + " Stop Follow Received! " + '</li>');
+            $(".leaderSign").css('color', '#1d2124');
+            $(".followSign").css('color', '#1d2124');
         }
 
         else if(data.dataType === 3001){
