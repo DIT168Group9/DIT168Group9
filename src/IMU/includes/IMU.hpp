@@ -43,6 +43,7 @@ void setAscale(A_SCALE);
 float getAscale();
 void setGscale(G_SCALE);
 float getGscale(bool);
+float getMscale();
 
 // Specify sensor full scale
 uint8_t m_gscale = GFS_250DPS;
@@ -55,9 +56,14 @@ uint8_t m_mmode = M_100HZ;
 /**
  * This function initializes the MPU Chip.
  * @param deviceFile int16_t - value of file at specified device node
- * @param MPU9250_ADDRESS uint8_t - Bus address of IMU
  */
 void initializeMpu(int16_t deviceFile);
+
+/**
+ * This function initializes the AK (Magnetometer) Chip
+ * @param deviceFile deviceFile int16_t - value of file at specified device node
+ */
+void initializeAK8963(int16_t deviceFile);
 
 /**
  * This function accesses the i2c device at the specified address.
