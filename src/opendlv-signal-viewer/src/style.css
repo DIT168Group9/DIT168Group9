@@ -311,8 +311,20 @@ body {
 }
 
 #goodOldSignal{
+
+    grid-column-start: first;
+    grid-column-end: line3;
+    grid-row-start: row1-start;
+    grid-row-end: third-line;
+
+    overflow: scroll;
+
     visibility: visible;
     color: antiquewhite;
+}
+
+#navbar.dots {
+    color: red;
 }
 
 table#dataView {

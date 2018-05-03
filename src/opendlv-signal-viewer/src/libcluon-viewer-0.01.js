@@ -36,6 +36,8 @@ if ("WebSocket" in window) {
         // Load the ODVD message specification file to have information about the messages to decode and encode.
         let odvdMessageSpecificationFile = getResourceFrom("opendlv-standard-message-set-v0.9.4.odvd");
         console.log("Loaded " + __libcluon.setMessageSpecification(odvdMessageSpecificationFile) + " messages from specification.");
+
+        setInterval(onInterval, Math.round(1000 / g_renderFreq));
     };
 
     ws.onmessage = function(evt) {
@@ -185,6 +187,7 @@ if ("WebSocket" in window) {
 
         $("#graphButton").on('click', function () {
             $("#goodOldSignal").toggle();
+
         });
 
         // if($(".oldSignal").css('visibility') === "hidden") {
@@ -205,6 +208,8 @@ if ("WebSocket" in window) {
         $(document).bind("kendo:skinChange", function(e) {
             createDashboard();
         });
+
+        setupViewer();
 
     });
 
@@ -381,7 +386,6 @@ var g_chartConfigs = new Map();
 var g_data = new Map();
 var g_pause = false;
 
-setInterval(onInterval, Math.round(1000 / g_renderFreq));
 
 function onMessageReceived(lc, msg) {
 
