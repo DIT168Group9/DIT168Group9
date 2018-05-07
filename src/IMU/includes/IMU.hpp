@@ -9,8 +9,8 @@
 #include "Messages.hpp"
 #include "cluon/OD4Session.hpp"
 
-uint8_t const MPU9250_ADDRESS = 0x68;   /**< Bus address of Gyroscope     */
-uint8_t const AK8963_ADDRESS = 0x76;    /**< Bus address of Accelerometer */
+uint8_t const MPU9250_ADDRESS = 0x68;   /**< Bus address of Gyroscope and Accelerometer chip     */
+uint8_t const AK8963_ADDRESS = 0x76;    /**< Bus address of Magnetometer chip                    */
 
 /**
  * This enum contains different scaling parameters for the accelerometer readings.
