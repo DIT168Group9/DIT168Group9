@@ -39,7 +39,7 @@ public:
                            std::string speed_after, std::string left, std::string right, uint16_t queue_max);
 
     void announcePresence();
-    void followRequest(std::string vehicleIp);
+    void followRequest();
     void followResponse();
     void stopFollow(std::string vehicleIp);
     void leaderStatus(float speed, float steeringAngle, uint8_t distanceTraveled);

@@ -262,7 +262,7 @@ void V2VService::announcePresence() {
  *
  * @param vehicleIp - IP of the target for the FollowRequest
  */
-void V2VService::followRequest(std::string vehicleIp) {
+void V2VService::followRequest() {
     if (!isPresentPartner || isFollower) {
         std::cout << "Follow request returned! isFollower: " << isFollower << " isPresentPartner: " << isPresentPartner
                   << std::endl;
