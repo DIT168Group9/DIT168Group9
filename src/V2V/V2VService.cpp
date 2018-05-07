@@ -260,7 +260,6 @@ void V2VService::announcePresence() {
  * This function sends a FollowRequest (id = 1002) message to the IP address specified by the parameter vehicleIp. And
  * sets the current leaderIp field of the sending vehicle to that of the target of the request.
  *
- * @param vehicleIp - IP of the target for the FollowRequest
  */
 void V2VService::followRequest() {
     if (!isPresentPartner || isFollower) {
