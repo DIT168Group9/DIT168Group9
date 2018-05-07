@@ -55,6 +55,9 @@ float getGscale(bool);
 uint8_t m_gscale = GFS_250DPS;
 uint8_t m_ascale = AFS_2G;
 
+uint8_t m_mscale = MFS_16BITS;     /**< Choose either 14-bit or 16-bit magnetometer resolution     */
+uint8_t m_mmode = M_100HZ;         /**< 2 for 8 Hz, 6 for 100 Hz continuous magnetometer data read */
+
 /**
  * This function initializes the MPU Chip.
  * @param deviceFile int16_t - value of file at specified device node
