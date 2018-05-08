@@ -100,7 +100,7 @@ if ("WebSocket" in window) {
                         .width(0)
                         .animate({
                             width: distanceReading * 5
-                        }, 'fast')
+                        }, 'fast');
                 });
 
                 $("#fuel").data("kendoRadialGauge").value(distanceReading);
