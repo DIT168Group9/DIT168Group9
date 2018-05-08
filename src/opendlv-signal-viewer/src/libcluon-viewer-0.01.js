@@ -129,6 +129,7 @@ if ("WebSocket" in window) {
             announcePresenceGroupId = window.atob(data.AnnouncePresence.groupId);
 
             $("#apList").append('<li>' + " Group " + announcePresenceGroupId + " has the ip: " + announcePresenceVehicalIp + '</li>');
+            data.scrollTop = data.scrollHeight;
         }
 
         else if(data.dataType === 2001){
