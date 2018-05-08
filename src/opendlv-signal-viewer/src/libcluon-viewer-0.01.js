@@ -100,7 +100,7 @@ if ("WebSocket" in window) {
                         .width(0)
                         .animate({
                             width: distanceReading * 5
-                        }, 'fast');
+                        }, 'fast')
                 });
 
                 $("#fuel").data("kendoRadialGauge").value(distanceReading);
@@ -115,12 +115,12 @@ if ("WebSocket" in window) {
 
         // Gyroscope Readings
 
-        else if(data.dataType === 1042){
-            gyroscopeReadingXAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingX;
-            gyroscopeReadingYAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingY;
-            gyroscopeReadingZAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingZ;
-
-        }
+        // else if(data.dataType === 1042){
+        //     gyroscopeReadingXAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingX;
+        //     gyroscopeReadingYAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingY;
+        //     gyroscopeReadingZAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingZ;
+        //
+        // }
 
         // V2V messages in Signal Viewer
 
