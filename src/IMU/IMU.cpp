@@ -195,8 +195,7 @@ void initializeMpu(int16_t deviceFile) {
     // Configure Interrupts and Bypass Enable
     // Set interrupt pin active high, push-pull, hold interrupt pin level HIGH
     // until interrupt cleared, clear on read of INT_STATUS, and enable
-    // I2C_BYPASS_EN so additional chips can join the I2C bus and all can be
-    // controlled by the Arduino as master.
+    // I2C_BYPASS_EN so additional chips can join the I2C bus (such as the Magnetometer)
     reg = MPU9250::INT_PIN_CFG;
     i2cWriteRegister(std::vector<uint8_t>{reg, 0x22}, deviceFile);
     // Enable data ready (bit 0) interrupt
