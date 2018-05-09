@@ -21,15 +21,14 @@ int main(int argc, char** argv) {
                   << std::endl;
         std::cerr << "Usage:   " << argv[0] << " --dev=<path toIMU> --freq=<int Frequency> --cid=<OD4Session Session>"
                   << std::endl;
-        std::cerr << "Example: " << argv[0] << " --dev=/dev/i2c-2 --freq=100 --cid=200 " <<
-                                                    "--bus=118" << std::endl;
+        std::cerr << "Example: " << argv[0] << " --dev=/dev/i2c-2 --freq=100 --cid=200 " << std::endl;
         returnValue = 1;
     }
     else {
         const std::string DEV = commandlineArguments["dev"];
         std::cout << DEV << std::endl;
         const uint16_t CID = (uint16_t) std::stoi(commandlineArguments["cid"]);
-        const float FREQ = std::stof(commandlineArguments["cid"]);
+        const float FREQ = std::stof(commandlineArguments["freq"]);
         const bool VERBOSE = commandlineArguments.count("verbose") != 0;
 
         int16_t deviceFile = open(DEV.c_str(), O_RDWR);
