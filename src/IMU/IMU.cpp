@@ -157,7 +157,6 @@ void initializeMpu(int16_t deviceFile) {
     uint8_t c;
     reg = MPU9250::GYRO_CONFIG;
     i2cReadRegister(deviceFile, reg, &c, 1);
-    // c = c & ~0xE0; // Clear self-test bits [7:5]
     c = c & ~0x02; // Clear Fchoice bits [1:0]
     c = c & ~0x18; // Clear AFS bits [4:3]
     c = c | m_gscale << 3; // Set full scale range for the gyro
@@ -241,8 +240,6 @@ std::vector<float> calibrateMPU9250(int16_t deviceFile) {
     uint16_t packetCount = fifoCount/12;
     std::cout << "[MPU9250] Packet Count: " << packetCount << std::endl;
 
-    // int32_t accelBias[3] = {0,0,0};
-    // std::vector<float> gyroBias;
     int32_t gyroBias[3] = {0,0,0};
     for (uint8_t i = 0; i < packetCount; i++) {
         int16_t gyroSampl[3] = {0,0,0};
