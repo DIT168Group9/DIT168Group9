@@ -1,0 +1,398 @@
+
+
+.page-wrap { width: 300px; margin: 80px auto; }
+
+body {
+    background-color: #1d2124;
+    display: grid;
+    grid-template-columns: [first] 20% [line2] auto [line3] 20% [end];
+    grid-template-rows: [row1-start] 30% [row1-end] auto [third-line] auto [last-line] auto [end-line];
+}
+
+#name {
+    color: antiquewhite;
+    opacity: 0.9;
+    text-align: center;
+    /*margin-top: 50px;*/
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    grid-column-start: line2;
+    grid-column-end: line3;
+    grid-row-start: row1-start;
+    grid-row-end: row1-end;
+    /*place-self: center;*/
+}
+
+#list{
+    grid-column-start: line2;
+    grid-column-end: line3;
+    grid-row-start: third-line;
+    grid-row-end: last-line;
+    place-self: center;
+}
+
+#apList {
+    color: antiquewhite;
+    width: 600px;
+    height: 150px;
+    overflow: auto;
+    /*margin: auto;*/
+    text-align: center;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(151,0,0,1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(151,60,11,1);
+}
+
+.meter {
+    height: 20px;  /* Can be anything */
+    position: relative;
+    /*margin: 20px 0 20px 0; !* Just for demo spacing *!*/
+    background: #555;
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    border-radius: 25px;
+    padding: 10px;
+    -webkit-box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
+    -moz-box-shadow   : inset 0 -1px 1px rgba(255,255,255,0.3);
+    box-shadow        : inset 0 -1px 1px rgba(255,255,255,0.3);
+    overflow:hidden;
+}
+#left{
+    /*float: left;*/
+    grid-column-start: first;
+    grid-column-end: line2;
+    grid-row-start: row1-end;
+    grid-row-end: third-line;
+    /*margin-left: 50px;*/
+
+}
+#meterLeft{
+    /*margin: 100px 20% 0 0;*/
+    /*left: 20%;*/
+    top: 20%;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+#right{
+    /*float: right;*/
+    grid-column-start: line3;
+    grid-column-end: end;
+    grid-row-start: row1-end;
+    grid-row-end: third-line;
+    /*margin-left: 50px;*/
+
+}
+#meterRight{
+    /*margin: 100px 30% 0 0;*/
+    /*right: 20%;*/
+    top: 20%;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+.stopSign{
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    grid-column-start: line3;
+    grid-column-end: end;
+    grid-row-start: third-line;
+    grid-row-end: last-line;
+    justify-self: center;
+    align-self: start;
+    color: #1d2124;
+}
+
+.followSign{
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    grid-column-start: first;
+    grid-column-end: line2;
+    grid-row-start: row1-start;
+    grid-row-end: row1-end;
+    justify-self: center;
+    align-self: start;
+    color: #1d2124;
+}
+
+.leaderSign{
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    grid-column-start: line3;
+    grid-column-end: end;
+    grid-row-start: row1-start;
+    grid-row-end: row1-end;
+    justify-self: center;
+    align-self: start;
+    color: #1d2124;
+}
+
+.meter > span {
+    display: block;
+    height: 100%;
+    -webkit-border-radius: 20px 8px 8px 20px;
+    -moz-border-radius: 20px 8px 8px 20px;
+    border-radius: 20px 8px 8px 20px;
+    background-color: rgb(43,194,83);
+    background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(0, rgb(43,194,83)),
+            color-stop(1, rgb(84,240,84))
+    );
+    background-image: -moz-linear-gradient(
+            center bottom,
+            rgb(43,194,83) 37%,
+            rgb(84,240,84) 69%
+    );
+    -webkit-box-shadow:
+            inset 0 2px 9px  rgba(255,255,255,0.3),
+            inset 0 -2px 6px rgba(0,0,0,0.4);
+    -moz-box-shadow:
+            inset 0 2px 9px  rgba(255,255,255,0.3),
+            inset 0 -2px 6px rgba(0,0,0,0.4);
+    box-shadow:
+            inset 0 2px 9px  rgba(255,255,255,0.3),
+            inset 0 -2px 6px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+}
+.meter > span:after, .animate > span > span {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background-image:
+            -webkit-gradient(linear, 0 0, 100% 100%,
+            color-stop(.25, rgba(255, 255, 255, .2)),
+            color-stop(.25, transparent), color-stop(.5, transparent),
+            color-stop(.5, rgba(255, 255, 255, .2)),
+            color-stop(.75, rgba(255, 255, 255, .2)),
+            color-stop(.75, transparent), to(transparent)
+            );
+    background-image:
+            -moz-linear-gradient(
+                    -45deg,
+                    rgba(255, 255, 255, .2) 25%,
+                    transparent 25%,
+                    transparent 50%,
+                    rgba(255, 255, 255, .2) 50%,
+                    rgba(255, 255, 255, .2) 75%,
+                    transparent 75%,
+                    transparent
+            );
+    z-index: 1;
+    -webkit-background-size: 50px 50px;
+    -moz-background-size: 50px 50px;
+    -webkit-animation: move 2s linear infinite;
+    -webkit-border-radius: 20px 8px 8px 20px;
+    -moz-border-radius: 20px 8px 8px 20px;
+    border-radius: 20px 8px 8px 20px;
+    overflow: hidden;
+}
+
+.animate > span:after {
+    display: none;
+}
+
+.button {
+    grid-column-start: first;
+    grid-column-end: line2;
+    grid-row-start: third-line;
+    grid-row-end: last-line;
+    place-self: center;
+
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;;
+    font-size: 1em;
+
+    position: relative;
+    background-color: #1b1e21;
+    border-radius: 25px;
+    border: none;
+    /*font-size: 20px;*/
+    color: antiquewhite;
+    width: 50%;
+    display: table-cell;
+    vertical-align: bottom;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.button:after {
+    content: "";
+    background: silver;
+    display: block;
+    position: absolute;
+    padding-top: 100%;
+    padding-left: 100%;
+    margin-left: -50% !important;
+    margin-top: -50%;
+    opacity: 0;
+    transition: all 0.8s
+}
+
+.button:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+.button:hover{
+    background-color: #491217;
+}
+
+@-webkit-keyframes move {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 50px 50px;
+    }
+}
+
+.orange > span {
+    background-color: #f1a165;
+    background-width: 80%;
+    background-image: -moz-linear-gradient(top, #f1a165, #f36d0a);
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #f1a165),color-stop(1, #f36d0a));
+    background-image: -webkit-linear-gradient(#f1a165, #f36d0a)
+}
+
+/*.red > span {*/
+    /*background-color: #f0a3a3;*/
+    /*background-image: -moz-linear-gradient(top, #f0a3a3, #f42323);*/
+    /*background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #f0a3a3),color-stop(1, #f42323));*/
+    /*background-image: -webkit-linear-gradient(#f0a3a3, #f42323);*/
+/*}*/
+
+.nostripes > span > span, .nostripes > span:after {
+    -webkit-animation: none;
+    background-image: none;
+}
+
+
+#car-dashboard {
+
+    grid-column-start: line2;
+    grid-column-end: line3;
+    grid-row-start: row1-end;
+    grid-row-end: third-line;
+    place-self: center;
+    /*margin-top: 70px;*/
+}
+
+#gauge-container {
+    /*margin: 0 auto;*/
+    overflow: hidden;
+    width: 614px;
+    height: 324px;
+
+    background: transparent url("car-dashboard.png") no-repeat 50% 50%;
+}
+
+.k-gauge {
+    float: left;
+}
+
+#rpm {
+    width: 142px;
+    height: 147px;
+    margin: 85px 0 0 38px;
+}
+
+#kmh {
+    width: 216px;
+    height: 216px;
+    margin: 57px 0 0 20px;
+}
+
+#fuel {
+    width: 77px;
+    height: 84px;
+
+    margin: 90px 0 0 68px;
+}
+
+#water-temprature {
+    width: 84px;
+    height: 80px;
+
+    margin: -7px 0 0 62px;
+}
+
+#goodOldSignal{
+
+    grid-column-start: line2;
+    grid-column-end: line3;
+    grid-row-start: last-line;
+    grid-row-end: end-line;
+    height: 200px;
+    background-color: #1b1e21;
+
+    overflow: scroll;
+
+    display: none;
+    color: antiquewhite;
+}
+
+#navbar.dots {
+    color: red;
+}
+
+table#dataView {
+    width: 80%;
+}
+
+table.dataFields {
+    padding-left: 5em;
+}
+
+tr.hidden {
+    visibility: visible;
+}
+
+tr.warning {
+    background-color: #ffc890;
+}
+
+th.signal-type {
+    min-width: 50px;
+}
+
+th.signal-sender {
+    min-width: 50px;
+}
+
+th.signal-name {
+}
+
+th.signal-frequency {
+    min-width: 50px;
+}
+
+th.signal-timestamp {
+    min-width: 100px;
+}
+
+td.field-name {
+    min-width: 200px;
+}
+
+td.field-plot {
+    min-width: 300px;
+}
+
+td.field-value {
+}

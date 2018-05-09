@@ -1,8 +1,8 @@
 # DIT168 Group9
 
-| Linux & OSX Build (TravisCI) | Test Coverage | CII Best Practices |
-| :--------------------------: | :-----------: | :----------------: |
-[![Build Status](https://travis-ci.org/DIT168Group9/DIT168Group9.svg?branch=master)](https://travis-ci.org/DIT168Group9/DIT168Group9) | [![codecov](https://codecov.io/gh/DIT168Group9/DIT168Group9/branch/master/graph/badge.svg)](https://codecov.io/gh/DIT168Group9/DIT168Group9) | [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/1665/badge)](https://bestpractices.coreinfrastructure.org/projects/1665) |
+| Linux & OSX Build (TravisCI) | CII Best Practices |
+| :--------------------------: | :----------------: |
+[![Build Status](https://travis-ci.org/DIT168Group9/DIT168Group9.svg?branch=master)](https://travis-ci.org/DIT168Group9/DIT168Group9) | [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/1665/badge)](https://bestpractices.coreinfrastructure.org/projects/1665) |
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -42,6 +42,8 @@ We provide a sample docker-compose.yml for you to use.
 ## Dependencies
 * A C++14 Compliant Compiler (We use G++)
 * [libcluon](https://github.com/chrberger/libcluon) [![License: GPLv3](https://img.shields.io/badge/license-GPL--3-blue.svg
+)](https://www.gnu.org/licenses/gpl-3.0.txt)
+* [opendlv-device-ultrasonic-srf08](https://github.com/chalmers-revere/opendlv-device-ultrasonic-srf08) [![License: GPLv3](https://img.shields.io/badge/license-GPL--3-blue.svg
 )](https://www.gnu.org/licenses/gpl-3.0.txt)
 
 ## Documentation

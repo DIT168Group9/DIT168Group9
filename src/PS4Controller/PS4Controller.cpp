@@ -19,8 +19,13 @@ int main(int argc, char** argv) {
         const uint16_t FREQ = (uint16_t) std::stoi(commandlineArguments["freq"]);
         const uint16_t CID = (uint16_t) std::stoi(commandlineArguments["cid"]);
 
+        const float m_OFFSET = std::stof(commandlineArguments["offset"]);
+        const uint16_t m_MAX_STEERING_ANGLE_LEFT = (uint16_t) std::stoi(commandlineArguments["leftAngle"]);
+        const uint16_t m_MAX_STEERING_ANGLE_RIGHT = (uint16_t) std::stoi(commandlineArguments["rightAngle"]);
+
         cluon::OD4Session od4(CID, [](cluon::data::Envelope /*&&envelope*/) noexcept {});
-        auto atFrequency{[&od4, &DEV, &FREQ, &CID]() -> bool {
+        auto atFrequency{[&od4, &DEV, &FREQ, &CID, &m_MAX_STEERING_ANGLE_LEFT, &m_MAX_STEERING_ANGLE_RIGHT,
+                                 m_OFFSET]() -> bool {
             FILE *file = fopen(DEV.c_str(), "rb");
             if (file != nullptr) {
                 PS4Event *event = (PS4Event *)malloc(sizeof(PS4Event));
@@ -117,10 +122,21 @@ int main(int argc, char** argv) {
                             switch (event->id) {
                                 case LStickX: {
                                     opendlv::proxy::GroundSteeringReading steeringReading;
-                                    float value = event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE *
-                                                  static_cast<float>(M_PI) / 180.0f - m_OFFSET;
-                                    value = roundf(value * 100) / 100.0;
-                                    steeringReading.groundSteering(value);
+                                    steeringReading.groundSteering(m_OFFSET);
+                                    float value = 0;
+                                    if (event->data < 0) {
+                                        value = event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE_LEFT *
+                                                      static_cast<float>(M_PI) / 180.0f + m_OFFSET;
+                                        value = roundf(value * 100) / 100.0;
+                                        steeringReading.groundSteering(value);
+                                    }
+                                    else if (event->data >= 0) {
+                                        value = event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE_RIGHT *
+                                                static_cast<float>(M_PI) / 180.0f + m_OFFSET;
+                                        value = roundf(value * 100) / 100.0;
+                                        steeringReading.groundSteering(value);
+                                    }
+
                                     od4.send(steeringReading);
                                     std::cout << "Sending Angle: " << steeringReading.groundSteering() << std::endl;
                                     }

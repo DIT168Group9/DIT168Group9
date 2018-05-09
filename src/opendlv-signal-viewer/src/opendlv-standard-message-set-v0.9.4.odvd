@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-//V2V Messages
+ //V2V Messages
 
 message AnnouncePresence [id = 1001] {
   string vehicleIp [id = 1];
@@ -46,7 +46,7 @@ message FollowerStatus [id = 3001] {
   string temporaryValue [id = 1];
 }
 
-//opendlv.body 
+//opendlv.body
 
 message opendlv.body.ComponentInfo [id = 1021] {
   string description [id = 1];
@@ -138,14 +138,14 @@ message opendlv.proxy.PedalPositionReading [id = 1041] {
 
 //This is used for the Gyroscope readings
 message opendlv.proxy.GyroscopeReading [id = 1042] {
-    float GyroscopeReadingX [id = 1];
-    float GyroscopeReadingY [id = 2];
-    float GyroscopeReadingZ [id = 3];
+  float GyroscopeReadingX [id = 1];
+  float GyroscopeReadingY [id = 2];
+  float GyroscopeReadingZ [id = 3];
 }
 
 //This is used to determine which button is pressed on the PS4 Controller
 message opendlv.proxy.ButtonPressed [id = 1043] {
-    uint16 buttonNumber [id = 1];
+  uint16 buttonNumber [id = 1];
 }
 
 message opendlv.proxy.GroundSteeringReading [id = 1045] {
