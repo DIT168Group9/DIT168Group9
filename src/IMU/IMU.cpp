@@ -161,9 +161,6 @@ void initializeMpu(int16_t deviceFile) {
     c = c & ~0x02; // Clear Fchoice bits [1:0]
     c = c & ~0x18; // Clear AFS bits [4:3]
     c = c | m_gscale << 3; // Set full scale range for the gyro
-    // Set Fchoice for the gyro to 11 by writing its inverse to bits 1:0 of
-    // GYRO_CONFIG
-    // c =| 0x00;
     // Write new GYRO_CONFIG value to register
     i2cWriteRegister(std::vector<uint8_t>{reg, c}, deviceFile);
 
@@ -171,7 +168,6 @@ void initializeMpu(int16_t deviceFile) {
     // Get current ACCEL_CONFIG register value
     reg = MPU9250::ACCEL_CONFIG;
     i2cReadRegister(deviceFile, reg, &c, 1);
-    // c = c & ~0xE0; // Clear self-test bits [7:5]
     c = c & ~0x18;  // Clear AFS bits [4:3]
     c = c | m_ascale << 3; // Set full scale range for the accelerometer
     // Write new ACCEL_CONFIG register value
@@ -259,7 +255,6 @@ std::vector<float> calibrateMPU9250(int16_t deviceFile) {
         gyroBias[0] += (int32_t) gyroSampl[0];
         gyroBias[1] += (int32_t) gyroSampl[1];
         gyroBias[2] += (int32_t) gyroSampl[2];
-        // std::cout << "[MPU9250] Gyro bias: " << gyroBias[0]/gyroSens << ", " << gyroBias[1]/gyroSens << ", " << gyroBias[2]/gyroSens << std::endl;
     }
 
     gyroBias[0] /= packetCount;
