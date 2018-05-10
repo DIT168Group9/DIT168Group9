@@ -3,11 +3,11 @@
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_v2_v_service_a6a49f9bf68deddd2a786ac7fa4d4f55c}{V2\+V\+Service}} (std\+::string ip, std\+::string id)
+\mbox{\hyperlink{class_v2_v_service_a26d77b5b1e8f2d11a51d3dc6ca9751bb}{V2\+V\+Service}} (std\+::string ip, std\+::string id, std\+::string partner\+Ip, std\+::string partner\+Id, std\+::string speed\+\_\+after, std\+::string left, std\+::string right, uint16\+\_\+t queue\+\_\+max)
 \item 
 void \mbox{\hyperlink{class_v2_v_service_a1e2f575ac83bebcda2c557d425b3050f}{announce\+Presence}} ()
 \item 
-void \mbox{\hyperlink{class_v2_v_service_a66b75bca64900e74b3308dfe4a48934d}{follow\+Request}} (std\+::string vehicle\+Ip)
+void \mbox{\hyperlink{class_v2_v_service_aa7ba49b6b0a128a10c12f96066107590}{follow\+Request}} ()
 \item 
 void \mbox{\hyperlink{class_v2_v_service_aaeec2a1f903f5c774a9e874776f1e8eb}{follow\+Response}} ()
 \item 
@@ -28,20 +28,20 @@ std\+::map$<$ std\+::string, std\+::string $>$ {\bfseries present\+Cars}
 \subsection{Detailed Description}
 
 
-Definition at line 33 of file V2\+V\+Service.\+hpp.
+Definition at line 34 of file V2\+V\+Service.\+hpp.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{class_v2_v_service_a6a49f9bf68deddd2a786ac7fa4d4f55c}\label{class_v2_v_service_a6a49f9bf68deddd2a786ac7fa4d4f55c}} 
+\mbox{\Hypertarget{class_v2_v_service_a26d77b5b1e8f2d11a51d3dc6ca9751bb}\label{class_v2_v_service_a26d77b5b1e8f2d11a51d3dc6ca9751bb}} 
 \index{V2\+V\+Service@{V2\+V\+Service}!V2\+V\+Service@{V2\+V\+Service}}
 \index{V2\+V\+Service@{V2\+V\+Service}!V2\+V\+Service@{V2\+V\+Service}}
 \subsubsection{\texorpdfstring{V2\+V\+Service()}{V2VService()}}
-{\footnotesize\ttfamily V2\+V\+Service\+::\+V2\+V\+Service (\begin{DoxyParamCaption}\item[{std\+::string}]{ip,  }\item[{std\+::string}]{id }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily V2\+V\+Service\+::\+V2\+V\+Service (\begin{DoxyParamCaption}\item[{std\+::string}]{ip,  }\item[{std\+::string}]{id,  }\item[{std\+::string}]{partner\+Ip,  }\item[{std\+::string}]{partner\+Id,  }\item[{std\+::string}]{speed\+\_\+after,  }\item[{std\+::string}]{left,  }\item[{std\+::string}]{right,  }\item[{uint16\+\_\+t}]{queue\+\_\+max }\end{DoxyParamCaption})}
 
 Implementation of the \mbox{\hyperlink{class_v2_v_service}{V2\+V\+Service}} class as declared in \mbox{\hyperlink{_v2_v_service_8hpp_source}{V2\+V\+Service.\+hpp}} 
 
-Definition at line 66 of file V2\+V\+Service.\+cpp.
+Definition at line 88 of file V2\+V\+Service.\+cpp.
 
 
 
@@ -54,7 +54,7 @@ Definition at line 66 of file V2\+V\+Service.\+cpp.
 
 This function sends an Announce\+Presence (id = 1001) message on the broadcast channel. It will contain information about the sending vehicle, including\+: IP, port and the group identifier. 
 
-Definition at line 164 of file V2\+V\+Service.\+cpp.
+Definition at line 246 of file V2\+V\+Service.\+cpp.
 
 \mbox{\Hypertarget{class_v2_v_service_acbf3639c3cbf7610e1c20967ccbab61b}\label{class_v2_v_service_acbf3639c3cbf7610e1c20967ccbab61b}} 
 \index{V2\+V\+Service@{V2\+V\+Service}!follower\+Status@{follower\+Status}}
@@ -77,24 +77,17 @@ This function sends a Follower\+Status (id = 3001) message on the leader channel
 \end{DoxyParams}
 
 
-Definition at line 231 of file V2\+V\+Service.\+cpp.
+Definition at line 331 of file V2\+V\+Service.\+cpp.
 
-\mbox{\Hypertarget{class_v2_v_service_a66b75bca64900e74b3308dfe4a48934d}\label{class_v2_v_service_a66b75bca64900e74b3308dfe4a48934d}} 
+\mbox{\Hypertarget{class_v2_v_service_aa7ba49b6b0a128a10c12f96066107590}\label{class_v2_v_service_aa7ba49b6b0a128a10c12f96066107590}} 
 \index{V2\+V\+Service@{V2\+V\+Service}!follow\+Request@{follow\+Request}}
 \index{follow\+Request@{follow\+Request}!V2\+V\+Service@{V2\+V\+Service}}
 \subsubsection{\texorpdfstring{follow\+Request()}{followRequest()}}
-{\footnotesize\ttfamily void V2\+V\+Service\+::follow\+Request (\begin{DoxyParamCaption}\item[{std\+::string}]{vehicle\+Ip }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void V2\+V\+Service\+::follow\+Request (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-This function sends a Follow\+Request (id = 1002) message to the IP address specified by the parameter vehicle\+Ip. And sets the current leader\+Ip field of the sending vehicle to that of the target of the request.
+This function sends a Follow\+Request (id = 1002) message to the IP address specified by the parameter vehicle\+Ip. And sets the current leader\+Ip field of the sending vehicle to that of the target of the request. 
 
-
-\begin{DoxyParams}{Parameters}
-{\em vehicle\+Ip} & -\/ IP of the target for the Follow\+Request \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 179 of file V2\+V\+Service.\+cpp.
+Definition at line 264 of file V2\+V\+Service.\+cpp.
 
 \mbox{\Hypertarget{class_v2_v_service_aaeec2a1f903f5c774a9e874776f1e8eb}\label{class_v2_v_service_aaeec2a1f903f5c774a9e874776f1e8eb}} 
 \index{V2\+V\+Service@{V2\+V\+Service}!follow\+Response@{follow\+Response}}
@@ -104,7 +97,7 @@ Definition at line 179 of file V2\+V\+Service.\+cpp.
 
 This function send a Follow\+Response (id = 1003) message and is sent in response to a Follow\+Request (id = 1002). This message will contain the N\+TP server IP for time synchronization between the target and the sender. 
 
-Definition at line 193 of file V2\+V\+Service.\+cpp.
+Definition at line 281 of file V2\+V\+Service.\+cpp.
 
 \mbox{\Hypertarget{class_v2_v_service_a6ea5f4b01830ea6e04837a7bd1774b6e}\label{class_v2_v_service_a6ea5f4b01830ea6e04837a7bd1774b6e}} 
 \index{V2\+V\+Service@{V2\+V\+Service}!leader\+Status@{leader\+Status}}
@@ -118,14 +111,14 @@ This function sends a Leader\+Status (id = 2001) message on the follower channel
 \begin{DoxyParams}{Parameters}
 {\em speed} & -\/ current velocity \\
 \hline
-{\em steering\+Angle} & -\/ current steering angle \\
+{\em steering\+Angle} & -\/ current\+F\+R\+EQ steering angle \\
 \hline
 {\em distance\+Traveled} & -\/ distance traveled since last reading \\
 \hline
 \end{DoxyParams}
 
 
-Definition at line 246 of file V2\+V\+Service.\+cpp.
+Definition at line 346 of file V2\+V\+Service.\+cpp.
 
 \mbox{\Hypertarget{class_v2_v_service_ad25bfe4c2a0a170f06a1a1f0bf7965c7}\label{class_v2_v_service_ad25bfe4c2a0a170f06a1a1f0bf7965c7}} 
 \index{V2\+V\+Service@{V2\+V\+Service}!stop\+Follow@{stop\+Follow}}
@@ -142,7 +135,7 @@ This function sends a Stop\+Follow (id = 1004) request on the ip address of the 
 \end{DoxyParams}
 
 
-Definition at line 207 of file V2\+V\+Service.\+cpp.
+Definition at line 300 of file V2\+V\+Service.\+cpp.
 
 
 
