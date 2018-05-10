@@ -17,6 +17,7 @@ static constexpr float m_MAX_ACCELERATION = 0.16f;               /**< Max Accele
 //static constexpr float m_OFFSET = -0.12f;
 
 opendlv::proxy::PedalPositionReading pedalPositionReading;
+opendlv::proxy::GroundSteeringReading steeringReading;
 
 /**
  * An enum.

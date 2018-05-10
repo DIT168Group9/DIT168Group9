@@ -121,7 +121,6 @@ int main(int argc, char** argv) {
                         else if ((event->type &0x0F) == 2) {
                             switch (event->id) {
                                 case LStickX: {
-                                    opendlv::proxy::GroundSteeringReading steeringReading;
                                     steeringReading.groundSteering(m_OFFSET);
                                     float value = 0;
                                     if (event->data < 0) {
