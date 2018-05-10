@@ -1,5 +1,7 @@
 sudo: required
 
+dist: trusty
+
 services:
   - docker
   
@@ -10,6 +12,22 @@ compiler:
 
 before_install:
   - sudo apt-get install build-essential git cmake -y
+  
+  # Upgrading c++ compiler for c++ 14 support
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+  - sudo apt-get update
+  - sudo apt-get install gcc-6 g++-6
+  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-6
+  
+  # Building libcluon from sources
+  - git clone https://github.com/chrberger/libcluon.git
+  - cd libcluon
+  - mkdir build
+  - cd build
+  - cmake ../libcluon
+  - make
+  - make test
+  - make install
   
   - git clone https://github.com/DIT168Group9/DIT168Group9.git
   - cd DIT168Group9
