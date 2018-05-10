@@ -187,87 +187,72 @@ int main(int argc, char** argv) {
     return retVal;
 }
 
-uint16_t findButton(PS4Event event) {
+uint16_t findButton(PS4Event* event) {
     switch (event->id) {
-        case X: {
-            if (event->data == 1) {
-                std::cout << "X pressed." << std::endl;
-                opendlv::proxy::ButtonPressed buttonPressed;
-                buttonPressed.buttonNumber(1);
-                od4.send(buttonPressed);
-                std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
-            }
-        }
-            break;
-        case Circle: {
-            if (event->data == 1) {
-                std::cout << "Circle pressed." << std::endl;
-                opendlv::proxy::ButtonPressed buttonPressed;
-                buttonPressed.buttonNumber(2);
-                od4.send(buttonPressed);
-                std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
-            }
-        }
-            break;
-        case Triangle: {
-            if (event->data == 1) {
-                std::cout << "Triangle pressed." << std::endl;
-                opendlv::proxy::ButtonPressed buttonPressed;
-                buttonPressed.buttonNumber(3);
-                od4.send(buttonPressed);
-                std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
-            }
-        }
-            break;
-        case Square: {
+        case Square:
             if (event->data == 1) {
                 std::cout << "Square pressed." << std::endl;
-                opendlv::proxy::ButtonPressed buttonPressed;
-                buttonPressed.buttonNumber(0);
-                od4.send(buttonPressed);
-                std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+                return {0};
             }
-        }
+            break;
+        case X:
+            if (event->data == 1) {
+                return {1};
+            }
+            break;
+        case Circle:
+            if (event->data == 1) {
+                return {2};
+            }
+            break;
+        case Triangle:
+            if (event->data == 1) {
+                return {3};
+            }
             break;
         case L1:
             if (event->data == 1) {
-                std::cout << "L1 pressed." << std::endl;
+                return {4};
             }
             break;
         case R1:
             if (event->data == 1) {
-                std::cout << "R1 pressed." << std::endl;
+                return {5};
             }
             break;
         case L2:
-            std::cout << "L2 pressed." << std::endl;
+            if (event->data == 1) {
+                return {6};
+            }
             break;
         case R2:
-            std::cout << "R2 pressed." << std::endl;
+            if (event->data == 1) {
+                return {7};
+            }
             break;
         case Share:
             if (event->data == 1) {
-                std::cout << "Share pressed." << std::endl;
+                return {8};
             }
             break;
         case Options:
             if (event->data == 1) {
-                std::cout << "Options pressed." << std::endl;
-            }
-            break;
-        case PS:
-            if (event->data == 1) {
-                std::cout << "PS Button pressed." << std::endl;
+                return {9};
             }
             break;
         case LStick:
             if (event->data == 1) {
-                std::cout << "L3 pressed." << std::endl;
+                return {10};
             }
             break;
         case RStick:
             if (event->data == 1) {
-                std::cout << "R3 pressed." << std::endl;
+                return {11};
+            }
+            break;
+        case PS:
+            if (event->data == 1) {
+                return {12};
             }
             break;
         default:
@@ -275,10 +260,14 @@ uint16_t findButton(PS4Event event) {
     }
 }
 
-uint16_t findAxis(uint8_t axisId);
+void sendButtonPressed(uint16_t buttonNumber) {
 
-void sendButtonPressed(uint16_t buttonNumber);
+}
 
-void sendPedalPosition(float pedalValue);
+void sendPedalPosition(float pedalValue) {
 
-void sendSteeringAngle(float steeringAngle);
+}
+
+void sendSteeringAngle(float steeringAngle) {
+
+}

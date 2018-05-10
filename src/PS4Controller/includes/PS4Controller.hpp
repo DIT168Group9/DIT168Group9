@@ -23,19 +23,19 @@ opendlv::proxy::PedalPositionReading pedalPositionReading;
  * Associates button numbers to defined button names.
  */
 typedef enum {
+    Square = 0,
     X = 1,
     Circle = 2,
     Triangle = 3,
-    Square = 0,
     L1 = 4,
     R1 = 5,
     L2 = 6,
     R2 = 7,
     Share = 8,
     Options = 9,
-    PS = 12,
     LStick = 10,
-    RStick = 11
+    RStick = 11,
+    PS = 12,
 } PS4Button;
 
 /**
@@ -45,10 +45,10 @@ typedef enum {
 typedef enum {
     LStickX = 0,
     LStickY = 1,
-    L2Y = 3,
     RStickX = 2,
-    RStickY = 5,
+    L2Y = 3,
     R2Y = 4,
+    RStickY = 5,
     PadX = 6,
     PadY = 7
 } PS4Axis;
@@ -75,14 +75,6 @@ typedef struct {
  * @return Button Number to be packaged into a Button Pressed message
  */
 uint16_t findButton(PS4Event event);
-
-/**
- * This function determines which PS4 Axis has been used.
- * The axes should correspond to those defined in the PS4Axis enum.
- * @param axisId
- * @return Axis Number
- */
-uint16_t findAxis(uint8_t axisId);
 
 /**
  * This function sends the Button Number of the button pressed to the OD4 Channel.
