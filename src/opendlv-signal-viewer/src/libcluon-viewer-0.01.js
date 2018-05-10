@@ -164,7 +164,7 @@ if ("WebSocket" in window) {
 
         var autoScroll = document.getElementById("apList");
         autoScroll.scrollTop = autoScroll.scrollHeight;
-        
+
         onMessageReceived(__libcluon, evt.data);
 
 
