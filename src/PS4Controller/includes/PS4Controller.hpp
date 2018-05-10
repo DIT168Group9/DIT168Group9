@@ -83,7 +83,7 @@ uint16_t findButton(PS4Event* event);
  * It makes use of the Button Pressed message and packages the button number into the buttonNumber field.
  * @param button, od4Session
  */
-void sendButtonPressed(uint16_t button, cluon::OD4Session od4Session);
+void sendButtonPressed(uint16_t button, std::shared_ptr<cluon::OD4Session> od4Session);
 
 /**
  * This function rounds a float to a two point decimal value.
