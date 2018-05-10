@@ -86,15 +86,7 @@ uint16_t findButton(PS4Event event);
 void sendButtonPressed(uint16_t button, cluon::OD4Session od4Session);
 
 /**
- * This function sends the Pedal Position value to the OD4 Channel.
- * It makes use of the PedalPositionReading message and packages the value into the position field.
- * @param pedalValue, od4Session
+ * This function rounds a float to a two point decimal value.
+ * @param number
  */
-void sendPedalPosition(float pedalValue, cluon::OD4Session od4Session);
-
-/**
- * This function sends the Steering Angle to the OD4 Channel.
- * It makes use of the GroundSteeringReading message and packages the angle into the groundSteering field.
- * @param steeringAngle, od4Session
- */
-void sendSteeringAngle(float steeringAngle, cluon::OD4Session od4Session);
+void roundValue(float number);

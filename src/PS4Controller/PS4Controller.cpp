@@ -42,13 +42,13 @@ int main(int argc, char** argv) {
                                     if (event->data < 0) {
                                         value = event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE_LEFT *
                                                       static_cast<float>(M_PI) / 180.0f + m_OFFSET;
-                                        value = roundf(value * 100) / 100.0;
+                                        roundValue(value);
                                         steeringReading.groundSteering(value);
                                     }
                                     else if (event->data >= 0) {
                                         value = event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE_RIGHT *
                                                 static_cast<float>(M_PI) / 180.0f + m_OFFSET;
-                                        value = roundf(value * 100) / 100.0;
+                                        roundValue(value);
                                         steeringReading.groundSteering(value);
                                     }
 
@@ -180,10 +180,6 @@ void sendButtonPressed(uint16_t button, cluon::OD4Session od4Session) {
     od4Session.send(buttonPressed);
 }
 
-void sendPedalPosition(float pedalValue, cluon::OD4Session od4Session) {
-
-}
-
-void sendSteeringAngle(float steeringAngle, cluon::OD4Session od4Session) {
-
+void roundValue(float number) {
+    number = roundf(number * 100) / 100.0f;
 }
