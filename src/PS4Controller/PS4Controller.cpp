@@ -6,7 +6,7 @@ int main(int argc, char** argv) {
     int retVal = 0;
     auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
     if (0 == commandlineArguments.count("dev") || 0 == commandlineArguments.count("freq") ||
-            0 == commandlineArguments.count("cid")) {
+        0 == commandlineArguments.count("cid")) {
         std::cerr << argv[0] << " reads the PS4Controller Wireless Controller inputs and sends it to the car's components"
                   << std::endl;
         std::cerr << "Usage:   " << argv[0] << " --dev=<path Controller> --freq=<int Frequency> --cid=<OD4Session Session>"
@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
         const uint16_t m_MAX_STEERING_ANGLE_LEFT = (uint16_t) std::stoi(commandlineArguments["leftAngle"]);
         const uint16_t m_MAX_STEERING_ANGLE_RIGHT = (uint16_t) std::stoi(commandlineArguments["rightAngle"]);
 
-        std::shared_ptr<cluon::OD4Session> od4 = std::make_shared<cluon::OD4Session>(CID, [](cluon::data::Envelope /*&&envelope*/) noexcept {});
+        cluon::OD4Session od4(CID, [](cluon::data::Envelope /*&&envelope*/) noexcept {});
         auto atFrequency{[&od4, &DEV, &FREQ, &CID, &m_MAX_STEERING_ANGLE_LEFT, &m_MAX_STEERING_ANGLE_RIGHT,
                                  m_OFFSET]() -> bool {
             FILE* file = fopen(DEV.c_str(), "rb");
@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
                 while (!feof(file)) {
                     if (fread(event, sizeof(PS4Event), 1, file)) {
                         if ((event->type &0x0F) == 1) {
-                            sendButtonPressed(findButton(event), od4);
+                            sendButtonPressed(findButton(event), &od4);
                         }
                         else if ((event->type &0x0F) == 2) {
                             switch (event->id) {
@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
                                     float value = 0;
                                     if (event->data < 0) {
                                         value = event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE_LEFT *
-                                                      static_cast<float>(M_PI) / 180.0f + m_OFFSET;
+                                                static_cast<float>(M_PI) / 180.0f + m_OFFSET;
                                         roundValue(&value);
                                         steeringReading.groundSteering(value);
                                     }
@@ -52,9 +52,9 @@ int main(int argc, char** argv) {
                                         steeringReading.groundSteering(value);
                                     }
 
-                                    od4->send(steeringReading);
+                                    od4.send(steeringReading);
                                     std::cout << "Sending Angle: " << steeringReading.groundSteering() << std::endl;
-                                    }
+                                }
                                     break;
                                 case LStickY: break;
                                 case L2Y:     break;
@@ -72,9 +72,9 @@ int main(int argc, char** argv) {
                                         roundValue(&value);
                                         pedalPositionReading.position(value);
                                     }
-                                    od4->send(pedalPositionReading);
+                                    od4.send(pedalPositionReading);
                                     std::cout << "Sending speed: " << value << std::endl;
-                                    }
+                                }
                                     break;
                                 case R2Y:     break;
                                 case PadX:    break;
@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
             }
             return true;
         }};
-        od4->timeTrigger(FREQ, atFrequency);
+        od4.timeTrigger(FREQ, atFrequency);
     }
     return retVal;
 }
@@ -175,7 +175,7 @@ uint16_t findButton(PS4Event* event) {
     }
 }
 
-void sendButtonPressed(uint16_t button, std::shared_ptr<cluon::OD4Session> od4Session) {
+void sendButtonPressed(uint16_t button, cluon::OD4Session* od4Session) {
     buttonPressed.buttonNumber(button);
     od4Session->send(buttonPressed);
 }
