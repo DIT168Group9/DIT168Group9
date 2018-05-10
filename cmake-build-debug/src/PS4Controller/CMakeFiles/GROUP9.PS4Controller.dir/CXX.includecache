@@ -1,0 +1,272 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Program Files (x86)/libcluon/include/cluon/Envelope.hpp
+cluon/FromProtoVisitor.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/FromProtoVisitor.hpp
+cluon/ToProtoVisitor.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/ToProtoVisitor.hpp
+cluon/cluonDataStructures.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/cluonDataStructures.hpp
+array
+-
+cstring
+-
+istream
+-
+sstream
+-
+string
+-
+utility
+-
+vector
+-
+
+C:/Program Files (x86)/libcluon/include/cluon/FromProtoVisitor.hpp
+cluon/ProtoConstants.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/ProtoConstants.hpp
+cluon/cluon.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/cluon.hpp
+cstdint
+-
+map
+-
+sstream
+-
+string
+-
+vector
+-
+
+C:/Program Files (x86)/libcluon/include/cluon/OD4Session.hpp
+cluon/Time.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/Time.hpp
+cluon/ToProtoVisitor.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/ToProtoVisitor.hpp
+cluon/UDPReceiver.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/UDPReceiver.hpp
+cluon/UDPSender.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/UDPSender.hpp
+cluon/cluon.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/cluon.hpp
+cluon/cluonDataStructures.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/cluonDataStructures.hpp
+chrono
+-
+cstdint
+-
+functional
+-
+map
+-
+memory
+-
+mutex
+-
+string
+-
+utility
+-
+
+C:/Program Files (x86)/libcluon/include/cluon/PortableEndian.hpp
+endian.h
+-
+libkern/OSByteOrder.h
+-
+sys/endian.h
+-
+endian.h
+-
+
+C:/Program Files (x86)/libcluon/include/cluon/ProtoConstants.hpp
+cstdint
+-
+
+C:/Program Files (x86)/libcluon/include/cluon/Time.hpp
+cluon/cluonDataStructures.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/cluonDataStructures.hpp
+chrono
+-
+
+C:/Program Files (x86)/libcluon/include/cluon/ToProtoVisitor.hpp
+cluon/ProtoConstants.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/ProtoConstants.hpp
+cluon/cluon.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/cluon.hpp
+cstdint
+-
+sstream
+-
+string
+-
+
+C:/Program Files (x86)/libcluon/include/cluon/UDPReceiver.hpp
+cluon/cluon.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/cluon.hpp
+Winsock2.h
+-
+ws2tcpip.h
+-
+netinet/in.h
+-
+cstdint
+-
+atomic
+-
+condition_variable
+-
+deque
+-
+chrono
+-
+functional
+-
+mutex
+-
+string
+-
+thread
+-
+
+C:/Program Files (x86)/libcluon/include/cluon/UDPSender.hpp
+cluon/cluon.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/cluon.hpp
+Winsock2.h
+-
+ws2tcpip.h
+-
+netinet/in.h
+-
+cstdint
+-
+mutex
+-
+string
+-
+utility
+-
+
+C:/Program Files (x86)/libcluon/include/cluon/cluon.hpp
+cluon/PortableEndian.hpp
+C:/Program Files (x86)/libcluon/include/cluon/cluon/PortableEndian.hpp
+map
+-
+string
+-
+
+C:/Program Files (x86)/libcluon/include/cluon/cluonDataStructures.hpp
+cstdint
+-
+string
+-
+utility
+-
+cstdint
+-
+string
+-
+utility
+-
+string
+-
+utility
+-
+cstdint
+-
+string
+-
+utility
+-
+cstdint
+-
+string
+-
+utility
+-
+string
+-
+utility
+-
+cstdint
+-
+string
+-
+utility
+-
+cstdint
+-
+string
+-
+utility
+-
+string
+-
+utility
+-
+cstdint
+-
+string
+-
+utility
+-
+cstdint
+-
+string
+-
+utility
+-
+string
+-
+utility
+-
+
+C:/Users/Firsou/Desktop/SEM/Term 4/Project/DIT168Group9/src/PS4Controller/PS4Controller.cpp
+cmath
+-
+includes/PS4Controller.hpp
+C:/Users/Firsou/Desktop/SEM/Term 4/Project/DIT168Group9/src/PS4Controller/includes/PS4Controller.hpp
+../V2V/includes/V2VService.hpp
+C:/Users/Firsou/Desktop/SEM/Term 4/Project/DIT168Group9/src/V2V/includes/V2VService.hpp
+
+C:/Users/Firsou/Desktop/SEM/Term 4/Project/DIT168Group9/src/PS4Controller/includes/PS4Controller.hpp
+iostream
+-
+fstream
+-
+unistd.h
+-
+iomanip
+-
+cluon/OD4Session.hpp
+C:/Users/Firsou/Desktop/SEM/Term 4/Project/DIT168Group9/src/PS4Controller/includes/cluon/OD4Session.hpp
+Messages.hpp
+C:/Users/Firsou/Desktop/SEM/Term 4/Project/DIT168Group9/src/PS4Controller/includes/Messages.hpp
+
+C:/Users/Firsou/Desktop/SEM/Term 4/Project/DIT168Group9/src/V2V/includes/V2VService.hpp
+iomanip
+-
+unistd.h
+-
+sys/time.h
+-
+cluon/OD4Session.hpp
+C:/Users/Firsou/Desktop/SEM/Term 4/Project/DIT168Group9/src/V2V/includes/cluon/OD4Session.hpp
+cluon/UDPSender.hpp
+C:/Users/Firsou/Desktop/SEM/Term 4/Project/DIT168Group9/src/V2V/includes/cluon/UDPSender.hpp
+cluon/UDPReceiver.hpp
+C:/Users/Firsou/Desktop/SEM/Term 4/Project/DIT168Group9/src/V2V/includes/cluon/UDPReceiver.hpp
+cluon/Envelope.hpp
+C:/Users/Firsou/Desktop/SEM/Term 4/Project/DIT168Group9/src/V2V/includes/cluon/Envelope.hpp
+Messages.hpp
+C:/Users/Firsou/Desktop/SEM/Term 4/Project/DIT168Group9/src/V2V/includes/Messages.hpp
+iostream
+-
+queue
+-
+
