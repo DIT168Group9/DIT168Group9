@@ -1,6 +1,7 @@
 //
 // Created by Firas Cheaib on 23-Apr-18.
 // Adapted from openKorp's IMU implementation
+// Comments and code modified with permission
 //
 
 #include <iostream>
