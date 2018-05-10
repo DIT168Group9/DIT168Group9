@@ -26,9 +26,9 @@ int main(int argc, char** argv) {
         cluon::OD4Session od4(CID, [](cluon::data::Envelope /*&&envelope*/) noexcept {});
         auto atFrequency{[&od4, &DEV, &FREQ, &CID, &m_MAX_STEERING_ANGLE_LEFT, &m_MAX_STEERING_ANGLE_RIGHT,
                                  m_OFFSET]() -> bool {
-            FILE *file = fopen(DEV.c_str(), "rb");
+            FILE* file = fopen(DEV.c_str(), "rb");
             if (file != nullptr) {
-                PS4Event *event = (PS4Event *)malloc(sizeof(PS4Event));
+                auto event = (PS4Event* )malloc(sizeof(PS4Event));
                 while (!feof(file)) {
                     if (fread(event, sizeof(PS4Event), 1, file)) {
                         if ((event->type &0x0F) == 1) {
