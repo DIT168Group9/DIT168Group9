@@ -44,7 +44,6 @@ if ("WebSocket" in window) {
 
         // Got new data from the WebSocket; now, try to decode it into JSON using the supplied message specification file.
         let data = JSON.parse(__libcluon.decodeEnvelopeToJSON(evt.data));
-        var objDiv = document.getElementById("apList");
 
         // Pedal Position Readings
 
@@ -130,8 +129,8 @@ if ("WebSocket" in window) {
             announcePresenceGroupId = window.atob(data.AnnouncePresence.groupId);
 
             $("#apList").append('<li>' + " Group " + announcePresenceGroupId + " has the ip: " + announcePresenceVehicalIp + '</li>');
-
-            objDiv.scrollTop = objDiv.scrollHeight;
+            var autoScroll = document.getElementById("apList");
+            autoScroll.scrollTop = objDiv.scrollHeight;
 
         }
 
