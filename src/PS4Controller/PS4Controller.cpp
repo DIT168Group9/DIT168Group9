@@ -186,3 +186,99 @@ int main(int argc, char** argv) {
     }
     return retVal;
 }
+
+uint16_t findButton(PS4Event event) {
+    switch (event->id) {
+        case X: {
+            if (event->data == 1) {
+                std::cout << "X pressed." << std::endl;
+                opendlv::proxy::ButtonPressed buttonPressed;
+                buttonPressed.buttonNumber(1);
+                od4.send(buttonPressed);
+                std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+            }
+        }
+            break;
+        case Circle: {
+            if (event->data == 1) {
+                std::cout << "Circle pressed." << std::endl;
+                opendlv::proxy::ButtonPressed buttonPressed;
+                buttonPressed.buttonNumber(2);
+                od4.send(buttonPressed);
+                std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+            }
+        }
+            break;
+        case Triangle: {
+            if (event->data == 1) {
+                std::cout << "Triangle pressed." << std::endl;
+                opendlv::proxy::ButtonPressed buttonPressed;
+                buttonPressed.buttonNumber(3);
+                od4.send(buttonPressed);
+                std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+            }
+        }
+            break;
+        case Square: {
+            if (event->data == 1) {
+                std::cout << "Square pressed." << std::endl;
+                opendlv::proxy::ButtonPressed buttonPressed;
+                buttonPressed.buttonNumber(0);
+                od4.send(buttonPressed);
+                std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
+            }
+        }
+            break;
+        case L1:
+            if (event->data == 1) {
+                std::cout << "L1 pressed." << std::endl;
+            }
+            break;
+        case R1:
+            if (event->data == 1) {
+                std::cout << "R1 pressed." << std::endl;
+            }
+            break;
+        case L2:
+            std::cout << "L2 pressed." << std::endl;
+            break;
+        case R2:
+            std::cout << "R2 pressed." << std::endl;
+            break;
+        case Share:
+            if (event->data == 1) {
+                std::cout << "Share pressed." << std::endl;
+            }
+            break;
+        case Options:
+            if (event->data == 1) {
+                std::cout << "Options pressed." << std::endl;
+            }
+            break;
+        case PS:
+            if (event->data == 1) {
+                std::cout << "PS Button pressed." << std::endl;
+            }
+            break;
+        case LStick:
+            if (event->data == 1) {
+                std::cout << "L3 pressed." << std::endl;
+            }
+            break;
+        case RStick:
+            if (event->data == 1) {
+                std::cout << "R3 pressed." << std::endl;
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+uint16_t findAxis(uint8_t axisId);
+
+void sendButtonPressed(uint16_t buttonNumber);
+
+void sendPedalPosition(float pedalValue);
+
+void sendSteeringAngle(float steeringAngle);

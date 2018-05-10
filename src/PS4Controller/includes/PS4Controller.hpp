@@ -67,3 +67,40 @@ typedef struct {
     uint8_t  type;
     uint8_t  id;
 } PS4Event;
+
+/**
+ * This function determines which PS4 Button has been pressed.
+ * The buttons should correspond to those defined in the PS4Button enum.
+ * @param buttonId
+ * @return Button Number to be packaged into a Button Pressed message
+ */
+uint16_t findButton(PS4Event event);
+
+/**
+ * This function determines which PS4 Axis has been used.
+ * The axes should correspond to those defined in the PS4Axis enum.
+ * @param axisId
+ * @return Axis Number
+ */
+uint16_t findAxis(uint8_t axisId);
+
+/**
+ * This function sends the Button Number of the button pressed to the OD4 Channel.
+ * It makes use of the Button Pressed message and packages the button number into the buttonNumber field.
+ * @param buttonNumber
+ */
+void sendButtonPressed(uint16_t buttonNumber);
+
+/**
+ * This function sends the Pedal Position value to the OD4 Channel.
+ * It makes use of the PedalPositionReading message and packages the value into the position field.
+ * @param pedalValue
+ */
+void sendPedalPosition(float pedalValue);
+
+/**
+ * This function sends the Steering Angle to the OD4 Channel.
+ * It makes use of the GroundSteeringReading message and packages the angle into the groundSteering field.
+ * @param steeringAngle
+ */
+void sendSteeringAngle(float steeringAngle);
