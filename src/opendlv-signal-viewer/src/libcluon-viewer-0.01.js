@@ -129,8 +129,6 @@ if ("WebSocket" in window) {
             announcePresenceGroupId = window.atob(data.AnnouncePresence.groupId);
 
             $("#apList").append('<li>' + " Group " + announcePresenceGroupId + " has the ip: " + announcePresenceVehicalIp + '</li>');
-            var autoScroll = document.getElementById("apList");
-            autoScroll.scrollTop = objDiv.scrollHeight;
 
         }
 
@@ -164,7 +162,11 @@ if ("WebSocket" in window) {
             $("#apList").append('<li>' + " Follower Status Received! " + '</li>');
         }
 
+        var autoScroll = document.getElementById("apList");
+        autoScroll.scrollTop = autoScroll.scrollHeight;
+        
         onMessageReceived(__libcluon, evt.data);
+
 
     };
     ws.onclose = function() {
