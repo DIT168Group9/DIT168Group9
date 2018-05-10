@@ -422,11 +422,6 @@ body {
 
     border: 10px solid #777;
 
-    background: radial-gradient(
-            ellipse cover,
-            white,
-            #A3E2FC
-    );
 
     box-shadow:
             0 0 4px #000,
@@ -436,15 +431,6 @@ body {
     transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
 
-#compass:hover {
-    transform: skewX(-5deg) skewY(-2deg);
-
-    box-shadow:
-            0 0 4px #000,
-            0 0 1px 8px #ccc,
-            8px 12px 3px 5px #666,
-            20px 28px 20px #afa9d7;
-}
 
 #compass:before {
     content: '';
