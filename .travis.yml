@@ -27,7 +27,8 @@ before_install:
   - cmake ../libcluon
   - make
   - make test
-  - make install
+  - sudo make install
+  - cd ~
   
   - git clone https://github.com/DIT168Group9/DIT168Group9.git
   - cd DIT168Group9
