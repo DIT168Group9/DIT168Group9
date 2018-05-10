@@ -44,6 +44,7 @@ if ("WebSocket" in window) {
 
         // Got new data from the WebSocket; now, try to decode it into JSON using the supplied message specification file.
         let data = JSON.parse(__libcluon.decodeEnvelopeToJSON(evt.data));
+        var objDiv = document.getElementById("apList");
 
         // Pedal Position Readings
 
@@ -120,7 +121,6 @@ if ("WebSocket" in window) {
             gyroscopeReadingYAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingY;
             gyroscopeReadingZAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingZ;
 
-            $("#fuel").data("kendoRadialGauge").value(gyroscopeReadingXAxis);
         }
 
         // V2V messages in Signal Viewer
@@ -130,7 +130,9 @@ if ("WebSocket" in window) {
             announcePresenceGroupId = window.atob(data.AnnouncePresence.groupId);
 
             $("#apList").append('<li>' + " Group " + announcePresenceGroupId + " has the ip: " + announcePresenceVehicalIp + '</li>');
-            data.scrollTop = data.scrollHeight;
+
+            objDiv.scrollTop = objDiv.scrollHeight;
+
         }
 
         else if(data.dataType === 2001){
