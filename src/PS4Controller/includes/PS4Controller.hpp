@@ -18,6 +18,7 @@ static constexpr float m_MAX_ACCELERATION = 0.16f;               /**< Max Accele
 
 opendlv::proxy::PedalPositionReading pedalPositionReading;
 opendlv::proxy::GroundSteeringReading steeringReading;
+opendlv::proxy::ButtonPressed buttonPressed;
 
 /**
  * An enum.
@@ -80,20 +81,20 @@ uint16_t findButton(PS4Event event);
 /**
  * This function sends the Button Number of the button pressed to the OD4 Channel.
  * It makes use of the Button Pressed message and packages the button number into the buttonNumber field.
- * @param buttonNumber
+ * @param button, od4Session
  */
-void sendButtonPressed(uint16_t buttonNumber);
+void sendButtonPressed(uint16_t button, cluon::OD4Session od4Session);
 
 /**
  * This function sends the Pedal Position value to the OD4 Channel.
  * It makes use of the PedalPositionReading message and packages the value into the position field.
- * @param pedalValue
+ * @param pedalValue, od4Session
  */
-void sendPedalPosition(float pedalValue);
+void sendPedalPosition(float pedalValue, cluon::OD4Session od4Session);
 
 /**
  * This function sends the Steering Angle to the OD4 Channel.
  * It makes use of the GroundSteeringReading message and packages the angle into the groundSteering field.
- * @param steeringAngle
+ * @param steeringAngle, od4Session
  */
-void sendSteeringAngle(float steeringAngle);
+void sendSteeringAngle(float steeringAngle, cluon::OD4Session od4Session);
