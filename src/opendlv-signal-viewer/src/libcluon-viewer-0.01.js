@@ -115,12 +115,13 @@ if ("WebSocket" in window) {
 
         // Gyroscope Readings
 
-        // else if(data.dataType === 1042){
-        //     gyroscopeReadingXAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingX;
-        //     gyroscopeReadingYAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingY;
-        //     gyroscopeReadingZAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingZ;
-        //
-        // }
+        else if(data.dataType === 1042) {
+            gyroscopeReadingXAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingX;
+            gyroscopeReadingYAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingY;
+            gyroscopeReadingZAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingZ;
+
+            $("#fuel").data("kendoRadialGauge").value(gyroscopeReadingXAxis);
+        }
 
         // V2V messages in Signal Viewer
 

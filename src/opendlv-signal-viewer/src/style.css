@@ -68,6 +68,15 @@ body {
     overflow:hidden;
 }
 
+#left{
+    /*float: left;*/
+    grid-column-start: first;
+    grid-column-end: line2;
+    grid-row-start: row1-end;
+    grid-row-end: third-line;
+    /*margin-left: 50px;*/
+}
+
 #meterLeft{
     /*margin: 100px 20% 0 0;*/
     /*left: 20%;*/
