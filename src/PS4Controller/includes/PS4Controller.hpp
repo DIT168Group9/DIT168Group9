@@ -89,4 +89,4 @@ void sendButtonPressed(uint16_t button, cluon::OD4Session od4Session);
  * This function rounds a float to a two point decimal value.
  * @param number
  */
-void roundValue(float number);
+void roundValue(float* number);

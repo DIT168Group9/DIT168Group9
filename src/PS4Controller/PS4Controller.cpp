@@ -42,13 +42,13 @@ int main(int argc, char** argv) {
                                     if (event->data < 0) {
                                         value = event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE_LEFT *
                                                       static_cast<float>(M_PI) / 180.0f + m_OFFSET;
-                                        roundValue(value);
+                                        roundValue(&value);
                                         steeringReading.groundSteering(value);
                                     }
                                     else if (event->data >= 0) {
                                         value = event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE_RIGHT *
                                                 static_cast<float>(M_PI) / 180.0f + m_OFFSET;
-                                        roundValue(value);
+                                        roundValue(&value);
                                         steeringReading.groundSteering(value);
                                     }
 
@@ -64,12 +64,12 @@ int main(int argc, char** argv) {
                                     pedalPositionReading.position(value);
                                     if(event->data < 0) {
                                         value = event->data / MIN_AXES_VALUE * m_MAX_ACCELERATION;
-                                        value = roundf(value * 100) / 100.0;
+                                        roundValue(value);
                                         pedalPositionReading.position(value);
                                     }
                                     else if (event->data >= 0) {
                                         value = event->data / MAX_AXES_VALUE * m_MAX_DECELERATION;
-                                        value = roundf(value * 100) / 100.0;
+                                        roundValue(value);
                                         pedalPositionReading.position(value);
                                     }
                                     od4.send(pedalPositionReading);
@@ -180,6 +180,6 @@ void sendButtonPressed(uint16_t button, cluon::OD4Session od4Session) {
     od4Session.send(buttonPressed);
 }
 
-void roundValue(float number) {
-    number = roundf(number * 100) / 100.0f;
+void roundValue(float* number) {
+    *number = roundf(*number * 100) / 100.0f;
 }
