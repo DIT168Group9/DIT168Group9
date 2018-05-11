@@ -108,7 +108,7 @@ uint16_t findButton(uint8_t buttonId) {
     uint16_t buttonNumber = 13;
     switch (buttonId) {
         case Square:
-            buttonNumber = 13;
+            buttonNumber = 0;
             std::cout << "Square pressed." << std::endl;
             break;
         case X:
