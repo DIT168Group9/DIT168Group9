@@ -105,46 +105,59 @@ int main(int argc, char** argv) {
 }
 
 uint16_t findButton(uint8_t buttonId) {
-    uint16_t buttonNumber = 0;
+    uint16_t buttonNumber = 13;
     switch (buttonId) {
         case Square:
+            buttonNumber = 13;
             std::cout << "Square pressed." << std::endl;
             break;
         case X:
             buttonNumber = 1;
+            std::cout << "X pressed." << std::endl;
             break;
         case Circle:
             buttonNumber = 2;
+            std::cout << "Circle pressed." << std::endl;
             break;
         case Triangle:
             buttonNumber = 3;
+            std::cout << "Triangle pressed." << std::endl;
             break;
         case L1:
             buttonNumber = 4;
+            std::cout << "L1 pressed." << std::endl;
             break;
         case R1:
             buttonNumber = 5;
+            std::cout << "R1 pressed." << std::endl;
             break;
         case L2:
             buttonNumber = 6;
+            std::cout << "L2 pressed." << std::endl;
             break;
         case R2:
             buttonNumber = 7;
+            std::cout << "R2 pressed." << std::endl;
             break;
         case Share:
             buttonNumber = 8;
+            std::cout << "Share pressed." << std::endl;
             break;
         case Options:
             buttonNumber = 9;
+            std::cout << "Options pressed." << std::endl;
             break;
         case LStick:
             buttonNumber = 10;
+            std::cout << "L3 pressed." << std::endl;
             break;
         case RStick:
             buttonNumber = 11;
+            std::cout << "R3 pressed." << std::endl;
             break;
         case PS:
             buttonNumber = 12;
+            std::cout << "PS pressed." << std::endl;
             break;
         default:
             break;
@@ -153,8 +166,13 @@ uint16_t findButton(uint8_t buttonId) {
 }
 
 void sendButtonPressed(uint16_t button, cluon::OD4Session* od4Session) {
-    buttonPressed.buttonNumber(button);
-    od4Session->send(buttonPressed);
+    if (button == 13) {
+        return;
+    }
+    else {
+        buttonPressed.buttonNumber(button);
+        od4Session->send(buttonPressed);
+    }
 }
 
 void roundValue(float* number) {
