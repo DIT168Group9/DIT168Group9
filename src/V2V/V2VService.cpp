@@ -2,6 +2,7 @@
 
 std::shared_ptr<cluon::OD4Session> od4;
 std::queue <float> delayQueue;
+bool cantMove = false;
 
 int main(int argc, char **argv) {
     int returnValue = 0;
@@ -34,11 +35,11 @@ int main(int argc, char **argv) {
 
         float pedalPos = 0, steeringAngle = 0, distanceReading = 0;
         uint16_t button = 0;
-        bool canMove = true;
+
 
         od4 =
         std::make_shared<cluon::OD4Session>(CID,
-        [&v2vService, &pedalPos, &steeringAngle, &button, &PARTNER_IP](cluon::data::Envelope &&envelope) noexcept {
+        [&v2vService, &pedalPos, &steeringAngle, &button, &PARTNER_IP, &distanceReading](cluon::data::Envelope &&envelope) noexcept {
             if (envelope.dataType() == 1041) {
                 opendlv::proxy::PedalPositionReading ppr =
                         cluon::extractMessage<opendlv::proxy::PedalPositionReading>(std::move(envelope));
@@ -71,11 +72,34 @@ int main(int argc, char **argv) {
                         cluon::extractMessage<opendlv::proxy::GroundSteeringReading>(std::move(envelope));
                 steeringAngle = gsr.groundSteering();
             }
+            else if (envelope.dataType() == 1039) {
+                opendlv::proxy::DistanceReading dist =
+                        cluon::extractMessage<opendlv::proxy::DistanceReading>(std::move(envelope));
+                distanceReading = dist.distance();
+                if (distanceReading < 0.25f) {
+                    std::cout << "less than 0.25, stopping" << std::endl;
+
+                    opendlv::proxy::PedalPositionReading msgPedal;
+                    opendlv::proxy::GroundSteeringReading msgSteering;
+
+                    msgPedal.position(0);
+                    od4->send(msgPedal);
+
+                    msgSteering.groundSteering(0);
+                    od4->send(msgSteering);
+
+                    cantMove = true;
+                }
+                else {
+                    cantMove = false;
+                }
+            }
         });
 
         auto atFrequency{[&v2vService, &pedalPos, &steeringAngle]() -> bool {
             v2vService->followerStatus();
             v2vService->leaderStatus(pedalPos, steeringAngle, 0);
+
             return true;
         }};
         od4->timeTrigger(FREQ, atFrequency);
@@ -180,6 +204,10 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
                  break;
              }
              case LEADER_STATUS: {
+                 if (cantMove) {
+                     std::cout << "Can't move" << std::endl;
+                     return;
+                 }
                  opendlv::proxy::PedalPositionReading msgPedal;
                  opendlv::proxy::GroundSteeringReading msgSteering;
                  float calibratedAngle = 0.0f;
