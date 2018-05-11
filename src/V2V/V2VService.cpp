@@ -1,7 +1,6 @@
 #include "V2VService.hpp"
 
 std::shared_ptr<cluon::OD4Session> od4;
-std::string followerIp;
 std::queue <float> delayQueue;
 
 int main(int argc, char **argv) {
@@ -17,7 +16,8 @@ int main(int argc, char **argv) {
         std::cerr << "Example: " << argv[0]
                   << " --cid=111 --freq=125 --ip=127.0.0.1 --id=9 --partnerIp=1.1.1.1 --parnterId=8" << std::endl;
         returnValue = 1;
-    } else {
+    }
+    else {
         const uint16_t CID = (uint16_t) std::stoi(commandlineArguments["cid"]);
         const uint16_t FREQ = (uint16_t) std::stoi(commandlineArguments["freq"]);
         const uint16_t QUEUE_MAX = (uint16_t) std::stoi(commandlineArguments["queueMax"]);
@@ -140,9 +140,8 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
 
                  // After receiving a FollowRequest, check first if there is currently no car already following.
                  if (!isLeader) {
-                     unsigned long len = sender.find(':');    // If no, add the requester to known follower slot
-                     followerIp = sender.substr(0, len);      // and establish a sending channel.
-                     toFollower = std::make_shared<cluon::UDPSender>(followerIp, DEFAULT_PORT);
+                     // If no, add the requester to known follower slot and establish a sending channel.
+                     toFollower = std::make_shared<cluon::UDPSender>(_PARTNER_IP, DEFAULT_PORT);
                      followResponse();
                  }
                  break;
@@ -161,16 +160,14 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
 
                  // Clear either follower or leader slot, depending on current role.
                  unsigned long len = sender.find(':');
-                 if (sender.substr(0, len) == followerIp) {
+                 if (isLeader) {
                      isLeader = false;
                      std::cout << "Car was leader, no longer is\n";
-                     followerIp = "";
                      toFollower.reset();
                  }
-                 else if (sender.substr(0, len) == leaderIp) {
+                 else if (isFollower) {
                      isFollower = false;
                      std::cout << "Car was follower, no longer is\n";
-                     leaderIp = "";
                      toLeader.reset();
                  }
                  break;
@@ -245,7 +242,7 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
  */
 void V2VService::announcePresence() {
     if (isFollower) {
-        std::cout << "Announce presence returned! Already following of a car" << std::endl;
+        std::cout << "Announce presence not sent. Already following of a car" << std::endl;
         return;
     }
 
@@ -263,13 +260,13 @@ void V2VService::announcePresence() {
  */
 void V2VService::followRequest() {
     if (!isPresentPartner || isFollower) {
-        std::cout << "Follow request returned! isFollower: " << isFollower << " isPresentPartner: " << isPresentPartner
+        std::cout << "Follow request not sent. isFollower: " << isFollower << " isPresentPartner: " << isPresentPartner
                   << std::endl;
         return;
     }
     toLeader = std::make_shared<cluon::UDPSender>(_PARTNER_IP, DEFAULT_PORT);
     FollowRequest followRequest;
-    followRequest.temporaryValue("Follow request test");
+    followRequest.temporaryValue("Follow request message");
     od4->send(followRequest);
     toLeader->send(encode(followRequest));
 }
@@ -280,12 +277,12 @@ void V2VService::followRequest() {
  */
 void V2VService::followResponse() {
     if (isFollower || isLeader) {
-        std::cout << "Follow response returned! isFollower: " << isFollower << " isLeader: " << isLeader << std::endl;
+        std::cout << "Follow response not sent. isFollower: " << isFollower << " isLeader: " << isLeader << std::endl;
         return;
     }
 
     FollowResponse followResponse;
-    followResponse.temporaryValue("Follow response test");
+    followResponse.temporaryValue("Follow response message");
     isLeader = true;
     od4->send(followResponse);
     toFollower->send(encode(followResponse));
@@ -299,7 +296,7 @@ void V2VService::followResponse() {
  */
 void V2VService::stopFollow(std::string vehicleIp) {
     StopFollow stopFollow;
-    stopFollow.temporaryValue("Stop follow test");
+    stopFollow.temporaryValue("Stop follow message");
 
     std::cout << "Inside stop follow, vehicleIp == _PARTNER_IP: " << (vehicleIp == _PARTNER_IP) << " isFollower: "
               << isFollower << " isLeader: " << isLeader << std::endl;
@@ -331,7 +328,7 @@ void V2VService::stopFollow(std::string vehicleIp) {
 void V2VService::followerStatus() {
     if (!isFollower) return;
     FollowerStatus followerStatus;
-    followerStatus.temporaryValue("Follower status test");
+    followerStatus.temporaryValue("Follower status message");
     od4->send(followerStatus);
     toLeader->send(encode(followerStatus));
 }

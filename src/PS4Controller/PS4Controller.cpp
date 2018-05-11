@@ -32,7 +32,9 @@ int main(int argc, char** argv) {
                 while (!feof(file)) {
                     if (fread(event, sizeof(PS4Event), 1, file)) {
                         if ((event->type &0x0F) == 1) {
-                            sendButtonPressed(findButton(event), &od4);
+                            if (event->data == 1) {
+                                sendButtonPressed(findButton(event->id), &od4);
+                            }
                         }
                         else if ((event->type &0x0F) == 2) {
                             switch (event->id) {
@@ -102,77 +104,52 @@ int main(int argc, char** argv) {
     return retVal;
 }
 
-uint16_t findButton(PS4Event* event) {
-    switch (event->id) {
+uint16_t findButton(uint8_t buttonId) {
+    uint16_t buttonNumber = 0;
+    switch (buttonId) {
         case Square:
-            if (event->data == 1) {
-                std::cout << "Square pressed." << std::endl;
-                return {0};
-            }
+            std::cout << "Square pressed." << std::endl;
             break;
         case X:
-            if (event->data == 1) {
-                return {1};
-            }
+            buttonNumber = 1;
             break;
         case Circle:
-            if (event->data == 1) {
-                return {2};
-            }
+            buttonNumber = 2;
             break;
         case Triangle:
-            if (event->data == 1) {
-                return {3};
-            }
+            buttonNumber = 3;
             break;
         case L1:
-            if (event->data == 1) {
-                return {4};
-            }
+            buttonNumber = 4;
             break;
         case R1:
-            if (event->data == 1) {
-                return {5};
-            }
+            buttonNumber = 5;
             break;
         case L2:
-            if (event->data == 1) {
-                return {6};
-            }
+            buttonNumber = 6;
             break;
         case R2:
-            if (event->data == 1) {
-                return {7};
-            }
+            buttonNumber = 7;
             break;
         case Share:
-            if (event->data == 1) {
-                return {8};
-            }
+            buttonNumber = 8;
             break;
         case Options:
-            if (event->data == 1) {
-                return {9};
-            }
+            buttonNumber = 9;
             break;
         case LStick:
-            if (event->data == 1) {
-                return {10};
-            }
+            buttonNumber = 10;
             break;
         case RStick:
-            if (event->data == 1) {
-                return {11};
-            }
+            buttonNumber = 11;
             break;
         case PS:
-            if (event->data == 1) {
-                return {12};
-            }
+            buttonNumber = 12;
             break;
         default:
             break;
     }
+    return buttonNumber;
 }
 
 void sendButtonPressed(uint16_t button, cluon::OD4Session* od4Session) {

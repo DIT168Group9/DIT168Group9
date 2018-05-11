@@ -59,9 +59,6 @@ private:
     bool isPresentPartner = false;
     bool isFollower = false;
     bool isLeader = false;
-//    static constexpr float leftAngleOffset = -0.3f;
-
-    std::string leaderIp;
 
     std::shared_ptr<cluon::OD4Session>  broadcast;
     std::shared_ptr<cluon::UDPReceiver> incoming;
