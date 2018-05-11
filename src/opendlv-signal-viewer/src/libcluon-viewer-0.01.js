@@ -197,7 +197,7 @@ function createDashboard() {
         theme: "black",
 
         pointer: {
-            value: 0,
+            value: 25,
             color: "#ea7001"
         },
 
@@ -271,7 +271,7 @@ function createDashboard() {
         theme: "black",
 
         pointer: {
-            value: 0,
+            value: 20,
             color: "#ea7001"
         },
 
@@ -309,7 +309,7 @@ function createDashboard() {
         theme: "black",
 
         pointer: {
-            value: 0,
+            value: 40,
             color: "#ea7001"
         },
 

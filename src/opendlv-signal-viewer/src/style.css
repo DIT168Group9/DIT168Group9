@@ -109,8 +109,8 @@ body {
     grid-column-end: end;
     grid-row-start: third-line;
     grid-row-end: last-line;
-    justify-self: center;
-    align-self: start;
+    place-self: center;
+    /*align-self: start;*/
     color: #1d2124;
 }
 
