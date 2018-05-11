@@ -1,6 +1,7 @@
 //
 // Created by Firas Cheaib on 23-Apr-18.
 // Adapted from openKorp's IMU implementation
+// Comments and code modified with permission
 //
 
 #include <iostream>
@@ -21,15 +22,14 @@ int main(int argc, char** argv) {
                   << std::endl;
         std::cerr << "Usage:   " << argv[0] << " --dev=<path toIMU> --freq=<int Frequency> --cid=<OD4Session Session>"
                   << std::endl;
-        std::cerr << "Example: " << argv[0] << " --dev=/dev/i2c-2 --freq=100 --cid=200 " <<
-                                                    "--bus=118" << std::endl;
+        std::cerr << "Example: " << argv[0] << " --dev=/dev/i2c-2 --freq=100 --cid=200 " << std::endl;
         returnValue = 1;
     }
     else {
         const std::string DEV = commandlineArguments["dev"];
         std::cout << DEV << std::endl;
         const uint16_t CID = (uint16_t) std::stoi(commandlineArguments["cid"]);
-        const float FREQ = std::stof(commandlineArguments["cid"]);
+        const float FREQ = std::stof(commandlineArguments["freq"]);
         const bool VERBOSE = commandlineArguments.count("verbose") != 0;
 
         int16_t deviceFile = open(DEV.c_str(), O_RDWR);
@@ -158,13 +158,9 @@ void initializeMpu(int16_t deviceFile) {
     uint8_t c;
     reg = MPU9250::GYRO_CONFIG;
     i2cReadRegister(deviceFile, reg, &c, 1);
-    // c = c & ~0xE0; // Clear self-test bits [7:5]
     c = c & ~0x02; // Clear Fchoice bits [1:0]
     c = c & ~0x18; // Clear AFS bits [4:3]
     c = c | m_gscale << 3; // Set full scale range for the gyro
-    // Set Fchoice for the gyro to 11 by writing its inverse to bits 1:0 of
-    // GYRO_CONFIG
-    // c =| 0x00;
     // Write new GYRO_CONFIG value to register
     i2cWriteRegister(std::vector<uint8_t>{reg, c}, deviceFile);
 
@@ -172,7 +168,6 @@ void initializeMpu(int16_t deviceFile) {
     // Get current ACCEL_CONFIG register value
     reg = MPU9250::ACCEL_CONFIG;
     i2cReadRegister(deviceFile, reg, &c, 1);
-    // c = c & ~0xE0; // Clear self-test bits [7:5]
     c = c & ~0x18;  // Clear AFS bits [4:3]
     c = c | m_ascale << 3; // Set full scale range for the accelerometer
     // Write new ACCEL_CONFIG register value
@@ -196,8 +191,7 @@ void initializeMpu(int16_t deviceFile) {
     // Configure Interrupts and Bypass Enable
     // Set interrupt pin active high, push-pull, hold interrupt pin level HIGH
     // until interrupt cleared, clear on read of INT_STATUS, and enable
-    // I2C_BYPASS_EN so additional chips can join the I2C bus and all can be
-    // controlled by the Arduino as master.
+    // I2C_BYPASS_EN so additional chips can join the I2C bus (such as the Magnetometer)
     reg = MPU9250::INT_PIN_CFG;
     i2cWriteRegister(std::vector<uint8_t>{reg, 0x22}, deviceFile);
     // Enable data ready (bit 0) interrupt
@@ -263,8 +257,6 @@ std::vector<float> calibrateMPU9250(int16_t deviceFile) {
     uint16_t packetCount = fifoCount/12;
     std::cout << "[MPU9250] Packet Count: " << packetCount << std::endl;
 
-    // int32_t accelBias[3] = {0,0,0};
-    // std::vector<float> gyroBias;
     int32_t gyroBias[3] = {0,0,0};
     for (uint8_t i = 0; i < packetCount; i++) {
         int16_t gyroSampl[3] = {0,0,0};
@@ -277,7 +269,6 @@ std::vector<float> calibrateMPU9250(int16_t deviceFile) {
         gyroBias[0] += (int32_t) gyroSampl[0];
         gyroBias[1] += (int32_t) gyroSampl[1];
         gyroBias[2] += (int32_t) gyroSampl[2];
-        // std::cout << "[MPU9250] Gyro bias: " << gyroBias[0]/gyroSens << ", " << gyroBias[1]/gyroSens << ", " << gyroBias[2]/gyroSens << std::endl;
     }
 
     gyroBias[0] /= packetCount;

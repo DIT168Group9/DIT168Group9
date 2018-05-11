@@ -24,6 +24,10 @@ for the JavaScript code in this file
 var NAVTREE =
 [
   [ "DIT168 Group9", "index.html", [
+    [ "OpenDLV Microservice to view signals in your web-browser", "md__c_1__users__firsou__desktop__s_e_m__term_4__project__d_i_t168_group9_src_opendlv-signal-viewer__r_e_a_d_m_e.html", null ],
+    [ "Namespaces", "namespaces.html", [
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ]
+    ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -40,7 +44,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_p_s4_controller_8cpp_source.html"
+"_i_m_u_8cpp_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

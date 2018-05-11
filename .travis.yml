@@ -1,5 +1,7 @@
 sudo: required
 
+dist: trusty
+
 services:
   - docker
   
@@ -9,21 +11,30 @@ compiler:
 - g++
 
 before_install:
-  # Installing lcov
-  - wget http://downloads.sourceforge.net/ltp/lcov-1.13.tar.gz
-  - tar -xvf lcov-1.13.tar.gz
-  - cd lcov-1.13 && sudo make install
-  - cd ..
+  - sudo apt-get install -y build-essential git cmake 
   
-  - docker pull dit168group9/dit168group9:cargroup9
+  # Upgrading c++ compiler for c++ 14 support
+  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  - sudo apt-get update
+  - sudo apt-get install -y gcc-6 g++-6
+  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-6
+  
+  # Building libcluon from sources
+  - git clone https://github.com/chrberger/libcluon.git
+  - cd libcluon
+  - mkdir build
+  - cd build
+  - cmake ../libcluon
+  - make
+  - make test
+  - sudo make install
+  - cd ~
+  
+  - git clone https://github.com/DIT168Group9/DIT168Group9.git
+  - cd DIT168Group9
+  - mkdir build
+  - cd build
   
 script:
-  - ci_env=`bash <(curl -s https://codecov.io/env)`
-  - docker run $ci_env --rm --net=host dit168group9/dit168group9:cargroup9
-  
-after_success:
-  # Creating report
-  - lcov --directory . --capture --output-file coverage.info # capture coverage info
-  - lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter out system
-  # Uploading report to CodeCov
-  - bash <(curl -s https://codecov.io/bash) -t ce76b3fb-6076-4d11-a0fb-864ed5380fff
+  - cmake ..
+  - make

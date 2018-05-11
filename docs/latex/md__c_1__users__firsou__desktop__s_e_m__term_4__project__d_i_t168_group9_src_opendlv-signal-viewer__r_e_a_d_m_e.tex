@@ -1,0 +1,54 @@
+This repository provides source code to view any signals that are exchanged in a running session using Open\+D\+LV software ecosystem.
+
+\href{https://opensource.org/licenses/BSD-3-Clause}{\tt }
+
+\subsection*{Table of Contents}
+
+
+\begin{DoxyItemize}
+\item \href{#dependencies}{\tt Dependencies}
+\item \href{#usage}{\tt Usage}
+\item \href{#license}{\tt License}
+\end{DoxyItemize}
+
+\subsection*{Dependencies}
+
+No dependencies! The following dependencies are part of the source distribution\+:
+
+
+\begin{DoxyItemize}
+\item \href{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}{\tt bootstrap.\+css 4.\+0.\+0}
+\item \href{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js}{\tt bootstrap 4.\+0.\+0}
+\item \href{https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js}{\tt Chart 2.\+7.\+1}
+\item \href{https://code.jquery.com/jquery-3.2.1.slim.min.js}{\tt j\+Query 3.\+2.\+1}
+\item \href{moment-with-locales.min.js}{\tt moment 2.\+20.\+1}
+\item \href{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js}{\tt popper 1.\+12.\+9}
+\item \href{https://github.com/chrberger/libcluon}{\tt libcluon.\+js 0.\+0.\+51} -\/ \href{https://opensource.org/licenses/BSD-3-Clause}{\tt }
+\end{DoxyItemize}
+
+\subsection*{Usage}
+
+This microservice is created automatically on changes to this repository via Docker\textquotesingle{}s public registry for\+:
+\begin{DoxyItemize}
+\item \href{https://hub.docker.com/r/chalmersrevere/opendlv-signal-viewer-amd64/tags/}{\tt x86\+\_\+64}
+\item \href{https://hub.docker.com/r/chalmersrevere/opendlv-signal-viewer-armhf/tags/}{\tt armhf}
+\end{DoxyItemize}
+
+To use this microservice for viewing any messages from the Open\+D\+LV Standard Message Set that are exchanged in a running Open\+D\+L\+V.\+io session (running at 111 in the example), simply run it as follows\+:
+
+
+\begin{DoxyCode}
+docker run --rm --net=host -p 8080:8080 chalmersrevere/opendlv-signal-viewer-multi:v0.0.4 --cid=111
+\end{DoxyCode}
+
+
+Now, simply point your web-\/browser to the IP address and port 8080 where you started this microservice to see any currently exchanged messages\+:
+
+
+
+\subsection*{License}
+
+
+\begin{DoxyItemize}
+\item This project is released under the terms of the B\+S\+D-\/3-\/\+Clause License 
+\end{DoxyItemize}
