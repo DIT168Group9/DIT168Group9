@@ -54,7 +54,14 @@ int main(int argc, char **argv) {
                         v2vService->followRequest();
                         break;
                     case 1: // X
-                        v2vService->followResponse();
+                        opendlv::proxy::PedalPositionReading msgPedal;
+                        opendlv::proxy::GroundSteeringReading msgSteering;
+
+                        msgPedal.position(0);
+                        od4->send(msgPedal);
+
+                        msgSteering.groundSteering(0);
+                        od4->send(msgSteering);
                         break;
                     case 2: // Circle
                         v2vService->stopFollow(PARTNER_IP);
@@ -63,7 +70,7 @@ int main(int argc, char **argv) {
                         v2vService->announcePresence();
                         break;
                     default:
-                        std::cout << "You shouldn't be here" << std::endl;
+                        std::cout << "V2V does not use this button" << std::endl;
                         break;
                 }
             }
@@ -96,10 +103,16 @@ int main(int argc, char **argv) {
             }
         });
 
+        int count = 0;
+
         auto atFrequency{[&v2vService, &pedalPos, &steeringAngle]() -> bool {
-            v2vService->followerStatus();
+            if (count == 3) {
+                v2vService->followerStatus();
+                count = 0;
+            }
             v2vService->leaderStatus(pedalPos, steeringAngle, 0);
 
+            count++;
             return true;
         }};
         od4->timeTrigger(FREQ, atFrequency);
