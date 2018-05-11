@@ -76,7 +76,7 @@ typedef struct {
  * @param buttonId
  * @return Button Number to be packaged into a Button Pressed message
  */
-uint16_t findButton(PS4Event* event);
+uint16_t findButton(uint8_t buttonId);
 
 /**
  * This function sends the Button Number of the button pressed to the OD4 Channel.
