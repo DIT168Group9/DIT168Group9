@@ -1,3 +1,0 @@
-C:\Users\Firsou\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\173.4301.33\bin\cmake\bin\cmake.exe -E remove -f CMakeFiles\GROUP9.V2V.dir/objects.a
-C:\MinGW\bin\ar.exe cr CMakeFiles\GROUP9.V2V.dir/objects.a @CMakeFiles\GROUP9.V2V.dir\objects1.rsp
-C:\MinGW\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\GROUP9.V2V.dir/objects.a -Wl,--no-whole-archive  -o GROUP9.V2V.exe -Wl,--out-implib,libGROUP9.V2V.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\GROUP9.V2V.dir\linklibs.rsp
