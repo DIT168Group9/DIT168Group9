@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
                     case 0: // Square
                         v2vService->followRequest();
                         break;
-                    case 1: // X
+                    case 1: { // X
                         opendlv::proxy::PedalPositionReading msgPedal;
                         opendlv::proxy::GroundSteeringReading msgSteering;
 
@@ -62,6 +62,7 @@ int main(int argc, char **argv) {
 
                         msgSteering.groundSteering(0);
                         od4->send(msgSteering);
+                    }
                         break;
                     case 2: // Circle
                         v2vService->stopFollow(PARTNER_IP);
@@ -105,7 +106,7 @@ int main(int argc, char **argv) {
 
         int count = 0;
 
-        auto atFrequency{[&v2vService, &pedalPos, &steeringAngle]() -> bool {
+        auto atFrequency{[&v2vService, &pedalPos, &steeringAngle, &count]() -> bool {
             if (count == 3) {
                 v2vService->followerStatus();
                 count = 0;
