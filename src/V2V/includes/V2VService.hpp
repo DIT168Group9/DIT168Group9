@@ -39,7 +39,7 @@ public:
                            std::string speed_after, std::string left, std::string right, uint16_t queue_max);
 
     void announcePresence();
-    void followRequest();
+    void followRequest(std::string vehicleIp);
     void followResponse();
     void stopFollow(std::string vehicleIp);
     void leaderStatus(float speed, float steeringAngle, uint8_t distanceTraveled);
@@ -59,9 +59,6 @@ private:
     bool isPresentPartner = false;
     bool isFollower = false;
     bool isLeader = false;
-//    static constexpr float leftAngleOffset = -0.3f;
-
-    std::string leaderIp;
 
     std::shared_ptr<cluon::OD4Session>  broadcast;
     std::shared_ptr<cluon::UDPReceiver> incoming;
