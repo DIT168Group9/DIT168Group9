@@ -258,7 +258,7 @@ void V2VService::announcePresence() {
  * sets the current leaderIp field of the sending vehicle to that of the target of the request.
  *
  */
-void V2VService::followRequest(std::string vehicleIp) {
+void V2VService::followRequest() {
     if (!isPresentPartner || isFollower) {
         std::cout << "Follow request not sent. isFollower: " << isFollower << " isPresentPartner: " << isPresentPartner
                   << std::endl;
