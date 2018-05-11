@@ -6,7 +6,7 @@ int main(int argc, char** argv) {
     int retVal = 0;
     auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
     if (0 == commandlineArguments.count("dev") || 0 == commandlineArguments.count("freq") ||
-            0 == commandlineArguments.count("cid")) {
+        0 == commandlineArguments.count("cid")) {
         std::cerr << argv[0] << " reads the PS4Controller Wireless Controller inputs and sends it to the car's components"
                   << std::endl;
         std::cerr << "Usage:   " << argv[0] << " --dev=<path Controller> --freq=<int Frequency> --cid=<OD4Session Session>"
@@ -26,120 +26,35 @@ int main(int argc, char** argv) {
         cluon::OD4Session od4(CID, [](cluon::data::Envelope /*&&envelope*/) noexcept {});
         auto atFrequency{[&od4, &DEV, &FREQ, &CID, &m_MAX_STEERING_ANGLE_LEFT, &m_MAX_STEERING_ANGLE_RIGHT,
                                  m_OFFSET]() -> bool {
-            FILE *file = fopen(DEV.c_str(), "rb");
+            FILE* file = fopen(DEV.c_str(), "rb");
             if (file != nullptr) {
-                PS4Event *event = (PS4Event *)malloc(sizeof(PS4Event));
+                auto event = (PS4Event* )malloc(sizeof(PS4Event));
                 while (!feof(file)) {
                     if (fread(event, sizeof(PS4Event), 1, file)) {
                         if ((event->type &0x0F) == 1) {
-                            switch (event->id) {
-                                case X: {
-                                    if (event->data == 1) {
-                                        std::cout << "X pressed." << std::endl;
-                                        opendlv::proxy::ButtonPressed buttonPressed;
-                                        buttonPressed.buttonNumber(1);
-                                        od4.send(buttonPressed);
-                                        std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
-                                    }
-                                }
-                                    break;
-                                case Circle: {
-                                    if (event->data == 1) {
-                                        std::cout << "Circle pressed." << std::endl;
-                                        opendlv::proxy::ButtonPressed buttonPressed;
-                                        buttonPressed.buttonNumber(2);
-                                        od4.send(buttonPressed);
-                                        std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
-                                    }
-                                }
-                                    break;
-                                case Triangle: {
-                                    if (event->data == 1) {
-                                        std::cout << "Triangle pressed." << std::endl;
-                                        opendlv::proxy::ButtonPressed buttonPressed;
-                                        buttonPressed.buttonNumber(3);
-                                        od4.send(buttonPressed);
-                                        std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
-                                    }
-                                }
-                                    break;
-                                case Square: {
-                                    if (event->data == 1) {
-                                        std::cout << "Square pressed." << std::endl;
-                                        opendlv::proxy::ButtonPressed buttonPressed;
-                                        buttonPressed.buttonNumber(0);
-                                        od4.send(buttonPressed);
-                                        std::cout << "Sending Button: " << buttonPressed.buttonNumber() << std::endl;
-                                    }
-                                }
-                                    break;
-                                case L1:
-                                    if (event->data == 1) {
-                                        std::cout << "L1 pressed." << std::endl;
-                                    }
-                                    break;
-                                case R1:
-                                    if (event->data == 1) {
-                                        std::cout << "R1 pressed." << std::endl;
-                                    }
-                                    break;
-                                case L2:
-                                        std::cout << "L2 pressed." << std::endl;
-                                    break;
-                                case R2:
-                                        std::cout << "R2 pressed." << std::endl;
-                                    break;
-                                case Share:
-                                    if (event->data == 1) {
-                                        std::cout << "Share pressed." << std::endl;
-                                    }
-                                    break;
-                                case Options:
-                                    if (event->data == 1) {
-                                        std::cout << "Options pressed." << std::endl;
-                                    }
-                                    break;
-                                case PS:
-                                    if (event->data == 1) {
-                                        std::cout << "PS Button pressed." << std::endl;
-                                    }
-                                    break;
-                                case LStick:
-                                    if (event->data == 1) {
-                                        std::cout << "L3 pressed." << std::endl;
-                                    }
-                                    break;
-                                case RStick:
-                                    if (event->data == 1) {
-                                        std::cout << "R3 pressed." << std::endl;
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
+                            sendButtonPressed(findButton(event), &od4);
                         }
                         else if ((event->type &0x0F) == 2) {
                             switch (event->id) {
                                 case LStickX: {
-                                    opendlv::proxy::GroundSteeringReading steeringReading;
                                     steeringReading.groundSteering(m_OFFSET);
                                     float value = 0;
                                     if (event->data < 0) {
                                         value = event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE_LEFT *
-                                                      static_cast<float>(M_PI) / 180.0f + m_OFFSET;
-                                        value = roundf(value * 100) / 100.0;
+                                                static_cast<float>(M_PI) / 180.0f + m_OFFSET;
+                                        roundValue(&value);
                                         steeringReading.groundSteering(value);
                                     }
                                     else if (event->data >= 0) {
                                         value = event->data / MIN_AXES_VALUE * m_MAX_STEERING_ANGLE_RIGHT *
                                                 static_cast<float>(M_PI) / 180.0f + m_OFFSET;
-                                        value = roundf(value * 100) / 100.0;
+                                        roundValue(&value);
                                         steeringReading.groundSteering(value);
                                     }
 
                                     od4.send(steeringReading);
                                     std::cout << "Sending Angle: " << steeringReading.groundSteering() << std::endl;
-                                    }
+                                }
                                     break;
                                 case LStickY: break;
                                 case L2Y:     break;
@@ -149,17 +64,17 @@ int main(int argc, char** argv) {
                                     pedalPositionReading.position(value);
                                     if(event->data < 0) {
                                         value = event->data / MIN_AXES_VALUE * m_MAX_ACCELERATION;
-                                        value = roundf(value * 100) / 100.0;
+                                        roundValue(&value);
                                         pedalPositionReading.position(value);
                                     }
                                     else if (event->data >= 0) {
                                         value = event->data / MAX_AXES_VALUE * m_MAX_DECELERATION;
-                                        value = roundf(value * 100) / 100.0;
+                                        roundValue(&value);
                                         pedalPositionReading.position(value);
                                     }
                                     od4.send(pedalPositionReading);
                                     std::cout << "Sending speed: " << value << std::endl;
-                                    }
+                                }
                                     break;
                                 case R2Y:     break;
                                 case PadX:    break;
@@ -185,4 +100,86 @@ int main(int argc, char** argv) {
         od4.timeTrigger(FREQ, atFrequency);
     }
     return retVal;
+}
+
+uint16_t findButton(PS4Event* event) {
+    switch (event->id) {
+        case Square:
+            if (event->data == 1) {
+                std::cout << "Square pressed." << std::endl;
+                return {0};
+            }
+            break;
+        case X:
+            if (event->data == 1) {
+                return {1};
+            }
+            break;
+        case Circle:
+            if (event->data == 1) {
+                return {2};
+            }
+            break;
+        case Triangle:
+            if (event->data == 1) {
+                return {3};
+            }
+            break;
+        case L1:
+            if (event->data == 1) {
+                return {4};
+            }
+            break;
+        case R1:
+            if (event->data == 1) {
+                return {5};
+            }
+            break;
+        case L2:
+            if (event->data == 1) {
+                return {6};
+            }
+            break;
+        case R2:
+            if (event->data == 1) {
+                return {7};
+            }
+            break;
+        case Share:
+            if (event->data == 1) {
+                return {8};
+            }
+            break;
+        case Options:
+            if (event->data == 1) {
+                return {9};
+            }
+            break;
+        case LStick:
+            if (event->data == 1) {
+                return {10};
+            }
+            break;
+        case RStick:
+            if (event->data == 1) {
+                return {11};
+            }
+            break;
+        case PS:
+            if (event->data == 1) {
+                return {12};
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+void sendButtonPressed(uint16_t button, cluon::OD4Session* od4Session) {
+    buttonPressed.buttonNumber(button);
+    od4Session->send(buttonPressed);
+}
+
+void roundValue(float* number) {
+    *number = roundf(*number * 100) / 100.0f;
 }

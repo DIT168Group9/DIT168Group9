@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
                 button = buttonPressed.buttonNumber();
                 switch (button) {
                     case 0: // Square
-                        v2vService->followRequest(PARTNER_IP);
+                        v2vService->followRequest();
                         break;
                     case 1: // X
                         v2vService->followResponse();

@@ -115,7 +115,7 @@ if ("WebSocket" in window) {
 
         // Gyroscope Readings
 
-        else if(data.dataType === 1042){
+        else if(data.dataType === 1042) {
             gyroscopeReadingXAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingX;
             gyroscopeReadingYAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingY;
             gyroscopeReadingZAxis = data.opendlv_proxy_GyroscopeReading.GyroscopeReadingZ;
@@ -129,6 +129,7 @@ if ("WebSocket" in window) {
             announcePresenceGroupId = window.atob(data.AnnouncePresence.groupId);
 
             $("#apList").append('<li>' + " Group " + announcePresenceGroupId + " has the ip: " + announcePresenceVehicalIp + '</li>');
+
         }
 
         else if(data.dataType === 2001){
@@ -161,7 +162,11 @@ if ("WebSocket" in window) {
             $("#apList").append('<li>' + " Follower Status Received! " + '</li>');
         }
 
+        var autoScroll = document.getElementById("apList");
+        autoScroll.scrollTop = autoScroll.scrollHeight;
+
         onMessageReceived(__libcluon, evt.data);
+
 
     };
     ws.onclose = function() {
@@ -197,7 +202,7 @@ function createDashboard() {
         theme: "black",
 
         pointer: {
-            value: 0,
+            value: 25,
             color: "#ea7001"
         },
 
@@ -271,7 +276,7 @@ function createDashboard() {
         theme: "black",
 
         pointer: {
-            value: 0,
+            value: 20,
             color: "#ea7001"
         },
 
@@ -309,7 +314,7 @@ function createDashboard() {
         theme: "black",
 
         pointer: {
-            value: 0,
+            value: 40,
             color: "#ea7001"
         },
 
