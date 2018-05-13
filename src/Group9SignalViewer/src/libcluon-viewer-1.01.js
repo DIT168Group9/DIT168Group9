@@ -1,6 +1,10 @@
+/**
+ * libcluon-viewer-1.01 JavaScript class holds the logic of Group 9 Signal Viewer and parts of OpenDLV SignalViewer source code.
+ * OpenDLV Signal Viewer is released under the terms of BSD-3-Clause license and libcluon-viewer-0.01.js has
+ * the following copyright notice: Copyright 2018 Ola Benderius.
+ */
 
-
-// "Instantiate" libcluon.
+// Instantiation of libcluon and other variables
 let __libcluon = libcluon();
 let pedalPosition;
 let groundSteering;
@@ -75,13 +79,14 @@ if ("WebSocket" in window) {
 
         else if(data.dataType === 1039) {
             distanceReading = (data.opendlv_proxy_DistanceReading.distance) * 100;
+            // Checks whether the front ultrasonic distance is less than 10 in order to turn on the stop light
             if (distanceReading <= 10 && distanceReading >= 1) {
                 $(".stopSign").css('color', 'red');
             }
             else {
                 $(".stopSign").css('color', '#1d2124');
             }
-
+            // animating the ultrasonic bars based on the readings
             if (distanceReading > 56) {
                 $(".meter > span").each(function () {
                     $(this)
@@ -125,6 +130,7 @@ if ("WebSocket" in window) {
         }
 
         // V2V messages in Signal Viewer
+        // Announce Presence message
 
         else if(data.dataType === 1001){
             announcePresenceVehicalIp = window.atob(data.AnnouncePresence.vehicleIp);
@@ -134,6 +140,8 @@ if ("WebSocket" in window) {
 
         }
 
+        // Leader Status message
+
         else if(data.dataType === 2001){
             leaderSpeed = data.LeaderStatus.speed;
             leaderSteering = data.LeaderStatus.steeringAngle;
@@ -141,10 +149,14 @@ if ("WebSocket" in window) {
             $(".leaderSign").css('color', 'orangered');
         }
 
+        // Follow Request message
+
         else if(data.dataType === 1002){
             followerRequest = data.FollowRequest.temporaryValue;
             $("#apList").append('<li>' + " Follow Request Received! " + '</li>');
         }
+
+        // Follow Response message
 
         else if(data.dataType === 1003){
             followResponse = data.FollowRequest.temporaryValue;
@@ -152,12 +164,16 @@ if ("WebSocket" in window) {
             $(".followSign").css('color', 'orangered');
         }
 
+        // Stop Follow message
+
         else if(data.dataType === 1004){
             stopFollow = data.FollowRequest.temporaryValue;
             $("#apList").append('<li>' + " Stop Follow Received! " + '</li>');
             $(".leaderSign").css('color', '#1d2124');
             $(".followSign").css('color', '#1d2124');
         }
+
+        // Follower Status message
 
         else if(data.dataType === 3001){
             followerStatus = data.FollowRequest.temporaryValue;
