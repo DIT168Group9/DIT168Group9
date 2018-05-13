@@ -159,7 +159,7 @@ if ("WebSocket" in window) {
         // Follow Response message
 
         else if(data.dataType === 1003){
-            followResponse = data.FollowRequest.temporaryValue;
+            followResponse = data.FollowResponse.temporaryValue;
             $("#apList").append('<li>' + " Follow Response Received! " + '</li>');
             $(".followSign").css('color', 'orangered');
         }
@@ -167,7 +167,7 @@ if ("WebSocket" in window) {
         // Stop Follow message
 
         else if(data.dataType === 1004){
-            stopFollow = data.FollowRequest.temporaryValue;
+            stopFollow = data.StopFollow.temporaryValue;
             $("#apList").append('<li>' + " Stop Follow Received! " + '</li>');
             $(".leaderSign").css('color', '#1d2124');
             $(".followSign").css('color', '#1d2124');
@@ -176,7 +176,7 @@ if ("WebSocket" in window) {
         // Follower Status message
 
         else if(data.dataType === 3001){
-            followerStatus = data.FollowRequest.temporaryValue;
+            followerStatus = data.FollowerStatus.temporaryValue;
             $("#apList").append('<li>' + " Follower Status Received! " + '</li>');
         }
 
