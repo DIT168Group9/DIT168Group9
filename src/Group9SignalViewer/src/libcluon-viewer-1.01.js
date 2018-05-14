@@ -180,6 +180,7 @@ if ("WebSocket" in window) {
             $("#apList").append('<li>' + " Follower Status Received! " + '</li>');
         }
 
+        // Scrolls the V2V messages list (apList) automatically
         var autoScroll = document.getElementById("apList");
         autoScroll.scrollTop = autoScroll.scrollHeight;
 
@@ -380,6 +381,13 @@ var g_chartConfigs = new Map();
 var g_data = new Map();
 var g_pause = false;
 
+/**
+ * This function decodes and parses each OD4 session envelope data and calls addTableData(), addFieldCharts()
+ * and storeData() functions. It also acquires the specific elements such as dataType and fieldName from the JSON
+ * object file in order to be used in the table for each message row and based on their column value.
+ * @param lc
+ * @param msg
+ */
 
 function onMessageReceived(lc, msg) {
 
@@ -449,6 +457,12 @@ function cutLongField(type, value) {
     return value;
 }
 
+/**
+ * This function fills the table data for each message type the first time the table is rendered.
+ * @param sourceKey
+ * @param data
+ */
+
 function addTableData(sourceKey, data) {
 
     if($('tr#' + sourceKey).length === 0) {
@@ -485,6 +499,13 @@ function addTableData(sourceKey, data) {
         $('#dataView > tbody:last-child').append(fieldsHtml);
     }
 }
+
+/**
+ * This function visulizes the chart for each table row and message type the first time the table is rendered.
+ * The function makes use of Charts.js library to visualize the charts.
+ * @param sourceKey
+ * @param data
+ */
 
 function addFieldCharts(sourceKey, data) {
 
@@ -585,6 +606,11 @@ function storeData(sourceKey, data) {
     g_data.get(sourceKey).push(data);
 }
 
+/**
+ * This function will be called on an interval until the websocket connection is open (in ws.open) in order to call
+ * updateTableData() and updateFieldCharts() functions and update both table and charts.
+ */
+
 function onInterval() {
     if (g_pause) {
         return;
@@ -596,6 +622,12 @@ function onInterval() {
         updateFieldCharts(sourceKey, dataList);
     });
 }
+
+/**
+ * This function updates the table data that has been initialized by addTableData() function previously.
+ * @param sourceKey
+ * @param data
+ */
 
 function updateTableData(sourceKey, data) {
 
@@ -621,6 +653,12 @@ function updateTableData(sourceKey, data) {
         $('td#' + sourceKey + '_field' + i + '_value').html(fieldValue);
     }
 }
+
+/**
+ * This function updates the charts that have been initialized by addFieldCharts() function previously.
+ * @param sourceKey
+ * @param dataList
+ */
 
 function updateFieldCharts(sourceKey, dataList) {
 
