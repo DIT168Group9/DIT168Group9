@@ -43,6 +43,8 @@ We provide a sample docker-compose.yml for you to use.
 * A C++14 Compliant Compiler (We use G++)
 * [libcluon](https://github.com/chrberger/libcluon) [![License: GPLv3](https://img.shields.io/badge/license-GPL--3-blue.svg
 )](https://www.gnu.org/licenses/gpl-3.0.txt)
+* libcluon.js is released under the terms of the MIT License [![License: MIT](https://img.shields.io/packagist/l/doctrine/orm.svg
+)](https://opensource.org/licenses/MIT)
 * [opendlv-device-ultrasonic-srf08](https://github.com/chalmers-revere/opendlv-device-ultrasonic-srf08) [![License: GPLv3](https://img.shields.io/badge/license-GPL--3-blue.svg
 )](https://www.gnu.org/licenses/gpl-3.0.txt)
 * [opendlv-signal-viewer](https://github.com/chalmers-revere/opendlv-signal-viewer) [![License: BSD3-Clause](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg
