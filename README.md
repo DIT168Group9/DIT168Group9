@@ -45,6 +45,8 @@ We provide a sample docker-compose.yml for you to use.
 )](https://www.gnu.org/licenses/gpl-3.0.txt)
 * [opendlv-device-ultrasonic-srf08](https://github.com/chalmers-revere/opendlv-device-ultrasonic-srf08) [![License: GPLv3](https://img.shields.io/badge/license-GPL--3-blue.svg
 )](https://www.gnu.org/licenses/gpl-3.0.txt)
+* [opendlv-signal-viewer](https://github.com/chalmers-revere/opendlv-signal-viewer) [![License: BSD3-Clause](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg
+)](https://opensource.org/licenses/BSD-3-Clause)
 
 ## Documentation
 * You can find our documentation in both TeX and HTML format in the /docs directory of this repository
