@@ -69,9 +69,9 @@ if ("WebSocket" in window) {
             groundSteering = (data.opendlv_proxy_GroundSteeringReading.groundSteering) * 100 + 16;
             if(groundSteering < 0){
                 // groundSteering = groundSteering * -1;
-                $("#kmh").data("kendoRadialGauge").value(groundSteering);
+                $("#groundSteeing").data("kendoRadialGauge").value(groundSteering);
             }else{
-                $("#kmh").data("kendoRadialGauge").value(groundSteering);
+                $("#groundSteeing").data("kendoRadialGauge").value(groundSteering);
             }
         }
 
@@ -96,7 +96,7 @@ if ("WebSocket" in window) {
                             width: 280
                         }, 'fast');
                 });
-                $("#fuel").data("kendoRadialGauge").value(distanceReading);
+                $("#ultrasonic").data("kendoRadialGauge").value(distanceReading);
             }
 
             else {
@@ -110,14 +110,14 @@ if ("WebSocket" in window) {
                         }, 'fast');
                 });
 
-                $("#fuel").data("kendoRadialGauge").value(distanceReading);
+                $("#ultrasonic").data("kendoRadialGauge").value(distanceReading);
             }
         }
         // Temperature Readings
 
         else if(data.dataType === 1035){
             temperatureReading = data.opendlv_proxy_TemperatureReading.temperature;
-            $("#water-temprature").data("kendoRadialGauge").value(temperatureReading);
+            $("#car-temprature").data("kendoRadialGauge").value(temperatureReading);
         }
 
         // Gyroscope Readings
@@ -191,9 +191,11 @@ if ("WebSocket" in window) {
         console.log("Connection is closed.");
     };
 
+    // Calls certain functions that need the webpage to be ready and done before being called
+
     $(document).ready(function() {
 
-
+        // Toggles between displaying and not displaying the OpenDLV Signal Viewer
         $("#graphButton").on('click', function () {
             $("#goodOldSignal").toggle();
 
@@ -211,12 +213,13 @@ else {
     console.log("WebSocket is not supported by your Browser!");
 }
 
-/*
-* Kendo Car Dashboard logic
+/**
+ * This function uses the Kendo library to visualize the car dashboard gauges, pointers and the style related to these
+ * elements. The functions calls four elements in the html div "car-dashboard" by using jQuery and Kendo library methods.
  */
 
 function createDashboard() {
-    $("#rpm").kendoRadialGauge({
+    $("#pedalPosition").kendoRadialGauge({
         theme: "black",
 
         pointer: {
@@ -258,7 +261,7 @@ function createDashboard() {
         }
     });
 
-    $("#kmh").kendoRadialGauge({
+    $("#groundSteeing").kendoRadialGauge({
         theme: "black",
 
         pointer: {
@@ -290,7 +293,7 @@ function createDashboard() {
         }
     });
 
-    $("#fuel").kendoRadialGauge({
+    $("#ultrasonic").kendoRadialGauge({
         theme: "black",
 
         pointer: {
@@ -328,7 +331,7 @@ function createDashboard() {
         }
     });
 
-    $("#water-temprature").kendoRadialGauge({
+    $("#car-temprature").kendoRadialGauge({
         theme: "black",
 
         pointer: {
