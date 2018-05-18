@@ -1,4 +1,10 @@
-// "Instantiate" libcluon.
+/**
+ * libcluon-viewer-1.01 JavaScript class holds the logic of Group 9 Signal Viewer and parts of OpenDLV SignalViewer source code.
+ * OpenDLV Signal Viewer is released under the terms of BSD-3-Clause license and libcluon-viewer-0.01.js has
+ * the following copyright notice: Copyright 2018 Ola Benderius.
+ */
+
+// Instantiation of libcluon and other variables
 let __libcluon = libcluon();
 let pedalPosition;
 let groundSteering;
@@ -63,9 +69,9 @@ if ("WebSocket" in window) {
             groundSteering = (data.opendlv_proxy_GroundSteeringReading.groundSteering) * 100 + 16;
             if(groundSteering < 0){
                 // groundSteering = groundSteering * -1;
-                $("#kmh").data("kendoRadialGauge").value(groundSteering);
+                $("#groundSteeing").data("kendoRadialGauge").value(groundSteering);
             }else{
-                $("#kmh").data("kendoRadialGauge").value(groundSteering);
+                $("#groundSteeing").data("kendoRadialGauge").value(groundSteering);
             }
         }
 
@@ -73,13 +79,14 @@ if ("WebSocket" in window) {
 
         else if(data.dataType === 1039) {
             distanceReading = (data.opendlv_proxy_DistanceReading.distance) * 100;
+            // Checks whether the front ultrasonic distance is less than 10 in order to turn on the stop light
             if (distanceReading <= 10 && distanceReading >= 1) {
                 $(".stopSign").css('color', 'red');
             }
             else {
                 $(".stopSign").css('color', '#1d2124');
             }
-
+            // animating the ultrasonic bars based on the readings
             if (distanceReading > 56) {
                 $(".meter > span").each(function () {
                     $(this)
@@ -89,7 +96,7 @@ if ("WebSocket" in window) {
                             width: 280
                         }, 'fast');
                 });
-                $("#fuel").data("kendoRadialGauge").value(distanceReading);
+                $("#ultrasonic").data("kendoRadialGauge").value(distanceReading);
             }
 
             else {
@@ -103,14 +110,14 @@ if ("WebSocket" in window) {
                         }, 'fast');
                 });
 
-                $("#fuel").data("kendoRadialGauge").value(distanceReading);
+                $("#ultrasonic").data("kendoRadialGauge").value(distanceReading);
             }
         }
         // Temperature Readings
 
         else if(data.dataType === 1035){
             temperatureReading = data.opendlv_proxy_TemperatureReading.temperature;
-            $("#water-temprature").data("kendoRadialGauge").value(temperatureReading);
+            $("#car-temprature").data("kendoRadialGauge").value(temperatureReading);
         }
 
         // Gyroscope Readings
@@ -123,6 +130,7 @@ if ("WebSocket" in window) {
         }
 
         // V2V messages in Signal Viewer
+        // Announce Presence message
 
         else if(data.dataType === 1001){
             announcePresenceVehicalIp = window.atob(data.AnnouncePresence.vehicleIp);
@@ -132,6 +140,8 @@ if ("WebSocket" in window) {
 
         }
 
+        // Leader Status message
+
         else if(data.dataType === 2001){
             leaderSpeed = data.LeaderStatus.speed;
             leaderSteering = data.LeaderStatus.steeringAngle;
@@ -139,29 +149,38 @@ if ("WebSocket" in window) {
             $(".leaderSign").css('color', 'orangered');
         }
 
+        // Follow Request message
+
         else if(data.dataType === 1002){
             followerRequest = data.FollowRequest.temporaryValue;
             $("#apList").append('<li>' + " Follow Request Received! " + '</li>');
         }
 
+        // Follow Response message
+
         else if(data.dataType === 1003){
-            followResponse = data.FollowRequest.temporaryValue;
+            followResponse = data.FollowResponse.temporaryValue;
             $("#apList").append('<li>' + " Follow Response Received! " + '</li>');
             $(".followSign").css('color', 'orangered');
         }
 
+        // Stop Follow message
+
         else if(data.dataType === 1004){
-            stopFollow = data.FollowRequest.temporaryValue;
+            stopFollow = data.StopFollow.temporaryValue;
             $("#apList").append('<li>' + " Stop Follow Received! " + '</li>');
             $(".leaderSign").css('color', '#1d2124');
             $(".followSign").css('color', '#1d2124');
         }
 
+        // Follower Status message
+
         else if(data.dataType === 3001){
-            followerStatus = data.FollowRequest.temporaryValue;
+            followerStatus = data.FollowerStatus.temporaryValue;
             $("#apList").append('<li>' + " Follower Status Received! " + '</li>');
         }
 
+        // Scrolls the V2V messages list (apList) automatically
         var autoScroll = document.getElementById("apList");
         autoScroll.scrollTop = autoScroll.scrollHeight;
 
@@ -173,9 +192,11 @@ if ("WebSocket" in window) {
         console.log("Connection is closed.");
     };
 
+    // Calls certain functions that need the webpage to be ready and done before being called
+
     $(document).ready(function() {
 
-
+        // Toggles between displaying and not displaying the OpenDLV Signal Viewer
         $("#graphButton").on('click', function () {
             $("#goodOldSignal").toggle();
 
@@ -193,12 +214,13 @@ else {
     console.log("WebSocket is not supported by your Browser!");
 }
 
-/*
-* Kendo Car Dashboard logic
+/**
+ * This function uses the Kendo library to visualize the car dashboard gauges, pointers and the style related to these
+ * elements. The functions calls four elements in the html div "car-dashboard" by using jQuery and Kendo library methods.
  */
 
 function createDashboard() {
-    $("#rpm").kendoRadialGauge({
+    $("#pedalPosition").kendoRadialGauge({
         theme: "black",
 
         pointer: {
@@ -240,7 +262,7 @@ function createDashboard() {
         }
     });
 
-    $("#kmh").kendoRadialGauge({
+    $("#groundSteeing").kendoRadialGauge({
         theme: "black",
 
         pointer: {
@@ -272,7 +294,7 @@ function createDashboard() {
         }
     });
 
-    $("#fuel").kendoRadialGauge({
+    $("#ultrasonic").kendoRadialGauge({
         theme: "black",
 
         pointer: {
@@ -310,7 +332,7 @@ function createDashboard() {
         }
     });
 
-    $("#water-temprature").kendoRadialGauge({
+    $("#car-temprature").kendoRadialGauge({
         theme: "black",
 
         pointer: {
@@ -359,6 +381,13 @@ var g_chartConfigs = new Map();
 var g_data = new Map();
 var g_pause = false;
 
+/**
+ * This function decodes and parses each OD4 session envelope data and calls addTableData(), addFieldCharts()
+ * and storeData() functions. It also acquires the specific elements such as dataType and fieldName from the JSON
+ * object file in order to be used in the table for each message row and based on their column value.
+ * @param lc
+ * @param msg
+ */
 
 function onMessageReceived(lc, msg) {
 
@@ -428,6 +457,12 @@ function cutLongField(type, value) {
     return value;
 }
 
+/**
+ * This function fills the table data for each message type the first time the table is rendered.
+ * @param sourceKey
+ * @param data
+ */
+
 function addTableData(sourceKey, data) {
 
     if($('tr#' + sourceKey).length === 0) {
@@ -464,6 +499,13 @@ function addTableData(sourceKey, data) {
         $('#dataView > tbody:last-child').append(fieldsHtml);
     }
 }
+
+/**
+ * This function visulizes the chart for each table row and message type the first time the table is rendered.
+ * The function makes use of Charts.js library to visualize the charts.
+ * @param sourceKey
+ * @param data
+ */
 
 function addFieldCharts(sourceKey, data) {
 
@@ -564,6 +606,11 @@ function storeData(sourceKey, data) {
     g_data.get(sourceKey).push(data);
 }
 
+/**
+ * This function will be called on an interval until the websocket connection is open (in ws.open) in order to call
+ * updateTableData() and updateFieldCharts() functions and update both table and charts.
+ */
+
 function onInterval() {
     if (g_pause) {
         return;
@@ -575,6 +622,12 @@ function onInterval() {
         updateFieldCharts(sourceKey, dataList);
     });
 }
+
+/**
+ * This function updates the table data that has been initialized by addTableData() function previously.
+ * @param sourceKey
+ * @param data
+ */
 
 function updateTableData(sourceKey, data) {
 
@@ -600,6 +653,12 @@ function updateTableData(sourceKey, data) {
         $('td#' + sourceKey + '_field' + i + '_value').html(fieldValue);
     }
 }
+
+/**
+ * This function updates the charts that have been initialized by addFieldCharts() function previously.
+ * @param sourceKey
+ * @param dataList
+ */
 
 function updateFieldCharts(sourceKey, dataList) {
 

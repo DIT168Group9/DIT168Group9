@@ -307,26 +307,26 @@ body {
     float: left;
 }
 
-#rpm {
+#pedalPosition {
     width: 142px;
     height: 147px;
     margin: 85px 0 0 38px;
 }
 
-#kmh {
+#groundSteeing {
     width: 216px;
     height: 216px;
     margin: 57px 0 0 20px;
 }
 
-#fuel {
+#ultrasonic {
     width: 77px;
     height: 84px;
 
     margin: 90px 0 0 68px;
 }
 
-#water-temprature {
+#car-temprature {
     width: 84px;
     height: 80px;
 

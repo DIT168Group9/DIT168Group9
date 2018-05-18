@@ -1,70 +1,81 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Group 09 Data Viewer">
     <meta name="author" content="Group 09">
+
     <script src="libcluon-v0.0.73.js"></script>
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="kendo.common-material.min.css" />
     <link rel="stylesheet" href="kendo.material.min.css" />
     <link rel="stylesheet" href="kendo.material.mobile.min.css" />
-
 </head>
-<body>
 
+<body>
+<!--Group name-->
 <div id="name">
     <h1>Group 09 Signal Viewer</h1>
 </div>
 
-<button class="button" id="graphButton">Good Old <br> Signal Viewer</button>
+<!--Button for toggling the display of OpenDLV Signal Viewer-->
+<button class="button" id="graphButton">Good Ol' <br> Signal Viewer</button>
 
+<!--Right ultrasonic bar-->
 <div class="page-wrap" id="right">
     <div class="meter orange nostripes" id="meterRight">
         <span style="width: 0%"></span>
     </div>
 </div>
 
+<!--Stop sign for warning the critical front distance of the car-->
 <div class="stopSign" id="rightStop">
     <h3>
         STOP
     </h3>
 </div>
+
+<!--Follower sign stating that the car is a follower at the moment-->
 <div class="followSign">
     <h3>
         Currently a Follower
     </h3>
 </div>
+
+<!--Leader sign stating that the car is a leader at the moment-->
 <div class="leaderSign">
     <h3>
         Currently a Leader
     </h3>
 </div>
 
+<!--Car dashboard and all its gauges including the speed, direction, ultrasonic distance and car temperature-->
 <div id="car-dashboard">
     <div id="gauge-container" class="hidden-on-narrow">
-        <div id="rpm"></div>
-        <div id="kmh"></div>
-        <div id="fuel"></div>
-        <div id="water-temprature"></div>
+        <div id="pedalPosition"></div>
+        <div id="groundSteeing"></div>
+        <div id="ultrasonic"></div>
+        <div id="car-temprature"></div>
     </div>
     <div class="responsive-message"></div>
-
 </div>
 
+<!--Left ultrasonic bar-->
 <div class="page-wrap" id="left">
     <div class="meter orange nostripes" id="meterLeft">
         <span style="width: 0%"></span>
     </div>
 </div>
 
+<!--The list visualizes the V2V related messages-->
 <div id="list">
     <ul id="apList"></ul>
 </div>
 
+<!--The whole element includes the OpenDLV Signal Viewer without its navbar-->
 <div class="oldSignal" id="goodOldSignal">
-
     <div class="pos-f-t">
     </div>
     
@@ -93,7 +104,7 @@
 <script type="text/javascript" src="Chart.js"></script>
 <script type="text/javascript" src="bootstrap.min.js"></script>
 <script type="text/javascript" src="kendo.all.min.js"></script>
-<script type="text/javascript" src="libcluon-viewer-0.01.js"></script>
+<script type="text/javascript" src="libcluon-viewer-1.01.js"></script>
 
 </body>
 </html>
