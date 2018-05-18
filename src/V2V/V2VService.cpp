@@ -8,14 +8,22 @@ int main(int argc, char **argv) {
     int returnValue = 0;
     auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
     if (0 == commandlineArguments.count("cid") || 0 == commandlineArguments.count("freq") ||
-        0 == commandlineArguments.count("ip") || 0 == commandlineArguments.count("id")) {
+        0 == commandlineArguments.count("ip") || 0 == commandlineArguments.count("id") ||
+        0 == commandlineArguments.count("partnerIp") || 0 == commandlineArguments.count("partnerId") ||
+        0 == commandlineArguments.count("speed") || 0 == commandlineArguments.count("left") ||
+        0 == commandlineArguments.count("right") || 0 == commandlineArguments.count("queueMax")) {
+
         std::cerr << argv[0] << " sends and receives follower or leader status as defined in the V2V Protocol (DIT168)."
                   << std::endl;
-        std::cerr << "Usage:   " << argv[0]
-                  << " --cid=<OD4Session Session> --freq=<frequency> --ip=<localIP> --id=<DIT168Group>"
+        std::cerr << "Usage: " << argv[0]
+                  << "--cid=<OD4Session Session> --freq=<frequency> --ip=<localIP> --id=<DIT168Group>"
+                     " --partnerIp=<Partnering vehicle IP> --partnerId<Partnering vehicle ID> --speed<Speed offset>"
+                     " --left<Left angle offset> --right<Right angle offset> --queueMax<Delay for following>"
                   << std::endl;
         std::cerr << "Example: " << argv[0]
-                  << " --cid=111 --freq=125 --ip=127.0.0.1 --id=9 --partnerIp=1.1.1.1 --parnterId=8" << std::endl;
+                  << "--cid=111 --freq=125 --ip=127.0.0.1 --id=9 --partnerIp=1.1.1.1 --partnerId=8 --speed=0.02"
+                     " --left=0.35 --right=-0.05 --queueMax=15"
+                  << std::endl;
         returnValue = 1;
     }
     else {
@@ -26,7 +34,7 @@ int main(int argc, char **argv) {
         const std::string ID = commandlineArguments["id"];
         const std::string PARTNER_IP = commandlineArguments["partnerIp"];
         const std::string PARTNER_ID = commandlineArguments["partnerId"];
-        const std::string SPEED_AFTER = commandlineArguments["offsetSpeedAfter"];
+        const std::string SPEED_AFTER = commandlineArguments["speed"];
         const std::string LEFT = commandlineArguments["left"];
         const std::string RIGHT = commandlineArguments["right"];
 
@@ -35,7 +43,6 @@ int main(int argc, char **argv) {
 
         float pedalPos = 0, steeringAngle = 0, distanceReading = 0;
         uint16_t button = 0;
-
 
         od4 =
         std::make_shared<cluon::OD4Session>(CID,
@@ -85,8 +92,6 @@ int main(int argc, char **argv) {
                         cluon::extractMessage<opendlv::proxy::DistanceReading>(std::move(envelope));
                 distanceReading = dist.distance();
                 if (distanceReading < 0.25f) {
-                    std::cout << "less than 0.25, stopping" << std::endl;
-
                     opendlv::proxy::PedalPositionReading msgPedal;
                     opendlv::proxy::GroundSteeringReading msgSteering;
 
@@ -200,12 +205,10 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
                  unsigned long len = sender.find(':');
                  if (isLeader) {
                      isLeader = false;
-                     std::cout << "Car was leader, no longer is\n";
                      toFollower.reset();
                  }
                  else if (isFollower) {
                      isFollower = false;
-                     std::cout << "Car was follower, no longer is\n";
                      toLeader.reset();
                  }
                  break;
@@ -387,7 +390,6 @@ void V2VService::leaderStatus(float speed, float steeringAngle, uint8_t distance
     LeaderStatus leaderStatus;
     leaderStatus.timestamp(getTime());
     leaderStatus.speed(speed);
-    std::cout << "Sending to david: " << (steeringAngle - m_OFFSET) << std::endl;
     leaderStatus.steeringAngle(steeringAngle - m_OFFSET);
     leaderStatus.distanceTraveled(distanceTraveled);
     od4->send(leaderStatus);
