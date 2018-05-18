@@ -12,11 +12,6 @@
 #include <iostream>
 #include <queue>
 
-/** ADD YOUR CAR_IP AND GROUP_ID HERE:  *****************/
-
-// static const std::string YOUR_CAR_IP    = "192.168.43.157";
-// static const std::string YOUR_GROUP_ID  = "9";
-
 /********************************************************/
 /** DON'T CHANGE STUFF BELOW THIS LINE. *****************/
 /********************************************************/
