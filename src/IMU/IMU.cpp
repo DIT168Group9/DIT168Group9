@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
 
     if (0 == commandlineArguments.count("dev") || 0 == commandlineArguments.count("freq") ||
         0 == commandlineArguments.count("cid") || 0 == commandlineArguments.count("verbose")) {
-        std::cerr << argv[0] << "reads inputs from the IMU Sensors and transmits them to the car's components."
+        std::cerr << argv[0] << " reads inputs from the IMU Sensors and transmits them to the car's components."
                   << std::endl;
         std::cerr << "Usage:   " << argv[0] << " --dev=<path toIMU> --freq=<int Frequency> --cid=<OD4Session Session> --verbose=<int 0/1>"
                   << std::endl;
