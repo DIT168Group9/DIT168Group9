@@ -20,9 +20,9 @@ int main(int argc, char** argv) {
         0 == commandlineArguments.count("cid") || 0 == commandlineArguments.count("verbose")) {
         std::cerr << "argv[0] reads inputs from the IMU Sensors and transmits them to the car's components."
                   << std::endl;
-        std::cerr << "Usage:   " << argv[0] << " --dev=<path toIMU> --freq=<int Frequency> --cid=<OD4Session Session>"
+        std::cerr << "Usage:   " << argv[0] << " --dev=<path toIMU> --freq=<int Frequency> --cid=<OD4Session Session> --verbose=<int 0/1>"
                   << std::endl;
-        std::cerr << "Example: " << argv[0] << " --dev=/dev/i2c-2 --freq=100 --cid=200 " << std::endl;
+        std::cerr << "Example: " << argv[0] << " --dev=/dev/i2c-2 --freq=100 --cid=200 --verbose=1" << std::endl;
         returnValue = 1;
     }
     else {
