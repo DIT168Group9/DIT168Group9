@@ -1,7 +1,14 @@
 /**
  * libcluon-viewer-1.01 JavaScript class holds the logic of Group 9 Signal Viewer and parts of OpenDLV SignalViewer source code.
+ *
  * OpenDLV Signal Viewer is released under the terms of BSD-3-Clause license and libcluon-viewer-0.01.js has
  * the following copyright notice: Copyright 2018 Ola Benderius.
+ *
+ * Kendo UI for jQuery library is copyrighted by Progress Software Corporation and our usage of the library is limited to
+ * one of their free demos on demos.telerik.com website.
+ *
+ * We also used the instruction code for the ultrasonic bars from css-tricks.com website. The tutorial and related code
+ * are not copyrighted.
  */
 
 // Instantiation of libcluon and other variables
