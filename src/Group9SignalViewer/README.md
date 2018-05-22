@@ -46,7 +46,7 @@ docker run --rm --net=host -p 8081:8081 group9/signal-viewer:v0.61-armhf --cid=2
 Now, simply point your web-browser to the IP address and port 8081 (x86_64: localhost:8081 / armhf: 192.168.8.1:8081) where you
 started this microservice to see any currently exchanged messages:
 
-![screenshot from signal viewer](https://raw.githubusercontent.com/DIT168Group9/DIT168Group9/src/Group9SignalViewer/Dashboard.png)
+![screenshot from signal viewer](https://github.com/DIT168Group9/DIT168Group9/blob/master/src/Group9SignalViewer/Dashboard.png)
 
 
 ## License
