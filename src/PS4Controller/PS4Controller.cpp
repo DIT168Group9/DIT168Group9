@@ -10,8 +10,11 @@ int main(int argc, char** argv) {
         std::cerr << argv[0] << " reads the PS4Controller Wireless Controller inputs and sends it to the car's components"
                   << std::endl;
         std::cerr << "Usage:   " << argv[0] << " --dev=<path Controller> --freq=<int Frequency> --cid=<OD4Session Session>"
+                  << " --offset=<float Offset> --leftAngle=<int Angle> --rightAngle=<int Angle>"
                   << std::endl;
-        std::cerr << "Example: " << argv[0] << " --dev=/dev/input/js0 --freq=100 --cid=200" << std::endl;
+        std::cerr << "Example: " << argv[0] << " --dev=/dev/input/js0 --freq=100 --cid=200"
+                  << " --offset=0.16 --leftAngle=5 --rightAngle=5"
+                  << std::endl;
         retVal = 1;
     }
     else {
