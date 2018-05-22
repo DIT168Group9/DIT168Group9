@@ -8,14 +8,22 @@ int main(int argc, char **argv) {
     int returnValue = 0;
     auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
     if (0 == commandlineArguments.count("cid") || 0 == commandlineArguments.count("freq") ||
-        0 == commandlineArguments.count("ip") || 0 == commandlineArguments.count("id")) {
+        0 == commandlineArguments.count("ip") || 0 == commandlineArguments.count("id") ||
+        0 == commandlineArguments.count("partnerIp") || 0 == commandlineArguments.count("partnerId") ||
+        0 == commandlineArguments.count("speed") || 0 == commandlineArguments.count("left") ||
+        0 == commandlineArguments.count("right") || 0 == commandlineArguments.count("queueMax")) {
+
         std::cerr << argv[0] << " sends and receives follower or leader status as defined in the V2V Protocol (DIT168)."
                   << std::endl;
-        std::cerr << "Usage:   " << argv[0]
-                  << " --cid=<OD4Session Session> --freq=<frequency> --ip=<localIP> --id=<DIT168Group>"
+        std::cerr << "Usage: " << argv[0]
+                  << "--cid=<OD4Session Session> --freq=<frequency> --ip=<localIP> --id=<DIT168Group>"
+                     " --partnerIp=<Partnering vehicle IP> --partnerId<Partnering vehicle ID> --speed<Speed offset>"
+                     " --left<Left angle offset> --right<Right angle offset> --queueMax<Delay for following>"
                   << std::endl;
         std::cerr << "Example: " << argv[0]
-                  << " --cid=111 --freq=125 --ip=127.0.0.1 --id=9 --partnerIp=1.1.1.1 --parnterId=8" << std::endl;
+                  << "--cid=111 --freq=125 --ip=127.0.0.1 --id=9 --partnerIp=1.1.1.1 --partnerId=8 --speed=0.02"
+                     " --left=0.35 --right=-0.05 --queueMax=15"
+                  << std::endl;
         returnValue = 1;
     }
     else {
@@ -26,7 +34,7 @@ int main(int argc, char **argv) {
         const std::string ID = commandlineArguments["id"];
         const std::string PARTNER_IP = commandlineArguments["partnerIp"];
         const std::string PARTNER_ID = commandlineArguments["partnerId"];
-        const std::string SPEED_AFTER = commandlineArguments["offsetSpeedAfter"];
+        const std::string SPEED_AFTER = commandlineArguments["speed"];
         const std::string LEFT = commandlineArguments["left"];
         const std::string RIGHT = commandlineArguments["right"];
 
@@ -36,7 +44,7 @@ int main(int argc, char **argv) {
         float pedalPos = 0, steeringAngle = 0, distanceReading = 0;
         uint16_t button = 0;
 
-
+        // OD4Session for sending and receiving messages internally
         od4 =
         std::make_shared<cluon::OD4Session>(CID,
         [&v2vService, &pedalPos, &steeringAngle, &button, &PARTNER_IP, &distanceReading](cluon::data::Envelope &&envelope) noexcept {
@@ -84,9 +92,9 @@ int main(int argc, char **argv) {
                 opendlv::proxy::DistanceReading dist =
                         cluon::extractMessage<opendlv::proxy::DistanceReading>(std::move(envelope));
                 distanceReading = dist.distance();
-                if (distanceReading < 0.25f) {
-                    std::cout << "less than 0.25, stopping" << std::endl;
 
+                // Emergency break check using ultrasonic reading
+                if (distanceReading < 0.25f) {
                     opendlv::proxy::PedalPositionReading msgPedal;
                     opendlv::proxy::GroundSteeringReading msgSteering;
 
@@ -106,13 +114,13 @@ int main(int argc, char **argv) {
 
         int count = 0;
 
+        // Sending leaderStatus at 125ms and followerStatus at 500ms (once every 4 leaderStatus sent)
         auto atFrequency{[&v2vService, &pedalPos, &steeringAngle, &count]() -> bool {
             if (count == 3) {
                 v2vService->followerStatus();
                 count = 0;
             }
             v2vService->leaderStatus(pedalPos, steeringAngle, 0);
-
             count++;
             return true;
         }};
@@ -176,9 +184,9 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
                  std::cout << "received '" << followRequest.LongName()
                            << "' from '" << sender << "'!" << std::endl;
 
-                 // After receiving a FollowRequest, check first if there is currently no car already following.
+                 // After receiving a FollowRequest, check first if the car is already a leader.
                  if (!isLeader) {
-                     // If no, add the requester to known follower slot and establish a sending channel.
+                     // If not, add the requester to known follower slot and establish a sending channel.
                      toFollower = std::make_shared<cluon::UDPSender>(_PARTNER_IP, DEFAULT_PORT);
                      followResponse();
                  }
@@ -200,12 +208,10 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
                  unsigned long len = sender.find(':');
                  if (isLeader) {
                      isLeader = false;
-                     std::cout << "Car was leader, no longer is\n";
                      toFollower.reset();
                  }
                  else if (isFollower) {
                      isFollower = false;
-                     std::cout << "Car was follower, no longer is\n";
                      toLeader.reset();
                  }
                  break;
@@ -219,12 +225,11 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
              }
              case LEADER_STATUS: {
                  if (cantMove) {
-                     std::cout << "Can't move" << std::endl;
+                     std::cout << "Car cannot move due to an emergency break" << std::endl;
                      return;
                  }
                  opendlv::proxy::PedalPositionReading msgPedal;
                  opendlv::proxy::GroundSteeringReading msgSteering;
-                 float calibratedAngle = 0.0f;
 
                  LeaderStatus leaderStatus = decode<LeaderStatus>(msg.second);
                  std::cout << "received '" << leaderStatus.LongName()
@@ -232,6 +237,7 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
                  std::cout << "LeaderStatus Values, pedalPos: " << leaderStatus.speed() << " steeringAngle: "
                            << leaderStatus.steeringAngle() << std::endl;
 
+                 // Calibrate speed received, then apply it.
                  float floatSpeedAfter = std::stof(_SPEED_AFTER);
                  if (leaderStatus.speed() < floatSpeedAfter) {
                      msgPedal.position(leaderStatus.speed());
@@ -243,7 +249,9 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
 
                  float floatLeft = std::stof(_LEFT);
                  float floatRight = std::stof(_RIGHT);
+                 float calibratedAngle = 0.0f;
 
+                 // Calibrate angle received.
                  if (leaderStatus.steeringAngle() == 0) {
                      calibratedAngle = leaderStatus.steeringAngle() + m_OFFSET;
                  }
@@ -258,6 +266,7 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
                      calibratedAngle = leaderStatus.steeringAngle() + floatRight;
                  }
 
+                 // Add angle to queue, and apply first angle in queue if queue max is reached.
                  if (leaderStatus.speed() != 0 && delayQueue.size() < _QUEUE_MAX) {
                      delayQueue.push(calibratedAngle);
                  }
@@ -280,11 +289,11 @@ V2VService::V2VService(std::string ip, std::string id, std::string partnerIp, st
 
 /**
  * This function sends an AnnouncePresence (id = 1001) message on the broadcast channel. It will contain information
- * about the sending vehicle, including: IP, port and the group identifier.
+ * about the sending vehicle, including the IP and the group identifier.
  */
 void V2VService::announcePresence() {
     if (isFollower) {
-        std::cout << "Announce presence not sent. Already following of a car" << std::endl;
+        std::cout << "Announce presence not sent. Already following a car" << std::endl;
         return;
     }
 
@@ -296,9 +305,7 @@ void V2VService::announcePresence() {
 }
 
 /**
- * This function sends a FollowRequest (id = 1002) message to the IP address specified by the parameter vehicleIp. And
- * sets the current leaderIp field of the sending vehicle to that of the target of the request.
- *
+ * This function sends a FollowRequest (id = 1002) message to a partner vehicle's IP address.
  */
 void V2VService::followRequest() {
     if (!isPresentPartner || isFollower) {
@@ -361,11 +368,6 @@ void V2VService::stopFollow(std::string vehicleIp) {
 
 /**
  * This function sends a FollowerStatus (id = 3001) message on the leader channel.
- *
- * @param speed - current velocity
- * @param steeringAngle - current steering angle
- * @param distanceFront - distance to nearest object in front of the car sending the status message
- * @param distanceTraveled - distance traveled since last reading
  */
 void V2VService::followerStatus() {
     if (!isFollower) return;
@@ -387,7 +389,6 @@ void V2VService::leaderStatus(float speed, float steeringAngle, uint8_t distance
     LeaderStatus leaderStatus;
     leaderStatus.timestamp(getTime());
     leaderStatus.speed(speed);
-    std::cout << "Sending to david: " << (steeringAngle - m_OFFSET) << std::endl;
     leaderStatus.steeringAngle(steeringAngle - m_OFFSET);
     leaderStatus.distanceTraveled(distanceTraveled);
     od4->send(leaderStatus);
