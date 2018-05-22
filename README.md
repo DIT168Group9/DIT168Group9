@@ -17,6 +17,8 @@ In order to clone the project through terminal:
 ```
 git clone https://github.com/DIT168Group9/DIT168Group9.git
 cd DIT168Group9
+mkdir build
+cd build
 cmake .. 
 make
 ```
